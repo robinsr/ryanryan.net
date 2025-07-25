@@ -1,0 +1,104 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Node MySQL
+description: "Quick and dirty MySQL hacks: Check one tables entries against a join table, user a subquery in a where, check if an entry exists without actually checking, make a quick array with group_concat"
+pubDate: 2014-01-04T12:00:00Z
+category: node
+tags: [Mysql]
+---
+
+Disclaimer: I am not a database developer. That being said I really enjoy my sqls. So you might find the tips catalogued here as hackish. But that's what I know how to do. Also note that because this is an article about node, I'll use squel to make SQL strings
+
+### Check one tables entries against a join table
+
+I have a table of articles that users of this sample website can subscribe to. When a user subscribes their id and the id of the article go in a join table. When a user wants a list articles of the articles this is how I see if the user is subscribed.
+
+```javascript
+var query = squel.select()
+    .field("a.*")
+    .field("s.subscribed")
+    .from("articles a")
+    .left_join( squel.select()
+        .field("1 as subscribed")
+        .from("subscriptions")
+        .where("user_id = ?" user.id), "s", "s.article_id = a.id")
+    .toString()
+```
+
+This creates a table of all articles with a "1" where the user is subscribed.
+
+### Use a subquery in a WHERE
+
+Although squel is awesome in letting you use squels in joins, it doesn't like them in WHEREs. Try stringing it first and wrapping it in paranthesis.
+
+```javascript
+var subquery = squel.select()
+    .field("user_id")
+    .from("user")
+    .where("user_name = ?", user.name)
+
+var mainquery = squel.select()
+    .from("article")
+    .where("author_id = (" +  subquery.toString() + ")")
+```
+
+### Check if an entry exists on update without actually checking
+
+Often when a user updates an entry in any DB, a developers first instinct would be to check if it exists before making the update resulting in two queries. With node-mysql just check rows affected.
+
+```javascript
+var query = squel.update()
+    .table("article")
+    .set("title", req.body.title)
+    .where("article_id = ?", req.params.id)
+
+mysql.query( query.toString(), function ( err, result ){
+    if (result.rowsAffected == 0){
+        res.send(404, "Article does not exists")
+    } else {
+        res.send(200, "Article Updated... probably") 
+}
+```
+
+### Make a quick array with GROUP_CONCAT
+
+Have a one to many relationship somewhere where the manys represent an array of strings? Use group_concat instead of bothering with a second query. 
+
+```javascript
+var query = squel.select()
+    .from("articles a")
+    .field("a.*")
+    .field("t.tagGroup")
+    .left_join( squel.select()
+        .field("*, group_concat( tag_name separator ,) as tagGroup")
+        .from("tags")
+        .group("article_id"), "t", "t.article_id = a.id" )
+
+mysql.query( query.toString(), function (err, result){
+    result.forEach( function (row) {
+        row.tagGroup = row.tagGroup.split(",")
+    }
+    res.send(200, result)
+}
+```
+
+Now each article entry returned has an array of tags that really live as their own entries in another table.
+
+### Use GROUP_CONCAT to search across join tables
+
+Sort of a tangent of the previous hack, you can use group_concat to search for an entry in one table based on its relationships in a join table.
+
+```javascript
+var query = squel.select()
+    .from("articles a")
+    .field("a.*")
+    .field("t.tagGroup")
+    .field("GROUP_CONCAT( a.title, ' ', a.desc, ' ', t.tagGroup ) as searchColumn")
+    .left_join( squel.select()
+        .field("*, group_concat( tag_name separator ,) as tagGroup")
+        .from("tags")
+        .group("article_id"), "t", "t.article_id = a.id")
+    .where("searchColumn LIKE '%"+ req.query.searchTerm +"%'")
+```
+
+This query will search a term across the article's title, description, and tags (which live in another table). NOTE: use IFNULL() on each item in the GROUP_CONCAT to keep one null value from nullifying that row's searchColumn field. For example, if an article had no tags it would have a searchColumn value of null despite having a title and description. 

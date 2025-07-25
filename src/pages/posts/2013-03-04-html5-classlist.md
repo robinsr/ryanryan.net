@@ -1,0 +1,19 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: HTML5 ClassList
+description: "It used to be pretty difficult to add and remove classes from page elements. Using vanilla JS required making a regular expression to search the elements class attribute for a match. JS libraries simplified the process but now HTML5 makes it even easier"
+pubDate: 2013-03-04T12:00:00Z
+category: html
+tags: [HTML5,cssFiles,classList]
+---
+
+It used to be pretty difficult to add and remove classes from page elements. Using vanilla JS required making a regular expression to search the elements class attribute for a match. JS libraries simplified the process (such as jQuery's "toggleClass()"). But now HTML5 makes it even easier
+
+```javascript
+myElement.classList.add( 'myClassName' ); // now it's added
+myElement.classList.remove( 'myClassName' ); // now it's removed
+myElement.classList.toggle( 'myClassName' ); // toggle on or off
+myElement.classList.contains( 'myClassName' ); //returns true or false
+```
+
+Supported in all major browsers (IE 10+) as of Feb 2013

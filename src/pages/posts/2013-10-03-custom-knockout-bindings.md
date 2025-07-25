@@ -1,0 +1,134 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Custom Knockout Bindings
+description: "Knockout's custom bindings are awesome. If your view has bindings are getting out of control or you have some complex functionality then custom bindings are for you."
+pubDate: 2013-10-03T12:00:00Z
+category: javascript
+tags: [knockout,javascript,MVVM]
+---
+
+Knockout's custom bindings are awesome. If your view has bindings are getting out of control or you have some complex functionality then custom bindings are for you. The following is an example that I used in a recent project.
+
+### the Problem
+
+I was writing the article editor for [WatoCMS](http://wato.ethernetbucket.com) and I didn't want to use textareas as the composing space. It seems too outdated and hard to style so the I decided to use a contenteditable div. The problem is that typically I would use the value binding to get the content in the textarea. But the value binding isn't supported on non input elements and the text binding doesn't go two ways; Knockout doesn't look for changes in the view on a text binding to update the observable; ie the text binding doesn't write to the observable. So custom binding time!
+
+### the Solution
+
+I'm calling my binding 'markdown' (as in WatoCMS articles are written in MarkDown)
+
+```javascript
+ko.bindingHandlers.markdown = {
+    init: function(){},
+    update: function(){}
+}
+```
+
+Each handler is part of the 'bindingHandlers' object which has properties we can add to (and also overwrite previous properties such as 'click' or 'value'). the handler itself is an object with init and update properties. Init is the function that is called when knockout first assesses your view. It is useful for assigning events. Update is the function that is called when the observable associated with this element is updated. Both functions are given as parameters the element being bound to and the value of whatever observable.
+
+So the first thing I want to do is make markdown write to the model
+
+```javascript
+ko.bindingHandlers.markdown = {
+    init: function(element,valueAccssor){
+        var value = valueAccessor();
+        $(element).on('keydown',function(){
+            value(element.innerText)
+        })
+    },
+    update: function(){}
+}
+```
+
+Notice that we have to access the value of the model by calling valueAccessor. Then like any other observable we write to it by passing a value as a parameter.
+
+This works great to get keystroke-by-keystroke values into the observable, but now we need to make sure the element can be updated if the observable changes.
+
+```javascript
+ko.bindingHandlers.markdown = {
+    init: function(element,valueAccssor){
+        var value = valueAccessor();
+        $(element).on('keydown',function(){
+            value(element.innerText)
+        })
+    },
+    update: function(element,valueAccssor){
+        element.innerText = value();
+    }
+}
+```
+
+This doesn't work so great though. On each keystroke the element being bound gets completely rewritten which moves our cursor to the very front of the div. This makes typing impossible. The answer I came up with is to use a data- attribute to let knockout know when its okay to update the element. If the user is typing, the element has focus. When the user clicks somewhere else (such as 'save' or 'preview') then its okay to update. I'll start by setting data-focus to false by default until the user focuses on the element.
+
+```javascript
+ko.bindingHandlers.markdown = {
+    init: function(element,valueAccssor){
+        var value = valueAccessor();
+        $(element).data("focus",false)
+        $(element).focus(function(){
+            $(element).data("focus",true)
+        });
+        $(element).on('keydown',function(){
+            value(element.innerText)
+        })
+    },
+    update: function(element,valueAccssor){
+        element.innerText = value();
+    }
+}
+```
+
+If the element's data-focus is true, we should stop knockout from writing to it. We can prevent unwanted updates to the view by using an if statement.
+
+```javascript
+ko.bindingHandlers.markdown = {
+    init: function(element,valueAccssor){
+        var value = valueAccessor();
+        $(element).data("focus",false)
+        $(element).focus(function(){
+            $(element).data("focus",true)
+        });
+        $(element).on('keydown',function(){
+            value(element.innerText)
+        })
+    },
+    update: function(element,valueAccssor){
+       if ($(element).data("focus") == false && value()){
+            element.innerText = value();
+        }
+    }
+}
+```
+
+Now we have the problem that the element never gets updated after the first time the user focuses on it which is a problem if the observable is updated via AJAX or something. I added a blur event to remove data-focus.
+
+
+```javascript
+ko.bindingHandlers.markdown = {
+    init: function(element,valueAccssor){
+        var value = valueAccessor();
+        $(element).data("focus",false)
+        $(element).focus(function(){
+            $(element).data("focus",true)
+        });
+        $(element).blur(function(){
+            $(element).data("focus",false)
+            value(element.innerText)
+        });
+        $(element).on('keydown',function(){
+            value(element.innerText)
+        })
+    },
+    update: function(element,valueAccssor){
+       if ($(element).data("focus") == false && value()){
+            element.innerText = value();
+        }
+    }
+}
+```
+
+You can checkout all the custom bindings I wrote for WatoCMS [here](https://github.com/robinsr/WatoCMS_express/blob/master/public/javascripts/handlers.js) and see the application in action [here](http://wato.ethernetbucket.com). You'll notice that this specific binding is actually more complex and listens for the tab key to add in some tab spaces.
+
+### Useful Examples
+
+[Here's a custom bindind I wrote to add IE8 placeholder functionality](https://github.com/robinsr/TinyBudget/blob/master/knockout_objects.js#L48) 

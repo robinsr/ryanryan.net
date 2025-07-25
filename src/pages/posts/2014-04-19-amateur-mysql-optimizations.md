@@ -1,0 +1,62 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Amateur MySQL Optimizations
+description: "MySQL is not my strongest card. And rightly so. It is its own profession. People who are experts at MySQL are paid to be experts at MySQL. Everybody else just has to be somewhat familiar with the basic functions. However, sometimes these experts are nowhere to be found and you're left alone to design your own schema and perform your own optimizations. These are my experiences doing just that."
+pubDate: 2014-04-19T12:00:00Z
+category: databases
+tags: [mysql,experiments]
+---
+
+MySQL is not my strongest card. And rightly so. It is its own profession. People who are experts at MySQL are paid to be experts at MySQL. Everybody else just has to be somewhat familiar with the basic functions. However, sometimes these experts are nowhere to be found and you're left alone to design your own schema and perform your own optimizations. These are my experiences doing just that.
+
+I'm involved in developing an application that collects click metrics on a large website that serves millions of pages a day. Each metric is made up of a series of datapoints that are collected each hour from an internal system that published the data. For each metric logged in the system, a row in a MySQL table is inserted each hour representing that metric's value at that time (a datapoint). If there are 2000 metrics, then over the course of a day there are 48,000 rows inserted. Two aspects of the application that posed specific challenges were hourly data and quick queries. Other applications exist at this website that perform metric collection, hourly data is part of what sets this application apart so it is critical that every row be maintained. In addition, our customers do not want to queue up and wait hours or days for their queries to run; the data needs to be instantly accessible. With these problems in mind, here are a few experiments I ran to optimize query performance on a large table. 
+
+### Primary Keys
+
+Our table, "collectedData", has these columns: time (accurate to the hour), datapointId, locale (this is a global website), and result (whatever value the metric was for that hour, in that locale). The part of our application that calculates these values has to sift through terabytes of data and so to come to a result in a reasonable amount of time we devised an distributed computing model (similar to a map-reduce) and programmed each node in our network to insert its value into our table. This insert, however, only represent part of the data; the combined values of all nodes is the true value for that datapoint. If another node has already calculated its result and inserted it into the table we do not want to overwrite that. Enter stage left, the primary key:
+
+```sql
+ADD PRIMARY KEY(`datapointId`,`locale`,`time`);
+```
+
+Each insert is written like so:
+
+```sql
+INSERT INTO collectedData (`datapointId`, `locale`, `time`, `result`) VALUES ('abc123', 1, 2014-2-2 12:00:00, 2345.00) ON DUPLICATE KEY UPDATE result=result+VALUES(result)
+```
+
+This ensures that node1 adds its value to the value that node2 already inserted. The primary key not only ensures that our nodes reach one definitive value for the hour, but it also greatly speeds of our queries. In the prototype of our application, the datapointId, locale, and time were concatenated into a string that was the only primary key in our table. It performed the same service or summing the results of our nodes but made queries slow. Querying for a specific datapoint meant using this column and a LIKE operator:
+
+```sql
+SELECT * FROM collectedData WHERE id LIKE '%abc123-%'
+```
+
+With our primary key, we can query the table like so:
+
+```sql
+SELECT * FROM collectedData WHERE datapointId = 'abc123'
+```
+
+Querying collectedData, with 680,000 rows, using the first method took .217 milliseconds. Compare that with the second method that took .020 milliseconds. Over 90% decrease in querying time.
+
+### Partitioning
+
+Since we expected our tables to grow to tens of millions of rows before we can start archiving, we also applied partitioning to collectedData. MySQL supports many types of partitioning and the key to determining which type of partitioning is to look at how you plan to query the table. For our needs, we found that we query collectedData by datapointId more so than anything other field. This makes sense as our customers care about their datapoints but not so much about all datapoints. Since `datapointId` is part of the primary key, we added key partitioning to collectedData using datapointId. 
+
+```sql
+ALTER TABLE collectedData
+PARTITION BY KEY(datapointId)
+PARTITIONS 10;
+```
+
+After loading 7 million rows into our test database, however, the partitioned collectedData showed no performance gains of the non-partitioned collectedData. After examining the partitions I found that each had about 700,000 rows or about one tenth of the total table. Perhaps the performance benefits of partitioning isn't realized until the table has closer to 100,000,000 rows or more. Considering that we expect to get somewhere around 17,000,000 rows inserted per year we might not see the benefits of partitioning for quite some time. 
+
+### Conclusions
+
+collectedData is generally going to be used with aggregate functions like sum. A typical query would look like this:
+
+```sql
+SELECT SUM(result), YEAR(time), WEEK(time) AS result FROM collectedData WHERE datapointId = 'abc123' GROUP BY YEAR(time), WEEK(time);
+```
+
+Our where clause is always going to contain the datapointId and maybe would contain greater than or less than some date. Considering this and the fact that our table only has 4 fields, it makes sense to use a primary key that combines all the fields. Our query times were not improved with partitioning and since it is uncertain if partitioning would slow inserts/updates it is probably better to not use it. 

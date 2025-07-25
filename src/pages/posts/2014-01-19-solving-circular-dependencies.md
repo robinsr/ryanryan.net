@@ -1,0 +1,186 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Solving Circular Dependencies
+description: "Inspired by sequelize.js's module pattern, learn how to prevent circular dependencies but still have access to a modules exports."
+pubDate: 2014-01-19T12:00:00Z
+category: node
+tags: []
+---
+
+Here's a pretty common thing do to in node, write modules and export methods:
+
+```javascript 
+// words.js
+exports.convertToWord = function(num){
+    var _numbers = [ "zero", "one", "two", "three" ]
+    console.log(_numbers[num])
+}
+
+// numbers.js
+var words = require(__dirname + "/words");
+words.convertToWord(3)
+// prints "three"
+```
+
+numbers.js uses exported functions in words.js. You can think of this setup as a one way street; one module requires another. But what if numbers.js has some useful methods that we want to use in words.js, creating something like a two way street?
+
+
+```javascript 
+// words.js
+var number = require(__dirname + "/number");
+exports.convertToWord = function(num){
+    var _numbers = [ "zero", "one", "two", "three" ]
+    number.countToNumber(function(count){
+        console.log(_numbers[count])
+    }
+}
+
+// numbers.js:
+var words = require(__dirname + +"/words");
+exports.countToNumber = function(num,callback){
+    for (i=0; i<num; i++){
+        callback(i)
+    }
+}
+words.convertToWord(3)
+// What does this do?
+```
+
+Node will not print "zero", "one", "two", "three" but instead prints "words has no method convertToWords" which is bullshit because we know that words indeed has that method. Why this happens is because this situation has a big problem: circular dependencies. numbers.js depends on words.js and words.js depends on numbers.js. So to prevent creating some infinite-loop-like-scenario Node just fails to import anything.
+
+How can we solve this? The most simple answer is to merge your modules together because, clearly, they are kinda related. Or you can use [dependency injection](http://selfcontained.us/2012/05/08/node-js-circular-dependencies/). Or you can use some hackish code that I will now describe.
+
+First, you need a class
+
+```javascript 
+// exporter.js
+var a = function(){}
+```
+
+Fuck yea... And also it needs a prototype called 'define'
+
+```javascript 
+// exporter.js
+var a = function(){}
+a.prototype.define = function(){}
+```
+
+And this prototype is going to take in a module name, and an object of methods and simply return the methods.
+
+```javascript 
+// exporter.js
+var a = function(){}
+a.prototype.define = function(objName,methods){
+    return methods
+}
+```
+
+Then we need a prototype that will take in a path to a module (just like require does) and require it. Then it will call the exports function of that module and pass itself as an argument. And it will return itself (wut?... just hold on)
+
+```javascript 
+// exporter.js
+var a = function(){}
+a.prototype.define = function(objName,methods){
+    return methods
+}
+a.prototype.import = function(path){
+    var newMod = require(path)
+    return newMod(this)
+}
+```
+
+Now to get our modules into this scheme we need to write them in a certain way. First they will have one export (which we call in the 'import' function) and this export will take a parameter that we expect to have a 'define' property (see where this is going?)
+
+```javascript 
+//words.js
+module.exports = function(exporter){
+    return exporter.define("words",{
+        convertToWords: function(num){
+            // logic here - we'll come back to this
+        }
+    })
+}
+```
+
+same for numbers
+
+```javascript 
+//numbers.js
+module.exports = function(exporter){
+    return exporter.define("numbers",{
+        countToNumber: function(num){
+            // logicless for now
+        {
+    }
+}
+```
+
+Now we need to glue all of our modules together in another file. This file will be required by both numbers.js and words.js so they can access each others methods.
+
+```javascript 
+//main.js
+var exporter = require(__dirname+"/exporter")
+
+var myExports = new exporter();
+
+module.exports.words = myExports.import(__dirname+"/words");
+module.exports.numbers = myExports.import(__dirname+"/numbers");
+```
+
+Now back to our modules, we require main.js and (skadoosh) all of our methods are available despite head spinning circular dependency problems:
+
+```javascript 
+//words.js
+var main = require(__dirname+"/main")
+module.exports = function(exporter){
+    return exporter.define("words",{
+        convertToWords: function(num){
+            var _numbers = [ "zero", "one", "two", "three" ]
+            main.numbers.countToNumber(num,function(count){
+                console.log(_numbers[count])
+            {
+        }
+    })
+}
+```
+
+```javascript 
+//numbers.js
+var main = require(__dirname+"/main")
+module.exports = function(exporter){
+    return exporter.define("numbers",{
+        countToNumber: function(num,callback){
+            for (i=0; i<num; i++){
+                callback(i)
+            }
+        {
+    }
+}
+main.words.convertToWord(3)
+```
+
+So whats happening here? We stop directly requiring modules because we know that would result in circular dependencies. Instead, each module registers itself with our exporter class which then exposes the module to other modules.
+
+This method also works well with object prototypes:
+
+```javascript
+function Player(){
+    this.name = "player name"
+}
+Player.prototype.updateName = function(newName){
+    this.name = newName;
+}
+
+module.exports = function(exporter){
+    return exporter.define('Player',{
+        create: function(){
+            return new Player()
+        }
+    }
+}
+
+// another file perhaps
+
+var aNewPlayer = main.player.create()
+aNewPlayer.updateName("This Works!");
+```

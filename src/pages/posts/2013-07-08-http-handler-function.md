@@ -1,0 +1,76 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: HTTP Handler Function
+description: "A good jumping-off-point when writing your node server is to use a handler function to route all HTTP requests to their proper functions. If you write functions that are specific to a url such as providing a web service that reads from a database and then writes back XML or JSON you can use an if-else block or a switch block to route the request to the function."
+pubDate: 2013-07-08T12:00:00Z
+category: node
+tags: [Node]
+---
+
+A good jumping-off-point when writing your node server is to use a handler function to route all HTTP requests to their proper functions. Typically, URLs are routed to files on disk that handle the request ("something.com/processForm.php" would process a form). With Node, we route URLs to handler functions using another function that handles all incoming HTTP requests.
+
+If you write functions that are specific to a url such as providing a web service that reads from a database and then writes back XML or JSON you can use an if-else block or a switch block to route the request to the function. You can pass the request and response objects along to the function as well so that the handler the return. If you are also serving static content then your switch or if-else block can default to a static file handler function.
+
+```javascript
+var http = require('http').createServer(httpHandler);
+
+function httpHandler (req,res){
+   if (req.url == '/read_from_db'){
+      // call the function to read from database
+      readFromDb(req,res);
+      return;
+   } else {
+      // call the function to serve static files (html,css,etc)
+      staticFileHandler(req,res);
+      return;
+}
+
+http.listen(8080);
+```
+
+
+### Breaking down the request URL
+This setup will work, but it if the url doesn't exactly match the string we're looking for then the handler will default to staticFileHandler. This is a problem if the a user is looking to read from the database, but maybe includes some parameters in the url. Node provides some default modules that make identifying parts of the url easier. Using the "URL" module, we can identify the path, query, and hash independently of each other.
+
+```javascript
+var http = require('http').createServer(httpHandler),
+    url = require('url');
+
+function httpHandler (req,res){
+   var path = url.parse(req.url).pathname;
+
+   if (path == '/read_from_db'){
+      // call the function to read from database
+      readFromDb(req,res);
+      return;
+   } else {
+      // call the function to serve static files (html,css,etc)
+      staticFileHandler(req,res);
+      return;
+}
+
+http.listen(8080);
+```
+
+
+By using url.parse(req.url).pathname, we get back a string that only contains the path, and not queries or hashes. To see how the default node url parses works, go [here](http://nodejs.org/api/url.html)
+
+
+### Finding the query in the URL
+
+
+We can get the query part of the url using the same method.
+
+```javascript
+function readFromDb(req,res){
+   // our request is something.com?record=myrecord
+   var query = url.parse(req.url).query;
+
+   client.get(query.record,function(err,result){
+      res.writeHead(200);
+      res.end(result);
+   });
+}
+```
+
+Notice that I used the req object to get information about the request, and then the res object to send a response. Passing along req and res as parameters means that these functions can respond to the request, freeing your http handler function from having to respond.

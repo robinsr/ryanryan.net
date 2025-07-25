@@ -1,0 +1,82 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Knockout Observable Extenders
+description: "Knockout observable extenders give custom functionality to observables. nuff said. No need to sell you on how useful that is. I'll just show how I used extenders in a recent project."
+pubDate: 2013-10-04T12:00:00Z
+category: javascript
+tags: [Knockout,MVVM,javascript]
+---
+
+Knockout observable extenders give custom functionality to observables. nuff said. No need to sell you on how useful that is. I'll just show how I used extenders in a recent project.
+
+### the Problem
+
+I needed an observable to be updated from a list of items (as in an select tag). A user could then assign the observable a value from a predefined list. The exception being that if the observable is already a specific value then the user should not be able to change it. 
+
+### the Solution
+
+Knockout's documentation shows an example of extenders being used to round number inputs, but this one is easier; it just needs to stop the write if the new value matches a string. While I could have just made the observable a computed with read/write rules, I wanted to make an extender in case I wanted to reuse the functionality. Extenders look like this: 
+
+```javascript
+ko.extenders.custonExtender( target, option ){
+    return 'the modified value'
+}
+```
+
+Target is the observable's value, option I'll show in a minute. 
+
+I started by setting up a new computed variable because computed observables can have different functions handling reading and writing:
+
+```javascript
+ko.extenders.neverChangeIfColor( target, option ){
+    var result = ko.computed({
+        read: // something here
+        write: // also something here
+    })
+    return 'the modified value'
+}
+```
+
+Then to have the computed work on the observable's value I passed it in as a the computed's parameter, and finally I plan to return what the computed's value is:
+
+```javascript
+ko.extenders.neverChangeIfColor( target, option ){
+    var result = ko.computed({
+        read: // something here
+        write: // also something here
+    })
+    result(target())
+    return result;
+}
+```
+
+I didn't need to change the read value, so I left that alone. For the write, all I needed to do was prevent a write if the value matched a string. The string is passed in as the option parameter.
+
+```javascript
+ko.extenders.neverChangeIfColor( target, option ){
+    var result = ko.computed({
+        read: target, // always return the observables unadultered value
+        write: function(newValue){
+            var oldValue = target();
+            if (oldValue == option){
+                target(option) // don't change it
+            } else {
+                target(newValue) // change it
+            }
+        }
+    })
+    result(target())
+    return result;
+}
+```
+
+Now to apply this extender to an observable:
+
+```javascript
+function appViewModel(){
+    var self = this;
+    self.staplerColor = ko.observable( ).extend({ neverChangeIfColor: 'red' })
+}
+```
+
+Now if staplerColor is ever set to 'red' then it will never change.

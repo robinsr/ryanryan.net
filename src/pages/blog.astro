@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BlogCard from '../components/BlogCard.astro';
+
+// Dynamically fetch all blog posts
+const allPosts = import.meta.glob('../pages/posts/*.md', { eager: true });
+
+// Transform the posts to match the expected format
+const posts = Object.entries(allPosts).map(([, post]: [string, any]) => {
+	const url = post.url || '';
+	
+	// Handle invalid dates gracefully
+	let pubDate;
+	try {
+		pubDate = new Date(post.frontmatter.pubDate);
+		if (isNaN(pubDate.getTime())) {
+			// If date is invalid, use current date
+			pubDate = new Date();
+		}
+	} catch (error) {
+		pubDate = new Date();
+	}
+	
+	return {
+		title: post.frontmatter.title,
+		description: post.frontmatter.description || '',
+		pubDate: pubDate,
+		url: url,
+		category: post.frontmatter.category || '',
+		tags: post.frontmatter.tags || [],
+		image: post.frontmatter.image || undefined
+	};
+});
+
+const sortedPosts = posts.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+---
+
+<Layout 
+	title="Blog - Ryan Ryan" 
+	description="Thoughts on web development, programming, and technology"
+>
+	<div class="min-h-screen flex flex-col">
+		<Header />
+		
+		<main class="flex-1">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+				<!-- Page Header -->
+				<div class="text-center mb-12">
+					<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Blog
+					</h1>
+					<p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+						Thoughts on web development, programming, and technology. 
+						Sharing what I learn along the way.
+					</p>
+				</div>
+				
+				<!-- Blog Posts Grid -->
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{sortedPosts.map((post) => (
+						<BlogCard
+							title={post.title}
+							description={post.description}
+							pubDate={post.pubDate}
+							url={post.url}
+							category={post.category}
+							tags={post.tags}
+							image={post.image}
+						/>
+					))}
+				</div>
+				
+				<!-- Empty State -->
+				{sortedPosts.length === 0 && (
+					<div class="text-center py-12">
+						<div class="text-gray-400 dark:text-gray-500 mb-4">
+							<svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+							</svg>
+						</div>
+						<h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+							No posts yet
+						</h3>
+						<p class="text-gray-500 dark:text-gray-400">
+							Check back soon for new content!
+						</p>
+					</div>
+				)}
+			</div>
+		</main>
+		
+		<Footer />
+	</div>
+</Layout> 

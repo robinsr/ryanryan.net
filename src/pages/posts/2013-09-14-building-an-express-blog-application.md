@@ -1,0 +1,187 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Building an Express Blog Application
+description: "I'm in the process of rewiring the backend for Ethernet Bucket using Express. If you don't know what express is, here's a good primer. The goal today is to write something that can take blog entries in MongoDB (that part not covered) and turn them into web pages."
+pubDate: 2013-09-14T12:00:00Z
+category: node
+tags: []
+---
+
+I'm in the process of rewiring the backend for Ethernet Bucket using Express. If you don't know what express is, [here's a good primer](). The goal today is to write something that can take blog entries in MongoDB (that part not covered) and turn them into web pages.
+
+The first thing we need to do is install express.
+
+```javascript
+npm install -g express
+```
+
+Then we initialize our project.
+
+
+```javascript
+express MyBlog
+# and then as per instructions
+cd MyBlog
+npm install
+```
+
+
+You'll notice that express made a lot of files for you, most importantly are the files in the 'routes' folder and the files in the 'views' folder. The way I wanted my blog to work was for a url like "www.ethernetbucket.com/article/whatever" to link to the article "whatever". Additionally I wanted the url "www.ethernetbucket/category/myCategory" to link to a page that listed articles of that category. To do this we need routes.
+
+
+### Article Route
+
+
+Add a file to the routes folder called article.js. To get it setup to query Mongo add something like this:
+
+
+```javascript
+var databaseUrl = "myDatabase",
+    collections = ["articles"],
+    db = require("mongojs").connect(databaseUrl, collections),
+    u = require("underscore");
+   // also probably a good time to install underscore and mongojs
+exports.servePage = function (req, res){
+}
+```
+
+
+
+We're setting up a function called 'servePage' that express will use to to respond to requests for articles. In order to hook this function into the process of an article request, we have to modify app.js in the top of the directory. App.js comes looking like this:
+
+
+```javascript
+var express = require('express');
+var routes = require('./routes');
+var user = require('./routes/user');
+var http = require('http');
+var path = require('path');
+var app = express();
+// all environments
+app.set('port', process.env.PORT || 3000);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
+// development only
+if ('development' == app.get('env')) {
+  app.use(express.errorHandler());
+}
+app.get('/', routes.index);
+app.get('/users', user.list);
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+});
+```
+
+
+We're going to replace 'user' with article. So line something like this:
+
+
+```javascript
+var user = require('./routes/user');
+  // changes to
+var article = require('./routes/article');
+  // and 
+app.get('/users', user.list);
+  // changes to
+app.get('/article/:article_name', user.servePage);
+```
+
+
+Now express will route (hence the name) all get requests that are of the format "/article" to our servePage function that does something which we haven't written yet. Lets fill it in...
+
+
+```javascript
+exports.servePage = function (req, res){
+   db.articles.findOne({url: req.params.article_name},function(err,result){
+      if (err) {
+         // oops - we'll deal with this later
+      } else if (!result){
+         // oops again - this would be a 404
+      } else {
+         res.render('article', result);
+      }
+   })
+}
+```
+
+
+Two things happening here. First in the mongo query I reference "req.params.article_name". This parameter was defined in app.js at the same time we defined the route for article. The second thing is at the end there you see "res.render('article',result)". This tells express to render the view 'article' (yet to be written) with the data from mongoDB.
+
+
+### Article View
+
+In the views folder, you see index.jade and layout.jade; both are jade templates (duh). layout.jade has "blocks" that can be filled by other templates which "extend" layout.jade. We need an article.jade file. It should look like this:
+
+
+```javascript
+extends layout
+block css
+	each val in css
+		link(rel='stylesheet', href='/stylesheets/'+val.file)
+block headertags
+	!= headertags
+block content
+	article
+		if hidetitle == false
+			h2= title
+		if publishDate
+			date
+				strong= publishDate
+		each val in content
+			if val.type == 'p'
+				p= val.text
+			if val.type == 'h2'
+				h2= val.text
+			if val.type == 'HTML'
+				!= val.text
+			if val.type == 'pre'
+				div.codebox
+					header Code
+					pre.prettyprint.linenums.lang-js= val.text
+```
+
+
+
+The template above actually makes the page you're looking at right now. The 'blocks' hook into certain parts of layout.js that looks like this:
+
+
+```javascript
+doctype 5
+html
+head
+title= title
+script(src='/javascripts/example.js')
+link(rel="stylesheet",href='/stylesheets/example.css')
+block css
+block headertags
+    body
+        header(id='masthead')
+            h1
+                a(href='/') My Blog!!!
+        nav
+            //- perhaps some nav stuff here
+        block content
+        footer
+            p Copywrite 2013
+            script
+        window.onload = function(){
+            // do some code
+        }
+```
+
+
+You can see there there is example javascript and css files included in layout.jade. These files would live in the 'public' directory created by express when we initialized our project. Using a layout template is really awesome because we can put any other template, for example the template for the category page, into the layout. So if we need to change our nav section or change our stylesheets we only have to go to one place and make one change.
+
+
+### Finishing up
+
+
+What we have so far is enough to get articles to render using the /article route. Some things that will need to be done in the future are making a 404 and 503 template to let readers know of errors. We need to fill out our index.jade template because its pretty bare at this point. And obviously we havent written the route for category or the view for it, but I think you can see from what we've done so far how you should go about doing it.
+
+If you want to see what this project ultimately came to be checkout [Wato Blog Tool](http://wato.ethernetbucket.com)

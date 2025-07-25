@@ -1,0 +1,81 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Git Reset
+description: "Oh, the usefulness of git reset. It works in two modes: The first mode modifies the \"index\" and the working-tree, moving around files similarly to git add but in the opposite direction. The second mode affects the tip of the branch, effectively undoing commits."
+pubDate: 2014-09-15T12:00:00Z
+category: git
+tags: [git,git-reset]
+---
+
+Oh, the usefulness of `git reset`. It works in two modes: The first mode modifies the "index" and the working-tree, moving around files similarly to `git add` but in the opposite direction. The second mode affects the tip of the branch, effectively undoing commits.  
+
+### Reseting single and multiple files
+
+Here's the simplest case for using `reset`. You made changes and used `git add` to add the changes to the index. But you added too many files for you to make a meaningful commit, better split up the changes into multiple commits. To move all the files back to the working tree (aka to "unstage" the changes) use this:
+
+```bash
+git reset
+```
+
+Then selectively add the files you want to commit back in with `git add`. 
+
+Slightly more complicated: You only added two files and you want to commit one of them. Instead of unstaging all, just be selective with your unstage:
+
+```bash
+git reset -- fileIDontWantToCommit
+```
+
+Another scenario: you're experimenting with a new technique or pattern and its just not working. You have four modified files that you want to just go away. For cases like this when there are multiple files, use this:
+
+```bash
+git reset --hard
+```
+
+### Undoing a commit
+
+So far we have only used `reset` in the mode that modifies the index and working-tree, but it also works to change commits. Scenario: you commit something that was incomplete or just wrong, or maybe you merged when you didn't mean to so now you have a merge commit you don't want. You have a few options for undoing this commit. In order from least destructive to most:
+
+```bash
+git reset --soft HEAD@{1}
+git reset HEAD@{1}
+git reset --hard HEAD@{1}
+```
+
+Which flavor of git reset depends on what you want to do with the code changes. The `--soft` option moves the commit changes back to the index ("changes to be committed"). From there you can do a `git reset HEAD filename` to remove it from staged. But you can skip that step if you do a normal `reset` (aka `--mixed`). Finally, if you don't want to recover any of the code changes in your unwanted commit, use the `--hard` option. You could still recover that commit my going into the reflog, finding the sha, and using `git checkout filename sha`. So don't be afraid of git reset, git never forgets anything.
+
+
+### Undoing a git rebase
+
+You're working with a client who prefers rebases to merges, before you push your branch you rebase off of master only to add 94 commits to your branch. You think, _well I don't want my PR to have 94 unrelated commits in it_, so here's what you do:
+
+```bash
+git reflog # shows when the tip of your branch was updated
+66b8dc8 HEAD@{0}: rebase finished: returning to refs/heads/someBranchName
+66b8dc8 HEAD@{1}: rebase: some rebase commit
+44b8bc8 HEAD@{2}: rebase: another unrelated commit 
+... # lots of commits later ...
+2eb3393 HEAD@{96}: commit: Commit msg for work I did
+
+git reset --hard HEAD@{96}
+HEAD is now at 2eb3393 Commit msg for work I did
+```
+
+Using reflog, get a list of all the updates to the "tip" of the branch (aka, whenever HEAD was changed). Reflog is nice that it differentiates between rebase commits and normal commits. Find the last commit reset head back to that. Since you don't want to recover any code from those rebase commits, use the `--hard` option when you reset (see the above tip).
+
+### Edit an incorrect commit message
+
+This tip doesn't actually use `git reset`, but it is helpful for fixing mistakes, and its one of my favorites. Scenario: you misspelled a word in your commit message, or the message just doesn't reflect the changes in code, or worse yet, the commit message is gibberish or inappropriate (guilty). You could follow the steps above and issue a soft reset and then commit with a different message. Or more simply you can change the message directly with this:
+
+```bash
+git commit --amend -m "This is a totally appropriate commit message!"
+```
+ 
+### Pushing your resets to a remote repo
+
+If you pull a branch from a remote repo, like Github, and use `git reset` to undo commits, you need to sync the remote repo before you can push anymore changes. Otherwise you will get an error like the following:    
+
+```bash
+error: failed to push some refs to 'git@yourrepo'
+```
+
+Why this happens, according to http://git-scm.com/, is git "refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it". For example, you pull a branch with commits A, B, C. Then you reset to B, make code changes and make a commit, D. Then you try to push D. Git will see that D is ancestor of B and not an ancestor of the current tip of the branch, C. At that point it will flip out and give you an error. To avoid this you need to use a force push: `git push -f origin repo`. Using the force push will update the remote repo's refs no matter how little sense it makes, so use caution.

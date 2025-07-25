@@ -1,0 +1,248 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Single Page App with Vanilla ES6 | Part 1
+description: ES6 gives us new native js features that make making a SPA a little easier. We will be making use of modules, template strings (and "tagged template literals"), classes, promises, and arrow functions
+pubDate: 2016-05-07T12:00:00Z
+category: javascript
+tags: [javascript, es6, gulp, browserify]
+---
+
+Lets build a single page app using es6. Yay!
+
+ES6 gives us new native js features that make making a SPA a little easier. We will be making use of modules, template strings (and "tagged template literals"), classes, promises, and arrow functions. The project is a simple calendar. It shows one month at a time, with controls to advance and rollback the current month in view. The weeks will show distinct leading and trailing days that are not in the month to keep the calendar square. Each day will have the date and a list of appointments for that day that we will load from a service. 
+
+## Project structure
+
+```bash
+/calendar
+  |-index.html
+  |-gulpfile.js
+  |-/src
+    |-/js
+      |-main.js
+      |-controller.js
+      |-view.js
+      |-template.js
+      |-model.js
+      |-service.js
+    |-/styles
+      |-style.scss
+  |-/build
+    |-bundle.js
+    |-bundle.css
+```
+
+Things to note: Theres are separate `src` and `build` directories. The `build` dir has a js bundle and a css bundle. `src` is divided into `js` and `styles`. Styling the app is fairly simple so we can make do with a single `.scss` file you could build a more sophisticated style system. `js` is broken down into modules that align with the MVC style. Gulp will be our task runner, automating a browserify build with node-sass used to compile our styles. 
+
+## Setup
+
+You will need NodeJS and its package manager (NPM) for this tutorial. You can get them from [here](https://nodejs.org/en/download/) or by running `brew install node` (NOTE: NPM comes bundled together with NodeJS, so just one install is required). This tutorial assumes you are using a *NIX terminal.
+
+Start by creating a new dir and running `npm init` inside of it. All the defaults are OK for now. To work with es6 you need to transpile your code back to es5 so it runs in the browser, and while we're at it we're going to bundle our source files together. To get this done we need a few dependencies installed.
+
+```bash
+npm i -S gulp browserify babelify babel-preset-es2015 vinyl-source-stream
+```
+
+A single gulp task will tie this together. 
+
+```javascript
+// gulpfile.js
+
+var gulp = require('gulp');
+var browserify = require('browserify');
+var babelify = require('babelify');
+var source = require('vinyl-source-stream');
+
+gulp.task('js', function () {
+  return browserify('./src/main.js')
+  .transform(babelify, {
+    presets: ['es2015']
+  })
+  .bundle()
+  .pipe(source('bundle.js'))
+  .pipe(gulp.dest('./build'))
+});
+```
+
+Gulp breaks down your automation into a series of tasks that are strung together using streams. Our tasks are a) transform the source into es5 using babelify and the es2015 preset for babelify, b) concat the files into a bundle, c) write the bundle to `build/bundle.js`. Because browserify returns a readable stream and not a vinyl stream, which gulp works with, there is an extra step using `vinyl-source-stream` to do the conversion (NOTE: gulp 4 will take care of this without the extra step).
+
+We can do a few more things in our gulpfile to make work a little easier. First we'll define a default task that runs both our previously defined tasks. Then we'll define a watch task that will run when a file changes.
+
+```javascript
+// gulpfile.js
+
+gulp.task('default', ['js']);
+
+gulp.task('watch', function () {
+  return gulp.watch('./src/**/*.js', ['default']);
+});
+```
+
+Running `gulp watch` will start a long running process to start our default task whenever a file changes, and running just `gulp` will start the `js` task. Go ahead and start that process and let it run while we work on our modules.
+
+### The HTML scaffolding
+
+Our app is rendered on the client, but we still need a HTML page to load into the browser that contains all the app resources. Our `index.html` should look like this:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calendar Tutorial</title>
+</head>
+<body>
+  <div id="target"></div>
+  <script src="build/bundle.js"></script>
+</body>
+</html>
+```
+
+## Time to code
+
+Neither ES6, gulp, or browserify require we write our application code in any particular way, so its incumbent on us as developers to define our own best practices. For this app, I divided the code into the following files:
+
+* `main.js`, the entry point to the app, pulls in the other modules
+* `model.js` will store our appointments, the current time, and will have methods for retrieving the list of days to render
+* `view.js` will handle rendering and DOM events
+* `template.js` is where the template functions will live
+* `controller.js` will connect our model and view
+* `service.js` will have code for interacting with a backend service
+* `util.js` will have helper functions
+
+### Templates
+
+We can avoid using a view library (handlebars, nunjucks, etc) by using tagged template strings. Template strings are multi-line so they're perfect for writing blocks of html. A "tagged" template string is one that is first passed through a custom function which returns the processed string. Lets start our tagged template string function `html`
+
+```javascript
+// template.js
+
+const html = (literal, ...cooked) {
+  // code to process the template here  
+};
+const example = html`2 + 2 = ${2+2}. See, I can do math.`;
+```
+
+The first argument passed to the function is an array of all the literal sections. In our example that would be '2 + 2 = ,' and '. See, I can do math'. The rest of the parameters are all the processed expressions (cooked). We have to use a rest parameter to capture all of them, because their number is unknown. The rest parameter (...) is essentially the es6 solution to using the arguments "array"; Its better because its more expressive and the named parameter into which the rest of the parameters go is an actual array instead of array-like. In this example, `cooked[0]` would equal `4`. The goal of this tag is to take an array of cooked and concat them into a string, that way we can use `array.map` in our template strings.
+
+```javascript
+// template.js
+
+const html = (literal, ...cooked) => {
+  let result = '';
+  cooked.forEach((cook, i) => {
+    let lit = literal[i];
+    if (Array.isArray(cook)) {
+      cook = cook.join('');
+    }
+    result += lit;
+    result += cook;
+  });
+  result += literal[literal.length - 1];
+  return result;
+};
+const answers = [8,64];
+const example = html`The answers to 4*4 and 8*8 are ${answers.map(a => html`
+  answer: ${a}
+`)}`;
+```
+
+Having this tag in place will set us up for some easy templating of repeating html elements such as lists. To get the ball rolling, lets make a simple template that returns the current month and year and also exposes some buttons to move the date forward and backward. We'll need moment.js and when we're done with our function we'll need to export it.
+
+```bash
+npm i -S moment
+```
+
+```javascript
+// template.js
+
+import moment from 'moment';
+
+const html = (literal, ...cooked) => {
+  // ...
+};
+
+const controls = () => {
+  const curr = moment();
+  const next = moment().add(1, 'month');
+  const prev = moment().subtract(1, 'month');
+  return html`
+    <div id="controls">
+      <a class="item" href="#/${prev.format('MM')}/${prev.format('YYYY')}">Back one month</a>
+      <p class="item">${curr.format('MMMM')}, ${curr.format('YYYY')}</p>
+      <a class="item" href="#/${next.format('MM')}/${next.format('YYYY')}">Forward one month</a>
+    </div>
+  `;
+};
+
+export { controls };
+```
+
+### View
+
+Our template functions are pure functions; they take arguments and return a result and on their own wont do anything useful for our app. Extracting them into their own module is a smart move so because it makes testing easier, but we'll need some way of integrating them into our app. The view module is responsible for using the template strings, feeding them data, and adding their output to the right DOM element. Our basic view file will look like this:
+
+```javascript
+// view.js
+
+import { controls } from './template';
+
+export default class View {
+  constructor() {
+    this.el = document.getElementById('target');
+  }
+  render() {
+    this.el.innerHTML = controls();
+  }
+}
+```
+
+The first thing we're doing is importing the template function from `template.js`. Notice that the import statement has brackets around the `controls`. This is because `template.js` exports multiple things. If it exported a default we could import that as well. The second thing is the module path. Browserify will see the string is a path rather than just a module name and look for that js file in that location (in this case, next to `view.js`).
+
+After our import statement, we are doing our own export. This time its a default export and its a class. The es6 module system is really flexible, you can import and export anything. To read more about the rules of es6 modules see [this article](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/).
+
+ES6 introduced the class syntax, but it is just syntactical sugar for features already available in ES5. We could rewrite the class like this:
+
+```javascript
+function View {
+  this.el = document.getElementById('target');
+};
+View.prototype.render = function () {
+  this.el.innerHTML = controls();
+};
+```
+
+This is a very simple example because our `View` class doesn't use a lot of class features, but to see why ES6 classes are better than the original ES5 methods, see [this article](https://hacks.mozilla.org/2015/07/es6-in-depth-classes/).
+
+Now that we have the `view.js` and `template.js` modules in place, lets create `main.js` and tie the pieces together.
+
+```javascript
+// main.js
+
+import View from './view';
+
+class App {
+  constructor() {
+    this.view = new View();
+  };
+  init() {
+    this.view.render();
+  };
+}
+
+const app = new App();
+
+window.addEventListener('load', () => app.init());
+```
+
+Then bundle the app (if `gulp watch` is still running then you're already bundled).
+
+```bash
+gulp js
+```
+
+Open your html file in your browser and you should see the controls with this month and year. 
+
+In [part 2](/posts/2016-05-09-vanilla-es6-spa-2) we'll add some basic URL routing to move the date forward and backward as well as rendering the main section of the calendar. 
+
+[Complete Code](https://github.com/robinsr/calendar-tutorial/tree/part-1)

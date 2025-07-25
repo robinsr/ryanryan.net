@@ -1,0 +1,144 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Knockout Mapping
+description: "One thing I really like about Knockout is that it doesn't lock you into using any particular implementation for features that other frameworks might. In fact Knockout is arguably a library in that sense. So to get some functionality you have a choice of plugins (or you could just write your own). This is a look at the Knockout Mapping plugin."
+pubDate: 2013-10-07T12:00:00Z
+category: javascript
+tags: [Knockout,Javascript]
+---
+
+One thing I really like about Knockout is that it doesn't lock you into using any particular implementation for features that other frameworks might. In fact Knockout is arguably a library in that sense. So to get some functionality you have a choice of plugins (or you could just write your own). This is a look at the Knockout Mapping plugin.
+
+Mapping is essentially a way to get data from your server into your viewmodel without manually having to create observables. If you observable is more-or-less going to match the objects coming from your server, then mapping is the easiest (read: least involved) way to set up your viewmodel. I'm taking the example in this article from my demos site. I needed a way to load my blog posts onto the page asyncronously. There is the manual jQuery way which would work fine, but knockout lends itself to this problem pretty well: We're getting a list of items that have the same properties (ie they are instances of the same 'object') and we want to display them in the same way (ie using the same template for each). The data from the server is going to look like this:
+
+```javascript
+[
+  {
+    "title": "Knockout Observable Extenders",
+    "tags": [
+      "Knockout",
+      "MVVM",
+      "javascript"
+    ],
+    "category": "javascript",
+    "previewText": "Knockout observable extenders give custom functionality to observables. nuff said. No need to sell you on how useful that is. I'll just show how I used extenders in a recent project and how to keep your staplers red.\n",
+    "location": "http://www.ethernetbucket.com/article/knockoutextenders",
+    "json": "http://www.ethernetbucket.com/article/knockoutextenders?json=true"
+  },
+  { /*...another article...*/ }
+]
+```
+
+So the first thing do to is write the template using the properties that each blog post has. 
+
+```html
+<div data-bind="foreach: posts">
+    <div class="blog-post">
+        <div class="blog-title">
+            <a data-bind="attr: {href: location}, text: title"></a>
+        </div>
+        <div class="blog-text">
+            <p data-bind="text: previewText">
+        </div>
+    </div>
+</div>
+```
+
+Then I'll set up the viewModel
+
+```javascript
+var postsViewModel = function() {
+    var self = this;
+    var posts = ko.mapping.fromJS([])
+}
+```
+
+ko.mapping.fromJS() is for convert javascript objects to observables, if you're going to use JSON then you can use ko.mapping.fromJSON(). The only difference is the fromJSON parses the JSON for you. Since Im going to use jQuery to get my JSON, it will come pre-parsed. Speak of the devil, here's how you do that:
+
+```javascript
+var postsViewModel = function() {
+    var self = this;
+    var posts = ko.mapping.fromJS([])
+    $.get( "http://www.ethernetbucket.com/article?limit=5", function( data ) {
+        ko.mapping.fromJS( data, {}, self.posts )
+    })
+}
+ko.applyBindings(new postViewModel);
+```
+
+Notice that I called ko.mapping.fromJS again and passed in two parameters. The first is the data to be made into observables, the optional second designates where to put the observables. 
+
+And that's it. Blog posts now work load on my demos site. there are, however, two hitches: 
+
+*    You need to include the knockout.mapping.js file in addition to knockout.js, so there's some extra http requests
+*    To actually set something like I just described up (where demos.ethernetbucket.com loads www.ethernetbucket.com) you will have to configure your server to allow Cross-Origin-Resource-Sharing (CORS). Thats not really part of this demo though so just google how to do it.
+
+### Advanced Usage
+
+There are a bunch of options included in the mapping plugin including settings for:
+
+*    Which properties to make into observables and which to ignore
+*    Which properties to convert back to JS when toJS is called
+*    Creating custom nested observables
+
+All of these options are encased in a 'mapping variable'; an object included as the second parameter when ko.mapping.fromJS in invoked (and shown above as just a empty object). In my case, I already had an object that I was using to make new entries into an observableArray. It included custom functionality like extending some observables and creating new computed observables. We can still use mapping if we use the 'create' option.
+
+```javascript
+function customObject( data ){
+    var self = this;
+    self.title = ko.observable( data.title + "!!!" );
+    self.date = ko.observable( data.date );
+    self.formattedDate = ko.computed( function(){
+        return dateFormat( Date.parse( self.date()), 'mmm d, yyyy' );
+    })
+}
+var mapping = {
+    create: function( opt ){
+        return new customObject( opt.data )
+    }
+}
+ko.mapping.fromJS( someJsObject, mapping, target ); 
+```
+
+### Even Advanced-er Usage
+
+What I want to cover is something that wasn't covered on the documentation page, adding to your mapped observableArray without overwriting it.
+
+The documentation does say you can specify a target observable. Doing this, however, will overwrite the target. So In my case where I needed to add multiple items to an array without overwriting the whole thing required updated the array itself and not the observable (if that makes any sense). 
+
+So first get your data (however you want), then create a new mapped observable.
+
+```javascript
+// magic data!
+var data = JSON.parse(data)
+var newItems = ko.mapping.fromJS([])
+```
+
+Map your new items into the new observable (Im using the variable 'mapping' as my mapping options)
+
+```javascript
+var data = JSON.parse(data)
+var newItems = ko.mapping.fromJS([])
+ko.mapping.fromJS( datai.items, mapping,newItems );
+```
+
+Then to get newItems into the previously existing target call arrayPushAll, its part of ko.utils.
+
+```javascript
+var data = JSON.parse(data)
+var newItems = ko.mapping.fromJS([])
+ko.mapping.fromJS( datai.items, mapping,newItems );
+ko.utils.arrayPushAll( viewmodel.targetObservable, newItems() );
+```
+
+Now the problem is that we've changed the underlying array without going through the observable modifying process so Knockout has no idea it changed and therefore wont update your UI. so call valueHasMutated() to force a UI update.
+
+```javascript
+var data = JSON.parse(data)
+var newItems = ko.mapping.fromJS([])
+ko.mapping.fromJS( datai.items, mapping,newItems );
+ko.utils.arrayPushAll( viewmodel.targetObservable, newItems() );
+viewmodel.targetObservable.valueHasMutated();
+```
+
+So with this method you can merge two arrays (you could even use different mapping options I guess) without overwriting the original. 

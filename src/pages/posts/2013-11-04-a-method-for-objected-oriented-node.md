@@ -1,0 +1,84 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: A Method for Objected Oriented Node
+description: "One frustrating part of learning how to use node is implementing JavaScript style OOP. I don't mean that Node's JavaScript engine is different than a browsers with respect to objects. What I'm talking about is understanding how to use objects in an asynchronous environment."
+pubDate: 2013-11-04T12:00:00Z
+category: node
+tags: [Node,javascript,object oriented programming,this keyword,asynchronous ,callback,call]
+---
+
+One frustrating part of learning how to use node is implementing JavaScript style OOP. I don't mean that Node's JavaScript engine is different than a browsers with respect to objects. What I'm talking about is understanding how to use objects in an asynchronous environment. For example consider this code:
+
+```javascript
+function User( name ){
+    var me = this;
+    db.users.findOne( {name:name}, function( err, response ) {
+        me.password = response.password;
+        console.log( "Database operation finished!" )
+    });
+}
+User.prototype.sayPass = function(){
+    console.log( this.password );
+}
+var ryan = new User("ryan")
+ryan.sayPass();
+```
+
+
+Since node will execute this code asynchronously it wont wait for the database operation in the class's constructor to finish setting the instances' password property before it runs the sayPass method. Therefore sayPass will print "undefined" to the console.
+
+We know that we have to use callbacks in Node, the problem is finding a way to do it neatly. I propose this:
+
+```javascript
+function User( name, next ){
+    var me = this;
+    db.users.findOne( {name:name}, function( err, response ) {
+        me.password = response.password;
+        console.log( "Database operation finished!" )
+        next.call( me, arguments )
+    });
+}
+User.prototype.sayPass = function(next){
+    console.log( this.password );
+    next.call( this, arguments )
+}
+var ryan = new User( "ryan", function(){
+    this.sayPass( function(){
+        console.log( "That was easy!" );
+    });
+})
+```
+
+When this code runs, the sayPass method isn't called until after the database operation completes. Why? Well because sayPass is in a callback. Whats more is we're using callbacks in kinda a special way in the interest of clarity. Instead of just invoking the callback as a function (ie, "next()") we're using the "call" method and setting the function context to the newly created instance of User.
+
+If you are unfamiliar with "call" just know that it sets what "this" is in a function. The function in question is our callback and by using call we can have access to our newly created object through the this keyword. We could have avoided using call by passing the newly created object to the callback as a parameter like this:
+
+```javascript
+function User( name, next ){
+    var me = this;
+    db.users.findOne( {name:name}, function( err, response ) {
+        me.password = response.password;
+        console.log( "Database operation finished!" )
+        next(me)
+    });
+}
+User.prototype.sayPass = function(next){
+    console.log( this.password );
+    next(this)
+}
+var ryan = new User( "ryan", function(ryan){
+    ryan.sayPass( function(ryan){
+        console.log( "Too many ryans!" );
+    });
+})
+```
+
+This code does essentially the same thing but I think it is a little messier. Leveraging the "this" keyword through the call method makes things nice and neat. In addition, using "call" gives us the option to drop the variable altogether but maintain code clarity:
+
+```javascript
+//no variable here!
+new User( "ryan", function(){
+    this.sayPass( function(){} );
+    //would still print the password despite not being in a variable
+})
+```

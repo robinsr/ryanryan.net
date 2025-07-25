@@ -1,0 +1,127 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Netflix Star Rating with Sibling Selectors
+description: "I was asked to build a Netflix/Amazon like star rating UI at a job interview recently and the interviewer implied that it could be accomplished completely with CSS. Even though I bombed that interview I still pursued this question and Im happy to say we can make a Netflix UI using radio buttons and child selectors."
+pubDate: 2013-10-31T12:00:00Z
+category: css
+tags: [CSS]
+---
+
+I was asked to build a Netflix/Amazon like star rating UI at a job interview recently and the interviewer implied that it could be accomplished completely with CSS. Even though I bombed that interview I still pursued this question and Im happy to say we <i>can</i> make a Netflix UI using   radio buttons and child selectors.
+
+If you haven't used Netflix before the star rating UI works like this: There are five stars displayed inline. Each star is "empty" by default. Hovering over a star causes that star and all the stars to the left to be filled in with red. Clicking the star confirms your rating; the star you clicked and all the stars to the left turn gold.
+
+### First some theory
+
+So we are familiar with radio buttons correct? Radio buttons are grouped by the "name" attribute and within this name only one radio button can be checked. This is good news for us because it means that only one radio button will have the :checked pseudo-class. 
+
+We also know that we can assign a label to each radio element by assigning the input an id and giving the label a "for" attribute which matches the id. Click the label and the matching radio gets checked. So theoretically we could write our CSS selectors around the ":checked" pseudo-class and then use sibling selectors to get the labels following the checked radio and style them.
+
+### Now for some code
+
+```html
+<div class="starbox">
+<input type="radio" name="starrating" id="star1" /> <label for="star1" class="star"> &#9733; </label>
+<!-- 4 more of these here please -->
+</div>
+```
+
+That ascii code is for a star (who knew that existed?)
+
+Styling a label that is associated with an input element is a common technique for making custom form elements. That being said we're really only interested in the styling of the label, so for our first CSS rule we can hide the input elements:
+
+```css
+input[type="radio"]{
+    display: none;
+}
+```
+
+next we want to give our labels basic styling like size and color:
+
+```css
+.starbox {
+    width: 125px;
+}
+.star {
+    padding: 0;
+    margin: 0;
+    float: right;
+    width:25px;
+    height:25px;
+    font-size: 25px;
+}
+```
+
+Notice the float, this will line up our stars on a horizontal line and, more importantly, it will reverse the order in which they appear. Because they are floated as they are loaded on the page, the first element becomes the right most, the second moves to its left. This is important because our sibling selectors will select the elements <i>after</i> the target element, which in our scenario are supposed to be to the left, not the right. 
+
+Now for color. Our stars can be one of three colors: light-grey (for not selected/hovered), red (for hovered), and gold (for selected). Figuring our when our stars are supposed to have these colors is the challenge. For starters, all the stars are light-grey. When we hover the star is red, and when its checked the star is gold. 
+
+```css
+.star {
+    color: #eee;
+}
+.star:hover {
+    color: red;
+}
+input:checked + label {
+    color: gold;
+}
+```
+
+The plus sign in that last selector is the immediate sibling selector. So that rule would read "any label directly next to a checked input make gold." That would work for an individual star, but what about the following stars, they are supposed to be the same style as the hovered or checked star. For that we use the "general sibling selector":
+
+```css
+input:checked ~ label {
+    color: gold;
+}
+```
+
+To be a "general sibling" the element must have the same parent as the preceding element. Also, only elements following the matched element would get this rule (which is kinda counter-intuitive). So any label with the same parent and occurring after as our checked input will be gold.
+
+What we have so far works pretty good but we still need the stars to the left of the hover star to turn red. We'll use the same sibling selector technique, this time combined with a hover state:
+
+```css
+.star:hover, .star:hover ~ .star {
+    color: red;
+}
+```
+
+Again this works OK, but when we click a star, we don't immediately see the gold stars; we have to mouse out of the stars to see the gold. So we need a selector that targets our newly checked star and its siblings. This is where the selectors get a little crazy: 
+
+```css
+input:checked ~ .star, input:checked:hover ~ .star {
+    color: gold;
+}
+```
+
+The first selector applies the color when there is no hover, and the latter overwrites the red star hover selector. Notice that because we are targeting the input and getting it's label siblings, the star we are currently hovering on is included in that group and we don't need an additional selector to get that label. 
+
+But we're not totally done. On Netflix, when you hover over stars that you have already used (ie the movie has been rated by before), the stars "reset" removing the gold. To do this I used a hover state on our container to reset the stars back to grey. But because the CSS rules for the red and gold states appear after this rule they would be applied and our hover states are maintained. In all our CSS looks like this:
+
+```css
+.starbox {
+    width: 125px;
+}
+input[type="radio"] {
+    display: none;
+}
+.star {
+    padding: 0;
+    margin: 0;
+    float: right;
+    width:25px;
+    height:25px;
+    font-size: 25px;
+}
+.star, .starbox:hover .star {
+    color: #eee;
+}
+.starbox .star:hover, .star:hover ~ .star  {
+    color: red;
+}
+input:checked ~ .star, input:checked:hover ~ .star {
+    color: gold;
+}
+```
+
+[Check out the fiddle here](http://jsfiddle.net/robinsr/h2Jay/)
