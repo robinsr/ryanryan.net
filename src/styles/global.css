@@ -1,2 +1,14 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+
+
+/* Global minimum width to prevent content compression */
+body {
+  min-width: 320px;
+}
+
+/* Ensure the main content area doesn't get too narrow */
+.container {
+  min-width: 320px;
+}

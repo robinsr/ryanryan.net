@@ -3,6 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlogCard from '../components/BlogCard.astro';
+import { SITE_CONFIG } from '../constants';
+import { posts } from '../utils/posts';
+
 ---
 
 <Layout 
@@ -18,7 +21,7 @@ import BlogCard from '../components/BlogCard.astro';
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div class="text-center">
 						<h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-6">
-							Hi, I'm Ryan Ryan
+							Hi, I'm {SITE_CONFIG.author.name.split(' ')[0]}
 						</h1>
 						<p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
 							Full-stack developer passionate about building great web experiences. 
@@ -55,33 +58,17 @@ import BlogCard from '../components/BlogCard.astro';
 					</div>
 					
 					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-						<BlogCard
-							title="Node Server"
-							description="As a web developer, building a node server has a lot of value not only in terms of gaining node programming skill, but also in understanding how web servers and fundamental web technologies such as HTTP work."
-							pubDate={new Date('2013-02-25')}
-							url="/posts/2013-02-25-node-server"
-							category="node"
-							tags={['node', 'server', 'HTTP', 'modules', 'javascript', 'require']}
-							image={undefined}
-						/>
-						<BlogCard
-							title="HTML5 Dataset"
-							description="The HTML5 dataset attribute provides a way to store custom data attributes on HTML elements."
-							pubDate={new Date('2013-03-01')}
-							url="/posts/2013-03-01-html5-dataset"
-							category="html5"
-							tags={['html5', 'dataset', 'javascript']}
-							image={undefined}
-						/>
-						<BlogCard
-							title="HTML5 ClassList"
-							description="The HTML5 classList API provides a convenient way to manipulate CSS classes on DOM elements."
-							pubDate={new Date('2013-03-04')}
-							url="/posts/2013-03-04-html5-classlist"
-							category="html5"
-							tags={['html5', 'classlist', 'javascript', 'dom']}
-							image={undefined}
-						/>
+						{posts.map((post) => (
+							<BlogCard
+								title={post.title}
+								description={post.description}
+								pubDate={post.pubDate}
+								url={post.url}
+								category={post.category}
+								tags={post.tags}
+								image={post.image}
+							/>
+						))}
 					</div>
 					
 					<div class="text-center mt-12">

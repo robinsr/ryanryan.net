@@ -11,7 +11,7 @@ const fmtShortConfig: Intl.DateTimeFormatOptions = {
 }
 
 export function formatDate(date: Date | string): string {
-	
+
 
 	if (typeof date === 'string') {
 		date = new Date(date);
@@ -45,7 +45,7 @@ export function formatDateISO(date: Date | string): string {
 		date = new Date(date);
 	}
 
-	try {	
+	try {
 		return date.toISOString().split('T')[0];
 	} catch (error) {
 		console.error(error);

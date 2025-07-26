@@ -1,0 +1,102 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { posts } from '../../utils/posts';
+import { SITE_CONFIG } from '../../constants';
+
+export async function getStaticPaths() {
+	// Get all unique categories from posts
+	const allCategories = new Set<string>();
+	posts.forEach(post => {
+		if (post.category) {
+			allCategories.add(post.category);
+		}
+	});
+
+	// Create a path for each category
+	return Array.from(allCategories).map((category: string) => ({
+		params: { category },
+		props: { category }
+	}));
+}
+
+const { category } = Astro.props;
+
+// Filter posts by category
+const categoryPosts = posts.filter(post => 
+	post.category === category
+);
+
+// Format category for display (capitalize first letter)
+const displayCategory = category.charAt(0).toUpperCase() + category.slice(1);
+---
+
+<Layout 
+	title={`${displayCategory} Posts - ${SITE_CONFIG.title}`}
+	description={`Blog posts in the ${displayCategory} category on ${SITE_CONFIG.title}`}
+>
+	<div class="min-h-screen flex flex-col">
+		<Header />
+		
+		<main class="flex-1">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+				<!-- Page Header -->
+				<div class="text-center mb-12">
+					<div class="mb-4">
+						<a href="/blog" class="text-blue-600 dark:text-blue-400 hover:underline">
+							← Back to Blog
+						</a>
+					</div>
+					<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						{displayCategory} Posts
+					</h1>
+					<p class="text-xl text-gray-600 dark:text-gray-300">
+						{categoryPosts.length} post{categoryPosts.length === 1 ? '' : 's'} found
+					</p>
+				</div>
+				
+				{categoryPosts.length > 0 ? (
+					<!-- Blog Posts Grid -->
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						{categoryPosts.map((post) => (
+							<BlogCard
+								title={post.title}
+								description={post.description}
+								pubDate={post.pubDate}
+								url={post.url}
+								category={post.category}
+								tags={post.tags}
+								image={post.image}
+							/>
+						))}
+					</div>
+				) : (
+					<!-- Empty State -->
+					<div class="text-center py-12">
+						<div class="text-gray-400 dark:text-gray-500 mb-4">
+							<svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+							</svg>
+						</div>
+						<h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+							No posts found
+						</h3>
+						<p class="text-gray-500 dark:text-gray-400 mb-6">
+							No posts were found in the "{displayCategory}" category.
+						</p>
+						<a 
+							href="/blog" 
+							class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+						>
+							View All Posts
+						</a>
+					</div>
+				)}
+			</div>
+		</main>
+		
+		<Footer />
+	</div>
+</Layout> 

@@ -44,7 +44,7 @@ const canonical = canonicalURL ? new URL(canonicalURL, Astro.site) : Astro.url;
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Overpass+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 	</head>
-	<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased">
+	<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased min-w-[320px]">
 		<slot />
 	</body>
 </html>
@@ -59,8 +59,11 @@ const canonical = canonicalURL ? new URL(canonicalURL, Astro.site) : Astro.url;
 	
 	html {
 		font-family: 'Inter', system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
+		min-height: 100vh;
+	}
+	
+	body {
+		min-height: 100vh;
 	}
 	
 	code {

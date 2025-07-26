@@ -1,0 +1,102 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { posts } from '../../utils/posts';
+import { SITE_CONFIG } from '../../constants';
+
+export async function getStaticPaths() {
+	// Get all unique tags from posts
+	const allTags = new Set<string>();
+	posts.forEach(post => {
+		if (post.tags) {
+			post.tags.forEach((tag: string) => allTags.add(tag));
+		}
+	});
+
+	// Create a path for each tag
+	return Array.from(allTags).map((tag: string) => ({
+		params: { tag },
+		props: { tag }
+	}));
+}
+
+const { tag } = Astro.props;
+
+// Filter posts by tag
+const taggedPosts = posts.filter(post => 
+	post.tags && post.tags.includes(tag)
+);
+
+// Format tag for display (capitalize first letter)
+const displayTag = tag.charAt(0).toUpperCase() + tag.slice(1);
+---
+
+<Layout 
+	title={`Posts tagged "${displayTag}" - ${SITE_CONFIG.title}`}
+	description={`Blog posts tagged with "${displayTag}" on ${SITE_CONFIG.title}`}
+>
+	<div class="min-h-screen flex flex-col">
+		<Header />
+		
+		<main class="flex-1">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+				<!-- Page Header -->
+				<div class="text-center mb-12">
+					<div class="mb-4">
+						<a href="/blog" class="text-blue-600 dark:text-blue-400 hover:underline">
+							← Back to Blog
+						</a>
+					</div>
+					<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+						Posts tagged "{displayTag}"
+					</h1>
+					<p class="text-xl text-gray-600 dark:text-gray-300">
+						{taggedPosts.length} post{taggedPosts.length === 1 ? '' : 's'} found
+					</p>
+				</div>
+				
+				{taggedPosts.length > 0 ? (
+					<!-- Blog Posts Grid -->
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						{taggedPosts.map((post) => (
+							<BlogCard
+								title={post.title}
+								description={post.description}
+								pubDate={post.pubDate}
+								url={post.url}
+								category={post.category}
+								tags={post.tags}
+								image={post.image}
+							/>
+						))}
+					</div>
+				) : (
+					<!-- Empty State -->
+					<div class="text-center py-12">
+						<div class="text-gray-400 dark:text-gray-500 mb-4">
+							<svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+							</svg>
+						</div>
+						<h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+							No posts found
+						</h3>
+						<p class="text-gray-500 dark:text-gray-400 mb-6">
+							No posts were found with the tag "{displayTag}".
+						</p>
+						<a 
+							href="/blog" 
+							class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+						>
+							View All Posts
+						</a>
+					</div>
+				)}
+			</div>
+		</main>
+		
+		<Footer />
+	</div>
+</Layout> 

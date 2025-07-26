@@ -3,43 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlogCard from '../components/BlogCard.astro';
+import { posts } from '../utils/posts';
 
-// Dynamically fetch all blog posts
-const allPosts = import.meta.glob('../pages/posts/*.md', { eager: true });
-
-// Transform the posts to match the expected format
-const posts = Object.entries(allPosts).map(([, post]: [string, any]) => {
-	const url = post.url || '';
-	
-	// Handle invalid dates gracefully
-	let pubDate;
-	try {
-		pubDate = new Date(post.frontmatter.pubDate);
-		if (isNaN(pubDate.getTime())) {
-			// If date is invalid, use current date
-			pubDate = new Date();
-		}
-	} catch (error) {
-		pubDate = new Date();
-	}
-	
-	return {
-		title: post.frontmatter.title,
-		description: post.frontmatter.description || '',
-		pubDate: pubDate,
-		url: url,
-		category: post.frontmatter.category || '',
-		tags: post.frontmatter.tags || [],
-		image: post.frontmatter.image || undefined
-	};
-});
-
-const sortedPosts = posts.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 ---
 
 <Layout 
-	title="Blog - Ryan Ryan" 
-	description="Thoughts on web development, programming, and technology"
+	title="Blog - {SITE_CONFIG.title}" 
+	description="{SITE_CONFIG.tagline}"
 >
 	<div class="min-h-screen flex flex-col">
 		<Header />
@@ -59,7 +29,7 @@ const sortedPosts = posts.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime
 				
 				<!-- Blog Posts Grid -->
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{sortedPosts.map((post) => (
+					{posts.map((post) => (
 						<BlogCard
 							title={post.title}
 							description={post.description}
@@ -73,7 +43,7 @@ const sortedPosts = posts.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime
 				</div>
 				
 				<!-- Empty State -->
-				{sortedPosts.length === 0 && (
+				{posts.length === 0 && (
 					<div class="text-center py-12">
 						<div class="text-gray-400 dark:text-gray-500 mb-4">
 							<svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
