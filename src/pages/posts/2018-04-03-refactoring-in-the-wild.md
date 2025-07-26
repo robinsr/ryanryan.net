@@ -1,0 +1,84 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: "A Senior Engineer’s Guide to Refactoring in the Wild"
+pubDate: 2018-04-03T12:00:00.000Z
+category: engineering
+description: "Refactoring in the real world isn’t about perfection — it’s about clarity, safety, and knowing where the bodies are buried. Here’s how I approach it when the code is messy, the deadlines are tight, and the system can’t stop running."
+tags: [refactoring, senior-engineering, maintainability, architecture, systems-design]
+---
+
+Refactoring in a greenfield project is one thing. Refactoring in a live system that people depend on — that’s a different beast.
+
+Over the years, I’ve learned that effective refactoring isn’t about making things pretty. It’s about **making the right things safer, clearer, and easier to change** — all while the system keeps running and the roadmap keeps moving.
+
+This isn’t a checklist. It’s a survival guide.
+
+
+## 1. Start With Gravity
+
+Not all messes are created equal. The first question I ask is: **“Where does entropy matter most?”**
+
+Sometimes that’s:
+- A brittle module that takes down the page when it fails
+- A core abstraction every new engineer trips over
+- A codepath no one understands but everyone relies on
+
+The goal is to find the part of the system that has the most **gravitational pull** — where a small improvement has outsized impact on safety, performance, or velocity.
+
+> Senior engineers don’t just refactor. They refactor **selectively**.
+
+
+## 2. Read the System Like a Crime Scene
+
+Before I touch a line of code, I study the system like a forensic investigator:
+
+- **Who owns this? Who used to own it?**
+- **What’s the version control history say?**
+- **Where are the seams? The choke points? The dead code paths?**
+- **What pages, what bugs, what incidents involve this code?**
+
+The goal is to build a **theory of pain**: what breaks, why it breaks, and what people complain about.
+
+Sometimes the clearest refactor isn’t the one that removes the most lines — it’s the one that dissolves the most confusion.
+
+
+## 3. Don’t Just Clean — Quarantine
+
+In a legacy system, the best move isn’t always to rewrite. It’s to **contain**.
+
+If I can wrap the mess in a clearer interface, or isolate it behind a stable API, I’ve already won. That buys the team time to understand, test, and incrementally improve without betting the farm.
+
+I’ve used this strategy everywhere from rendering systems to configuration logic to shared frontends: draw a line around the mess, give it a clean name, and **stop the mess from spreading**.
+
+
+## 4. Refactor the Thinking, Not Just the Code
+
+Some of the most important refactors I’ve done weren’t in code — they were in **tests**, **docs**, or **mental models**.
+
+If the system’s behavior is implicit and tribal, your first job is to **make it visible**. That might mean:
+
+- Writing a test that explains what should happen
+- Adding a README that explains the contract
+- Writing a Slack post that redraws the mental map
+
+> A good refactor isn’t just cleaner — it’s **clearer**. Especially to the next person.
+
+
+## 5. Refactor With Your Reputation
+
+You don’t get to refactor everything. But you do build a reputation for how you approach complexity.
+
+When I do refactoring work, I try to:
+
+- Leave behind better test coverage than I found
+- Add metrics or logs that make future bugs easier to trace
+- Document what changed and why (PRs, tickets, internal wikis)
+
+This isn’t just altruism — it’s self-defense. The next time you propose a cleanup, people will remember that your last one made their life better, not harder.
+
+
+## Final Thoughts
+
+Refactoring in the wild is less like surgery and more like field medicine. You won’t fix everything. You won’t get it all right. But if you know where to cut, when to isolate, and how to teach what you learned — you’ll leave the system better than you found it.
+
+That’s the real senior move.

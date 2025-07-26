@@ -1,0 +1,29 @@
+---
+export interface Props {
+	tag: string;
+	type?: 'tag' | 'category';
+	href?: string;
+}
+
+const { tag, type = 'tag', href } = Astro.props;
+
+const baseClasses = "inline-flex items-center text-xs font-medium transition-colors";
+const tagClasses = "px-3 py-1 rounded-md text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600";
+const categoryClasses = "px-3 py-1 rounded-full text-blue-800 bg-blue-100 dark:bg-blue-900 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800";
+
+const classes = type === 'category' ? categoryClasses : tagClasses;
+---
+
+{type === 'category' && href ? (
+	<a href={href} class={`${baseClasses} ${classes}`}>
+		{tag}
+	</a>
+) : type === 'tag' && href ? (
+	<a href={href} class={`${baseClasses} ${classes}`}>
+		#{tag}
+	</a>
+) : (
+	<span class={`${baseClasses} ${classes}`}>
+		{tag}
+	</span>
+)} 

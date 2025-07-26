@@ -1,5 +1,6 @@
 ---
 import { formatDate } from '../utils/date';
+import Tag from './Tag.astro';
 
 export interface Props {
 	title: string;
@@ -29,12 +30,7 @@ const formattedDate = formatDate(pubDate);
 	<div class="p-6">
 		<div class="flex items-center gap-2 mb-3">
 			{category && (
-				<a 
-					href={`/category/${category.toLowerCase()}`}
-					class="inline-block px-2 py-1 text-xs font-medium text-blue-600 bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400 rounded-full hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors"
-				>
-					{category}
-				</a>
+				<Tag tag={category} type="category" href={`/category/${category.toLowerCase()}`} />
 			)}
 			<time datetime={pubDate.toISOString()} class="text-sm text-gray-500 dark:text-gray-400">
 				{formattedDate}
@@ -56,12 +52,7 @@ const formattedDate = formatDate(pubDate);
 		{tags.length > 0 && (
 			<div class="flex flex-wrap gap-1 mb-4">
 				{tags.slice(0, 3).map(tag => (
-					<a 
-						href={`/tag/${tag.toLowerCase()}`}
-						class="inline-block px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-					>
-						#{tag}
-					</a>
+					<Tag tag={tag} href={`/tag/${tag.toLowerCase()}`}/>
 				))}
 				{tags.length > 3 && (
 					<span class="text-xs text-gray-500 dark:text-gray-400 px-2 py-1">

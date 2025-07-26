@@ -15,7 +15,7 @@ const { code, lang = 'text', filename } = Astro.props;
 		</div>
 	)}
 	<div class={`relative ${filename ? 'rounded-b-lg' : 'rounded-lg'} overflow-hidden`}>
-		<pre class={`${filename ? '' : 'rounded-lg'} bg-gray-900 text-gray-100 p-4 overflow-x-auto`}>
+		<pre class={`${filename ? '' : 'rounded-lg'} bg-gray-900 text-gray-100 p-4 overflow-x-auto font-mono`}>
 			<code class={`language-${lang}`}>{code}</code>
 		</pre>
 		<button
