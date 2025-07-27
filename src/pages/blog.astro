@@ -3,14 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlogCard from '../components/BlogCard.astro';
+import { SITE_CONFIG } from '../constants';
 import { posts } from '../utils/posts';
 
 ---
 
-<Layout 
-	title="Blog - {SITE_CONFIG.title}" 
-	description="{SITE_CONFIG.tagline}"
->
+<Layout title="Blog">
 	<div class="min-h-screen flex flex-col">
 		<Header />
 		

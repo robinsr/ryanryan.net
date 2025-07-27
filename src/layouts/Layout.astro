@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SITE_CONFIG } from '../constants';
 
 export interface Props {
 	title: string;
@@ -8,8 +9,16 @@ export interface Props {
 	canonicalURL?: string;
 }
 
-const { title, description = "Ryan's blog and portfolio", image, canonicalURL } = Astro.props;
+const { 
+	title = "", 
+	description = SITE_CONFIG.tagline, 
+	image, 
+	canonicalURL 
+} = Astro.props;
+
 const canonical = canonicalURL ? new URL(canonicalURL, Astro.site) : Astro.url;
+
+const fullTitle = [ title, SITE_CONFIG.title ].filter(Boolean).join(' - ');
 ---
 
 <!doctype html>
@@ -19,23 +28,25 @@ const canonical = canonicalURL ? new URL(canonicalURL, Astro.site) : Astro.url;
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		
 		<!-- SEO -->
-		<title>{title}</title>
+		<title>{fullTitle}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />
 		
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={Astro.url} />
-		<meta property="og:title" content={title} />
+		<meta property="og:title" content={fullTitle} />
 		<meta property="og:description" content={description} />
 		{image && <meta property="og:image" content={new URL(image, Astro.url)} />}
 		
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={Astro.url} />
-		<meta property="twitter:title" content={title} />
+		<meta property="twitter:title" content={fullTitle} />
 		<meta property="twitter:description" content={description} />
 		{image && <meta property="twitter:image" content={new URL(image, Astro.url)} />}
 		

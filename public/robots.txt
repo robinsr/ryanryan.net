@@ -1,0 +1,65 @@
+# robots.txt for ryanryan.net
+# Last updated: 2025-01-27
+
+# Allow all crawlers by default
+User-agent: *
+Allow: /
+
+# Disallow admin or private areas (if any exist)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /_astro/
+
+# Allow important pages and content
+Allow: /blog/
+Allow: /posts/
+Allow: /about/
+Allow: /work/
+Allow: /archive/
+
+# Sitemap location
+Sitemap: https://ryanryan.net/sitemap-index.xml
+
+# Crawl-delay for polite crawling (optional)
+Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block common bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Block archive.org if you don't want your content archived
+# User-agent: ia_archiver
+# Disallow: /
+
+# Block social media crawlers if needed
+# User-agent: Twitterbot
+# Disallow: /
+
+# User-agent: facebookexternalhit
+# Disallow: / 
