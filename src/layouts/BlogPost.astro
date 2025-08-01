@@ -20,7 +20,6 @@ export interface Props {
 	};
 }
 
-
 const { 
 	frontmatter: {
 		title,
@@ -60,26 +59,15 @@ const formattedDate = formatDateLong(pubDate);
 					</h1>
 					
 					{description && (
-						// Can this be styled like a blockquote?
 						<blockquote class="text-sm text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
 							{description}
 						</blockquote>
-
-						// <p class="text-xl text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-						// 	{description}
-						// </p>
 					)}
 					
 					<div class="flex items-center text-sm text-gray-500 dark:text-gray-400 space-x-4">
 						<time datetime={formatDateISO(pubDate)}>
 							Published {formattedDate}
 						</time>
-						
-						<!-- {formattedUpdatedDate && (
-							<time datetime={updatedDate!.toISOString()}>
-								Updated {formattedUpdatedDate}
-							</time>
-						)} -->
 					</div>
 					
 					{tags.length > 0 && (
