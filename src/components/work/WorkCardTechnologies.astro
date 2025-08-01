@@ -11,26 +11,110 @@ const { entry } = Astro.props;
 
 {entry.data.technologies && entry.data.technologies.length > 0 && (
   <div>
-    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-      Technologies
-    </h4>
-    <div class="flex flex-wrap gap-2">
-      {entry.data.technologies.map((tech: any) => {
+    <div class="flex justify-between items-center mb-3">
+      <h4 class="text-lg font-semibold text-gray-900 dark:text-white">
+        Technologies
+      </h4>
+      <button
+        id={`expand-tech-${entry.id}`}
+        class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+        data-expanded="false"
+      >
+        Expand
+      </button>
+    </div>
+    
+    <div 
+      id={`tech-container-${entry.id}`}
+      class="flex flex-wrap gap-2 transition-all duration-300"
+    >
+      {entry.data.technologies.map((tech: any, index: number) => {
         const techName = typeof tech === 'string' ? tech : tech.name;
         const techDescription = typeof tech === 'string' ? null : tech.description;
         const techType = typeof tech === 'string' ? null : tech.type;
         
         return (
-          <TechnologyBadge 
-            tech={{
-              name: techName,
-              type: techType,
-              description: techDescription
-            }}
-            workType={entry.data.type}
-          />
+          <div 
+            id={`tech-item-${entry.id}-${index}`}
+            class="tech-item"
+            data-description={techDescription || ''}
+          >
+            <TechnologyBadge 
+              tech={{
+                name: techName,
+                type: techType,
+                description: techDescription
+              }}
+              workType={entry.data.type}
+            />
+          </div>
         );
       })}
     </div>
   </div>
-)} 
+)}
+
+<script>
+  // Get all expand buttons
+  const expandButtons = document.querySelectorAll('[id^="expand-tech-"]');
+  
+  expandButtons.forEach((button: Element) => {
+    button.addEventListener('click', (event) => {
+      const target = event.target as HTMLButtonElement;
+      const isExpanded = target.getAttribute('data-expanded') === 'true';
+      const entryId = target.id.replace('expand-tech-', '');
+      const container = document.getElementById(`tech-container-${entryId}`);
+      const techItems = container?.querySelectorAll('.tech-item');
+      
+      if (!container || !techItems) return;
+      
+      if (isExpanded) {
+        // Collapse back to flex layout
+        target.textContent = 'Expand';
+        target.setAttribute('data-expanded', 'false');
+        container.className = 'flex flex-wrap gap-2 transition-all duration-300';
+        
+        techItems.forEach(item => {
+          item.className = 'tech-item';
+          // Remove any description elements that were added
+          const descriptionEl = item.querySelector('.tech-description');
+          if (descriptionEl) {
+            descriptionEl.remove();
+          }
+          
+          // Re-enable tooltips
+          const tooltip = item.querySelector('.tech-tooltip');
+          if (tooltip) {
+            tooltip.classList.remove('hidden');
+            tooltip.classList.add('group-hover:opacity-100');
+          }
+        });
+      } else {
+        // Expand to single column layout
+        target.textContent = 'Collapse';
+        target.setAttribute('data-expanded', 'true');
+        container.className = 'flex flex-col gap-3 transition-all duration-300';
+        
+        techItems.forEach(item => {
+          item.className = 'tech-item flex items-start gap-3';
+          const description = item.getAttribute('data-description');
+          
+          if (description) {
+            // Add description element
+            const descriptionEl = document.createElement('div');
+            descriptionEl.className = 'tech-description text-sm text-gray-600 dark:text-gray-400 flex-1 leading-relaxed';
+            descriptionEl.textContent = description;
+            item.appendChild(descriptionEl);
+          }
+          
+          // Disable tooltips when expanded
+          const tooltip = item.querySelector('.tech-tooltip');
+          if (tooltip) {
+            tooltip.classList.add('hidden');
+            tooltip.classList.remove('group-hover:opacity-100');
+          }
+        });
+      }
+    });
+  });
+</script> 

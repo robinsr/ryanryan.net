@@ -241,6 +241,8 @@
 
 	function onContentLoaded() {
 		const progressItems = getProgressBarItems();
+
+		
 		
 		progressItems.forEach(item => {
 			item.el.addEventListener('click', () => {
@@ -248,7 +250,17 @@
 				const card = cards.find(card => card.anchor == item.anchor)
 
 				if (card) {
-					card.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					const siteHeader = document.getElementById('site-header');
+					let headerOffset = 0;
+
+					if (siteHeader) {	
+						headerOffset = siteHeader.clientHeight;
+					}
+
+					const cardTop = card.el.getBoundingClientRect().top;
+					const scrollTo = cardTop + window.pageYOffset - headerOffset - 20;
+
+					window.scrollTo({ top: scrollTo, behavior: 'smooth' });
 				}
 			});
 		});
