@@ -1,7 +1,8 @@
 // Site configuration constants
 export const SITE_CONFIG = {
   title: 'Eventually Consistent',
-  tagline: 'Dispatches from the grey area between correct and working',
+  //tagline: 'Dispatches from the grey area between correct and working',
+  tagline: '...between correct and working',
   description: 'Personal website and blog', // What is this for that's not in the tagline?
   domain: 'ryanryan.net',
   url: 'https://ryanryan.net',

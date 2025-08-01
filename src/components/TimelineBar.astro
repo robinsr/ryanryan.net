@@ -27,7 +27,7 @@ const { entries } = Astro.props;
   <div class="absolute left-0 top-0 w-full h-full">
     {entries.map((entry, index) => (
       <div 
-        class="timeline-item absolute top-20 flex flex-row items-center justify-center"
+        class="timeline-item absolute top-20 flex flex-row items-center justify-center lg:hover:*:block cursor-pointer"
         style={`
           top: ${(index / (entries.length - 1)) * 95}%;
           transform: translateY(-50%);
@@ -43,7 +43,7 @@ const { entries } = Astro.props;
         ></div>
         
         <!-- Timeline Label -->
-        <div class="timeline-label text-sm font-medium transition-all duration-300 whitespace-nowrap">
+        <div class="timeline-label text-sm font-medium transition-all duration-300 whitespace-nowrap hidden xl:block lg:hover:block">
           <span class="timeline-label-text text-gray-400 dark:text-gray-500">
             {entry.data.type === 'employment' ? entry.data.title : entry.data.projectName}
           </span>

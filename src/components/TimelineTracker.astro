@@ -13,22 +13,6 @@
 	const DEFAULT_TIMELINE_LABEL_TEXT_CLASSES = ['text-gray-400', 'dark:text-gray-500'];
 	const ACTIVE_TIMELINE_LABEL_TEXT_CLASSES = ['text-gray-900', 'dark:text-gray-100'];
 
-  // Just for testing, applying border colors to cards	
-	const TEST_ACTIVE_CARD_BORDER_COLOR = '#ef4444'; // red-500
-	const TEST_PAST_CARD_BORDER_COLOR = '#f472b6'; // pink-500
-	const TEST_UPCOMING_CARD_BORDER_COLOR = '#06b6d4'; // cyan-500
-	const TEST_SHOWING_CARD_BORDER_COLOR = '#10b981'; // emerald-500
-
-	const TEST_ISABOVE_BORDER_STYLE = 'dashed';
-  const TEST_ISBELOW_BORDER_STYLE = 'dotted';
-  const TEST_ISIN_BORDER_STYLE = 'solid';
-
-	const ACTIVE_JOB_COLOR = '#3b82f6'; // blue-500
-	const ACTIVE_PROJECT_COLOR = '#8b5cf6'; // purple-500
-
-	
-	
-	
 	interface TimelineCardElement {
 		el: HTMLElement;
 		index: number;
@@ -40,8 +24,13 @@
 		}
 	}
 
-	type TimelineCardState = 'past' | 'upcoming' | 'showing' | 'active';
+	interface TimelineProgressBarItem {
+		el: HTMLElement;
+		index: number;
+		anchor: string;
+	}
 
+	type TimelineCardState = 'past' | 'upcoming' | 'showing' | 'active';
 	type ViewportLineRelation = 'above' | 'below';
 	type ViewportFrameRelation = 'fully-above' | 'fully-below' | 'partially-above' | 'partially-below' | 'contained';
 
@@ -97,18 +86,25 @@
 		})
 	}
 
+	function getProgressBarItems(): TimelineProgressBarItem[] {
+		let elems = [...document.querySelectorAll('.timeline-item')];
+
+		return elems.map((item, index) => {
+			const el = item as HTMLElement;
+			const anchor = el.dataset.timelineAnchor || 'none';
+			
+			return { el, index, anchor } as TimelineProgressBarItem;
+		})
+	}
+
 	function getTimelineCard(card: TimelineCardElement, windowPosition: WindowPositionState): TimelineCard {
-		const { el, index, anchor, rect } = card;
+		const { rect } = card;
 
 		const cardBottomPosition = rect.elBottomToPageTop;
 		const cardTopPosition = rect.elTopToPageTop;
-		const cardHeight = rect.elHeight;
-
 		const windowBottom = windowPosition.windowBottom;
 		const windowTop = windowPosition.windowTop;
 		const windowCenter = windowPosition.windowCenter;
-
-		
 
 		const cardTop: CardEdgeRelationships = {
 			viewportBottom: cardTopPosition < windowTop ? 'above' : 'below',
@@ -166,11 +162,8 @@
 		// There will be only one active card. Initially, the first card is active.
 		let activeCard: TimelineCard = cards[0]
 
-		// The naive approach to the the "active card": the first card whose top is above the window center, or the very first card
-		activeCard = cards[0]
-
 		// Here is the more complex approach to the active card:
-		// 1. If there is a single "showing" card, that is the active card
+		// 1. If t=here is a single "showing" card, that is the active card
 		// 2. If there are multiple "showing" cards, the first one is the active card.
 		// 3. If there are no "showing" cards, the last card to break the center line is the active card.
 
@@ -196,7 +189,6 @@
 		// Update the #timeline-progress element's height
 		const progressElement: HTMLElement | null = document.getElementById('timeline-progress');
 
-
 		if (progressElement) {
 			progressElement.style.height = `${activeCardIndex / (cards.length - 1) * 100}%`;
 		}
@@ -220,13 +212,6 @@
 				const label = el.querySelector('.timeline-label-text') as HTMLElement;
 
 				const cardType: string = el.dataset.timelineType || 'employment';
-
-				/**
-				 * Styles being manipulated:
-				 * 
-				 * class="timeline-marker transform -translate-x-1/2 w-3 h-3 rounded-full border-2 border-white dark:border-gray-800 shadow-sm transition-all duration-300 bg-gray-400 dark:bg-gray-500"
-				 */
-
 				const itemIsActiveItem = anchor === activeCard.card.anchor
 				const itemIsPastItem = pastCards.some((card) => card.card.anchor === anchor);
 
@@ -255,38 +240,34 @@
 					label.classList.add(...DEFAULT_TIMELINE_LABEL_TEXT_CLASSES);
 				}
 			});
-			
-
-			// switch (card.state) {
-			// 	case 'past':
-			// 		card.card.el.style.borderColor = TEST_PAST_CARD_BORDER_COLOR;
-			// 		break;
-			// 	case 'upcoming':
-			// 		card.card.el.style.borderColor = TEST_UPCOMING_CARD_BORDER_COLOR;
-			// 		break;
-			// 	case 'showing':
-			// 		card.card.el.style.borderColor = TEST_SHOWING_CARD_BORDER_COLOR;
-			// 		break;
-			// 	case 'active':
-			// 		card.card.el.style.borderColor = TEST_ACTIVE_CARD_BORDER_COLOR;
-			// 		break;
-			// 	default:
-			// 		card.card.el.style.borderColor = 'transparent';
-			// 		break;
-			// }
-
-			// // Uncomment this to see the borders
-			// card.card.el.style.borderWidth = '2px';
-			// card.card.el.style.borderStyle = card.cardTop.viewportCenter === 'above' ? TEST_ISABOVE_BORDER_STYLE : card.cardTop.viewportCenter === 'below' ? TEST_ISBELOW_BORDER_STYLE : TEST_ISIN_BORDER_STYLE;
-
-
-			// const metaInfo = card.card.el.querySelector('.meta-info') as HTMLElement;
-			
-			// if (metaInfo) {
-			// 	metaInfo.textContent = JSON.stringify(card, null, 2);
-			// }
 		})
+	}
 
+	function onMarkerClicked(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		const anchor = target.dataset.timelineAnchor;
+		const cards = getTimelineCardElements();
+
+		const card = cards.find((card) => card.anchor === anchor);
+		
+		if (card) {
+			card.el.scrollIntoView({ behavior: 'smooth' });
+		}
+	}
+
+	function onContentLoaded() {
+		const progressItems = getProgressBarItems();
+		
+		progressItems.forEach(item => {
+			item.el.addEventListener('click', () => {
+				const cards = getTimelineCardElements();
+				const card = cards.find(card => card.anchor == item.anchor)
+
+				if (card) {
+					card.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+			});
+		});
 	}
 	
 	// Throttle function for performance
@@ -306,4 +287,5 @@
 	
 	// Initial call
 	document.addEventListener('DOMContentLoaded', updateTimelineProgress);
+	document.addEventListener('DOMContentLoaded', onContentLoaded);
 </script> 
