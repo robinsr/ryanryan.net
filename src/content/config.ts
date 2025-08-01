@@ -14,7 +14,10 @@ const workCollection = defineCollection({
     current: z.boolean().default(false),
     description: z.string(),
     highlights: z.array(z.string()),
-    technologies: z.array(z.string()).optional(),
+    technologies: z.array(z.object({
+      name: z.string(),
+      description: z.string().optional(),
+    })),
     url: z.string().url().optional(),
     githubUrl: z.string().url().optional(), // For projects
     liveUrl: z.string().url().optional(), // For projects
