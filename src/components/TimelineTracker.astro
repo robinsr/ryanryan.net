@@ -1,0 +1,309 @@
+---
+// This component only contains JavaScript for timeline tracking
+---
+
+<script>
+	const ACTIVE_CARD_SCALE_CLASS = 'scale-103';
+	const ACTIVE_CARD_SHADOW_CLASS = 'shadow-lg';
+
+	const DEFAULT_TIMELINE_MARKER_BG_CLASSES = ['bg-gray-400', 'dark:bg-gray-500'];
+	const ACTIVE_JOB_TIMELINE_MARKER_BG_CLASSES = ['bg-blue-500', 'dark:bg-blue-400'];
+	const ACTIVE_PROJECT_TIMELINE_MARKER_BG_CLASSES = ['bg-purple-500', 'dark:bg-purple-400'];
+
+	const DEFAULT_TIMELINE_LABEL_TEXT_CLASSES = ['text-gray-400', 'dark:text-gray-500'];
+	const ACTIVE_TIMELINE_LABEL_TEXT_CLASSES = ['text-gray-900', 'dark:text-gray-100'];
+
+  // Just for testing, applying border colors to cards	
+	const TEST_ACTIVE_CARD_BORDER_COLOR = '#ef4444'; // red-500
+	const TEST_PAST_CARD_BORDER_COLOR = '#f472b6'; // pink-500
+	const TEST_UPCOMING_CARD_BORDER_COLOR = '#06b6d4'; // cyan-500
+	const TEST_SHOWING_CARD_BORDER_COLOR = '#10b981'; // emerald-500
+
+	const TEST_ISABOVE_BORDER_STYLE = 'dashed';
+  const TEST_ISBELOW_BORDER_STYLE = 'dotted';
+  const TEST_ISIN_BORDER_STYLE = 'solid';
+
+	const ACTIVE_JOB_COLOR = '#3b82f6'; // blue-500
+	const ACTIVE_PROJECT_COLOR = '#8b5cf6'; // purple-500
+
+	
+	
+	
+	interface TimelineCardElement {
+		el: HTMLElement;
+		index: number;
+		anchor: string;
+		rect: {
+			elTopToPageTop: number;
+			elBottomToPageTop: number;
+			elHeight: number;
+		}
+	}
+
+	type TimelineCardState = 'past' | 'upcoming' | 'showing' | 'active';
+
+	type ViewportLineRelation = 'above' | 'below';
+	type ViewportFrameRelation = 'fully-above' | 'fully-below' | 'partially-above' | 'partially-below' | 'contained';
+
+	interface CardEdgeRelationships {
+		viewportBottom: ViewportLineRelation;
+		viewportCenter: ViewportLineRelation;
+		viewportTop: ViewportLineRelation;
+	}
+
+	interface TimelineCard {
+		card: TimelineCardElement;
+		state: TimelineCardState;
+		cardTop: CardEdgeRelationships;
+		cardBottom: CardEdgeRelationships;
+		cardBody: ViewportFrameRelation;
+	}
+
+	interface WindowPositionState {
+		height: number;
+		scrollY: number;
+		windowTop: number;
+		windowBottom: number;
+		windowCenter: number;
+	}
+
+	function getWindowPositionState(): WindowPositionState {
+		const height = window.innerHeight
+		const scrollY = document.documentElement.scrollTop
+
+		const windowTop = scrollY
+		const windowBottom = scrollY + height
+		const windowCenter = scrollY + height / 2
+		
+		return {
+			height, scrollY, windowTop, windowBottom, windowCenter
+		};
+	}
+
+	function getTimelineCardElements(): TimelineCardElement[] {
+		return [...document.querySelectorAll('.timeline-tracker-card')]
+			.map((card, index) => {
+				const el = card as HTMLElement;
+				const anchor = el.dataset.timelineAnchor || "none";
+				const elRect = el.getBoundingClientRect();
+
+				const rect = { 
+					elTopToPageTop: elRect.top + window.scrollY,
+					elBottomToPageTop: elRect.bottom + window.scrollY,
+					elHeight: elRect.height
+				}
+			
+				return { el, index, anchor, rect }
+		})
+	}
+
+	function getTimelineCard(card: TimelineCardElement, windowPosition: WindowPositionState): TimelineCard {
+		const { el, index, anchor, rect } = card;
+
+		const cardBottomPosition = rect.elBottomToPageTop;
+		const cardTopPosition = rect.elTopToPageTop;
+		const cardHeight = rect.elHeight;
+
+		const windowBottom = windowPosition.windowBottom;
+		const windowTop = windowPosition.windowTop;
+		const windowCenter = windowPosition.windowCenter;
+
+		
+
+		const cardTop: CardEdgeRelationships = {
+			viewportBottom: cardTopPosition < windowTop ? 'above' : 'below',
+			viewportCenter: cardTopPosition < windowCenter ? 'above' : 'below',
+			viewportTop: cardTopPosition > windowBottom ? 'above' : 'below'
+		}
+
+		const cardBottom: CardEdgeRelationships = {
+			viewportBottom: cardBottomPosition > windowBottom ? 'below' : 'above',
+			viewportCenter: cardBottomPosition > windowCenter ? 'below' : 'above',
+			viewportTop: cardBottomPosition < windowTop ? 'below' : 'above'
+		}
+
+		const isInViewport = cardTopPosition >= windowTop && cardBottomPosition <= windowBottom;
+    const isAboveViewport = cardTopPosition < windowTop;
+    const isBelowViewport = cardBottomPosition > windowBottom;
+
+		const cardBody: ViewportFrameRelation = isInViewport ? 'contained' : isAboveViewport ? 'fully-above' : 'fully-below';
+		
+		// We make what determinations we can here, but the final state is determined by comparing to other cards
+		let state: TimelineCardState = 'showing';
+		
+		// If the card is above the viewport, it is past
+		if (cardBottom.viewportBottom === 'above') {
+			state = 'past';
+		}
+		
+		// If the card is below the viewport, it is next
+		if (cardTop.viewportBottom === 'below') {
+			state = 'upcoming';
+		}
+		
+		return {
+			card, state, cardTop, cardBottom, cardBody
+		};
+	}
+
+	// Timeline scroll tracking
+	function updateTimelineProgress() {
+		const windowPosition: WindowPositionState = getWindowPositionState();
+		const cardElements: TimelineCardElement[] = getTimelineCardElements();
+		const cards: TimelineCard[] = cardElements.map((cardEl) => getTimelineCard(cardEl, windowPosition));
+
+		// Past cards (cards that are above the viewport) have active timeline markers and
+		// labels, but are not the active card
+		const pastCards = cards.filter((card) => card.state === 'past');
+		
+		// Upcoming cards (cards that are below the viewport) have inactive timeline markers and labels
+		const upcomingCards = cards.filter((card) => card.state === 'upcoming');
+		
+		// Showing cards are fully in the viewport. For large viewports this could be multiple 
+		// cards; for small viewports this might not be any cards. 
+		const showingCards = cards.filter((card) => card.state === 'showing');
+		
+		// There will be only one active card. Initially, the first card is active.
+		let activeCard: TimelineCard = cards[0]
+
+		// The naive approach to the the "active card": the first card whose top is above the window center, or the very first card
+		activeCard = cards[0]
+
+		// Here is the more complex approach to the active card:
+		// 1. If there is a single "showing" card, that is the active card
+		// 2. If there are multiple "showing" cards, the first one is the active card.
+		// 3. If there are no "showing" cards, the last card to break the center line is the active card.
+
+		// If there is a single "showing" card, that is the active card
+		if (showingCards.length === 1) {
+			activeCard = showingCards[0];
+		}
+		
+		// If there are multiple "showing" cards, the first one is the active card
+		if (showingCards.length > 1) {
+			activeCard = showingCards[0];
+		}
+
+		// If there are no "showing" cards, the last card to break the center line is the active card
+		if (showingCards.length === 0) {
+			activeCard = cards.findLast((card) => card.cardTop.viewportCenter === 'above') || cards[0];
+		}
+
+		activeCard.state = 'active';
+
+		const activeCardIndex = activeCard.card.index;
+
+		// Update the #timeline-progress element's height
+		const progressElement: HTMLElement | null = document.getElementById('timeline-progress');
+
+
+		if (progressElement) {
+			progressElement.style.height = `${activeCardIndex / (cards.length - 1) * 100}%`;
+		}
+
+		cards.forEach((card) => {
+			if (card.state === 'active') {
+				card.card.el.classList.add(ACTIVE_CARD_SCALE_CLASS);
+				card.card.el.classList.add(ACTIVE_CARD_SHADOW_CLASS);
+			} else {
+				card.card.el.classList.remove(ACTIVE_CARD_SCALE_CLASS);
+				card.card.el.classList.remove(ACTIVE_CARD_SHADOW_CLASS);
+			}
+
+			const progressBarItems = [...document.querySelectorAll('.timeline-item')];
+			
+			progressBarItems.forEach(item => {
+				const el = item as HTMLElement;
+				const anchor = el.dataset.timelineAnchor
+
+				const marker = el.querySelector('.timeline-marker') as HTMLElement;
+				const label = el.querySelector('.timeline-label-text') as HTMLElement;
+
+				const cardType: string = el.dataset.timelineType || 'employment';
+
+				/**
+				 * Styles being manipulated:
+				 * 
+				 * class="timeline-marker transform -translate-x-1/2 w-3 h-3 rounded-full border-2 border-white dark:border-gray-800 shadow-sm transition-all duration-300 bg-gray-400 dark:bg-gray-500"
+				 */
+
+				const itemIsActiveItem = anchor === activeCard.card.anchor
+				const itemIsPastItem = pastCards.some((card) => card.card.anchor === anchor);
+
+				if (itemIsActiveItem || itemIsPastItem) {
+					if (cardType === 'employment') {
+						marker.classList.remove(...DEFAULT_TIMELINE_MARKER_BG_CLASSES);
+						marker.classList.add(...ACTIVE_JOB_TIMELINE_MARKER_BG_CLASSES);
+					}
+
+					if (cardType === 'project') {
+						marker.classList.remove(...DEFAULT_TIMELINE_MARKER_BG_CLASSES);
+						marker.classList.add(...ACTIVE_PROJECT_TIMELINE_MARKER_BG_CLASSES);
+					}
+					
+				} else {
+					marker.classList.remove(...ACTIVE_JOB_TIMELINE_MARKER_BG_CLASSES, ...ACTIVE_PROJECT_TIMELINE_MARKER_BG_CLASSES);
+					marker.classList.add(...DEFAULT_TIMELINE_MARKER_BG_CLASSES);
+				}
+
+				// Active item text is dark, past item text is light
+				if (itemIsActiveItem) {
+					label.classList.remove(...DEFAULT_TIMELINE_LABEL_TEXT_CLASSES);
+					label.classList.add(...ACTIVE_TIMELINE_LABEL_TEXT_CLASSES);
+				} else {
+					label.classList.remove(...ACTIVE_TIMELINE_LABEL_TEXT_CLASSES);
+					label.classList.add(...DEFAULT_TIMELINE_LABEL_TEXT_CLASSES);
+				}
+			});
+			
+
+			// switch (card.state) {
+			// 	case 'past':
+			// 		card.card.el.style.borderColor = TEST_PAST_CARD_BORDER_COLOR;
+			// 		break;
+			// 	case 'upcoming':
+			// 		card.card.el.style.borderColor = TEST_UPCOMING_CARD_BORDER_COLOR;
+			// 		break;
+			// 	case 'showing':
+			// 		card.card.el.style.borderColor = TEST_SHOWING_CARD_BORDER_COLOR;
+			// 		break;
+			// 	case 'active':
+			// 		card.card.el.style.borderColor = TEST_ACTIVE_CARD_BORDER_COLOR;
+			// 		break;
+			// 	default:
+			// 		card.card.el.style.borderColor = 'transparent';
+			// 		break;
+			// }
+
+			// // Uncomment this to see the borders
+			// card.card.el.style.borderWidth = '2px';
+			// card.card.el.style.borderStyle = card.cardTop.viewportCenter === 'above' ? TEST_ISABOVE_BORDER_STYLE : card.cardTop.viewportCenter === 'below' ? TEST_ISBELOW_BORDER_STYLE : TEST_ISIN_BORDER_STYLE;
+
+
+			// const metaInfo = card.card.el.querySelector('.meta-info') as HTMLElement;
+			
+			// if (metaInfo) {
+			// 	metaInfo.textContent = JSON.stringify(card, null, 2);
+			// }
+		})
+
+	}
+	
+	// Throttle function for performance
+	function throttle(func: Function, limit: number) {
+		let inThrottle: boolean = false;
+		return function(this: Window, ...args: any[]) {
+			if (!inThrottle) {
+				func.apply(this, args);
+				inThrottle = true;
+				setTimeout(() => inThrottle = false, limit);
+			}
+		}
+	}
+	
+	// Add scroll event listener
+	window.addEventListener('scroll', throttle(updateTimelineProgress, 16));
+	
+	// Initial call
+	document.addEventListener('DOMContentLoaded', updateTimelineProgress);
+</script> 

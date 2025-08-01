@@ -3,7 +3,7 @@ import Layout from './Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Tag from '../components/Tag.astro';
-import { formatDate, formatDateISO } from '../utils/date';
+import { formatDateLong, formatDateISO } from '../utils/date';
 
 export interface Props {
 	file: string;
@@ -38,8 +38,8 @@ const {
 
 console.log(pubDate, typeof pubDate);
 
-const formattedDate = formatDate(pubDate);
-const formattedUpdatedDate = formatDate(updatedDate);
+const formattedDate = formatDateLong(pubDate);
+const formattedUpdatedDate = formatDateLong(updatedDate);
 ---
 
 <Layout 
