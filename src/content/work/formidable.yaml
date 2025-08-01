@@ -1,26 +1,102 @@
 type: "employment"
+
 company: "Formidable Labs"
 title: "Staff Engineer"
 location: "Seattle, WA"
+
 startDate: "2014-07"
 endDate: "2014-12"
 current: false
-description: "At Formidable Labs, I worked as a Staff Engineer, delivering high-quality front-end frameworks and style guides for enterprise clients. This consultancy role emphasized craftsmanship, rapid delivery, and tight collaboration with client teams to build scalable and maintainable UI systems."
-highlights:
-  - "Delivered custom CSS frameworks and front-end architecture for clients such as Walmart and Ookla, helping standardize and scale their design languages across multiple applications"
-  - "Developed componentized, reusable UI patterns that enhanced consistency, accessibility, and developer experience for client engineering teams"
-  - "Consulted directly with client stakeholders to translate brand and UX requirements into practical, scalable front-end solutions"
-  - "Employed modern web standards and responsive design practices to ensure cross-device compatibility and performance"
-  - "Contributed to Formidable's culture of technical excellence, rapid prototyping, and client-focused delivery"
-technologies:
-  - name: "Front-end Architecture"
-  - name: "CSS Frameworks"
-  - name: "Design Systems"
-  - name: "Component Libraries"
-  - name: "Responsive Design"
-  - name: "Web Standards"
-  - name: "Client Consulting"
-  - name: "Rapid Prototyping"
-  - name: "UI Patterns"
-  - name: "Accessibility"
+
 url: "https://formidable.com" 
+
+description: >
+  At Formidable Labs, I worked as a Staff Engineer, delivering high-quality front-end frameworks and style guides for
+  enterprise clients. This consultancy role emphasized craftsmanship, rapid delivery, and tight collaboration with
+  client teams to build scalable and maintainable UI systems.
+
+highlights:
+  - |
+    Delivered custom CSS frameworks and front-end architecture for clients such as Walmart and Ookla, 
+    helping standardize and scale their design languages across multiple applications
+  - |
+    Developed componentized, reusable UI patterns that enhanced consistency, accessibility, and 
+    developer experience for client engineering teams
+  - |
+    Consulted directly with client stakeholders to translate brand and UX requirements into practical, 
+    scalable front-end solutions
+  - |
+    Employed modern web standards and responsive design practices to ensure cross-device compatibility 
+    and performance
+  - |
+    Contributed to Formidable's culture of technical excellence, rapid prototyping, and client-focused delivery
+
+technologies:
+
+  # === Frameworks & Tools ===
+  
+  - name: "CSS Frameworks"
+    type: "framework_tooling"
+    description: |
+      Used and extended CSS frameworks to accelerate layout development and enforce consistent visual design
+      during client engagements.
+
+  # === Engineering Practices ===
+  
+  - name: "Responsive Design"
+    type: "engineering_practice"
+    description: |
+      Delivered front-end solutions that adapted seamlessly across devices and screen sizes, using mobile-first
+      principles and flexible layout systems.
+
+  - name: "Web Standards"
+    type: "engineering_practice"
+    description: |
+      Emphasized semantic HTML, proper ARIA roles, and standards compliance to ensure compatibility and long-term
+      maintainability.
+
+  - name: "Accessibility"
+    type: "engineering_practice"
+    description: |
+      Applied WCAG and ARIA standards in client projects to ensure inclusive and compliant experiences for all
+      users.
+
+  - name: "UI Patterns"
+    type: "engineering_practice"
+    description: |
+      Implemented consistent and reusable UI patterns that improved usability, development velocity, and alignment
+      with design guidelines.
+
+  - name: "Rapid Prototyping"
+    type: "engineering_practice"
+    description: |
+      Collaborated with clients to rapidly prototype UI solutions, helping teams validate product ideas and gather
+      early user feedback.
+
+  # === Architecture Patterns ===
+  
+  - name: "Front-end Architecture"
+    type: "architecture_pattern"
+    description: |
+      Designed scalable and maintainable front-end structures for client applications, with an emphasis on
+      modularity, reuse, and long-term extensibility.
+
+  - name: "Design Systems"
+    type: "architecture_pattern"
+    description: |
+      Worked with clients to develop and document design systems that standardized branding, interaction, and
+      layout conventions across multiple properties.
+
+  - name: "Component Libraries"
+    type: "architecture_pattern"
+    description: |
+      Built reusable UI component libraries using modern front-end tooling to streamline development and align
+      cross-team implementation.
+
+  # === Delivery Context ===
+  
+  - name: "Client Consulting"
+    type: "delivery_context"
+    description: |
+      Partnered with engineering and product teams across industries to assess needs, recommend technical
+      approaches, and deliver high-impact front-end solutions.

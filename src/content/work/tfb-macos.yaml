@@ -1,55 +1,164 @@
 type: "project"
+
 projectName: "TaggedFileBrowser"
 title: "macOS File Browser with Advanced Tagging System"
+
 startDate: "2024-09"
 current: true
-description: "A sophisticated macOS file browser application built with SwiftUI that provides advanced file organization through a comprehensive tagging system. The app features intelligent file indexing, metadata management, and powerful search capabilities, allowing users to organize and discover files through descriptive tags, attribution metadata, and custom work queues."
+
+githubUrl: "https://github.com/robinsr/TaggedFileBrowser"
+
+description: >
+  A sophisticated macOS file browser application built with SwiftUI that provides advanced file organization 
+  through a comprehensive tagging system. The app features intelligent file indexing, metadata management, and 
+  powerful search capabilities, allowing users to organize and discover files through descriptive tags, attribution 
+  metadata, and custom work queues.
+
 highlights:
-  - "Built a native macOS application using SwiftUI and AppKit with a modern, responsive interface featuring grid and table views for file browsing"
-  - "Implemented a sophisticated tagging system with multiple domains including descriptive tags, attribution metadata (artist, creator, owner), creation dates, and work queues"
-  - "Developed a robust file indexing service using GRDB (SQLite) for persistent storage of file metadata, tags, and relationships"
-  - "Created an intelligent file identification system using extended attributes to maintain unique content IDs across file operations"
-  - "Integrated macOS system services including QuickLook for thumbnail generation, Spotlight for search, and file system monitoring for real-time updates"
-  - "Built a comprehensive search system supporting complex queries with tag-based filtering, date ranges, and full-text search capabilities"
-  - "Implemented a work queue system for batch operations and task management with visual progress tracking"
-  - "Designed a modular architecture with dependency injection using Factory framework for maintainable and testable code"
-  - "Added advanced features including drag-and-drop support, keyboard navigation, context menus, and customizable UI panels"
-  - "Integrated with macOS system features like clipboard operations, file operations (rename, move, trash), and volume management"
+  - |
+    Built a native macOS application using SwiftUI and AppKit with a modern, responsive interface featuring 
+    grid and table views for file browsing
+  - |
+    Implemented a sophisticated tagging system with multiple domains including descriptive tags, attribution
+    metadata (artist, creator, owner), creation dates, and work queues
+  - |
+    Developed a robust file indexing service using GRDB (SQLite) for persistent storage of file metadata, 
+    tags, and relationships
+  - |
+    Created an intelligent file identification system using extended attributes to maintain unique content 
+    IDs across file operations
+  - |
+    Integrated macOS system services including QuickLook for thumbnail generation, Spotlight for search, 
+    and file system monitoring for real-time updates
+  - |
+    Built a comprehensive search system supporting complex queries with tag-based filtering, date ranges, 
+    and full-text search capabilities
+  - |
+    Implemented a work queue system for batch operations and task management with visual progress tracking
+  - |
+    Designed a modular architecture with dependency injection using Factory framework for maintainable 
+    and testable code
+  - |
+    Added advanced features including drag-and-drop support, keyboard navigation, context menus, and 
+    customizable UI panels
+  - |
+    Integrated with macOS system features like clipboard operations, file operations (rename, move, 
+    trash), and volume management
+
+
 technologies:
-  - name: "SwiftUI"
-    description: "The primary UI framework used to build the modern, responsive interface with declarative syntax and automatic state management"
-  - name: "AppKit"
-    description: "Used for macOS-specific functionality including window management, system integration, and native controls not available in SwiftUI"
+  
+  # === Programming Languages ===
+  
   - name: "Swift"
-    description: "The core programming language used throughout the application for type-safe, performant code with modern language features"
+    type: "language_tech"
+    description: |
+      The core programming language used throughout the application for type-safe, performant code with modern
+      language features
+  
+  # === Frameworks & Tools ===
+  
+  - name: "SwiftUI"
+    type: "framework_tooling"
+    description: |
+      The primary UI framework used to build the modern, responsive interface with declarative syntax and
+      automatic state management
+  
+  - name: "AppKit"
+    type: "framework_tooling"
+    description: |
+      Used for macOS-specific functionality including window management, system integration, and native controls
+      not available in SwiftUI
+  
   - name: "GRDB (SQLite)"
-    description: "The database layer providing persistent storage for file metadata, tags, relationships, and search indexes with type-safe query building"
-  - name: "Factory (Dependency Injection)"
-    description: "Used to implement a clean dependency injection system for better testability and modular architecture design"
+    type: "framework_tooling"
+    description: |
+      The database layer providing persistent storage for file metadata, tags, relationships, and search indexes
+      with type-safe query building
+  
   - name: "QuickLook"
-    description: "Integrated for automatic thumbnail generation and preview capabilities for various file types including images and documents"
+    type: "framework_tooling"
+    description: |
+      Integrated for automatic thumbnail generation and preview capabilities for various file types including
+      images and documents
+  
   - name: "Spotlight"
-    description: "Leveraged for advanced search functionality including full-text search, metadata indexing, and system-wide content discovery"
+    type: "framework_tooling"
+    description: |
+      Leveraged for advanced search functionality including full-text search, metadata indexing, and system-wide
+      content discovery
+  
   - name: "Core Data"
-    description: "Used for managing complex data relationships and providing a robust object graph for the application's data model"
+    type: "framework_tooling"
+    description: |
+      Used for managing complex data relationships and providing a robust object graph for the application's
+      data model
+  
   - name: "Uniform Type Identifiers"
-    description: "Utilized for file type identification and categorization to enable proper handling of different content types"
+    type: "framework_tooling"
+    description: |
+      Utilized for file type identification and categorization to enable proper handling of different content
+      types
+  
+  # === Architecture Patterns ===
+  
+  - name: "Factory (Dependency Injection)"
+    type: "architecture_pattern"
+    description: |
+      Used to implement a clean dependency injection system for better testability and modular architecture
+      design
+
+  # === System Capabilities ===
+  
   - name: "File System Monitoring"
-    description: "Implemented to watch for file system changes and automatically update the database when files are modified, moved, or deleted"
+    type: "system_capability"
+    description: |
+      Implemented to watch for file system changes and automatically update the database when files are modified,
+      moved, or deleted
+  
   - name: "Extended Attributes"
-    description: "Used to store unique content IDs on files to maintain identity across file operations and enable robust file tracking"
+    type: "system_capability"
+    description: |
+      Used to store unique content IDs on files to maintain identity across file operations and enable robust
+      file tracking
+  
   - name: "macOS System Integration"
-    description: "Integrated with various macOS system services including clipboard, file operations, volume management, and system preferences"
+    type: "system_capability"
+    description: |
+      Integrated with various macOS system services including clipboard, file operations, volume management, and
+      system preferences
+  
   - name: "Thumbnail Generation"
-    description: "Built a custom thumbnail service using QuickLook and caching to provide fast, efficient image previews for the file browser"
+    type: "system_capability"
+    description: |
+      Built a custom thumbnail service using QuickLook and caching to provide fast, efficient image previews
+      for the file browser
+  
   - name: "Search & Filtering"
-    description: "Developed a sophisticated search system with tag-based filtering, date ranges, and complex query building for efficient file discovery"
+    type: "system_capability"
+    description: |
+      Developed a sophisticated search system with tag-based filtering, date ranges, and complex query building
+      for efficient file discovery
+  
   - name: "Tag Management"
-    description: "Created a comprehensive tagging system with multiple domains (descriptive, attribution, creation dates) and drag-and-drop support"
+    type: "system_capability"
+    description: |
+      Created a comprehensive tagging system with multiple domains (descriptive, attribution, creation dates)
+      and drag-and-drop support
+  
   - name: "Work Queues"
-    description: "Implemented a queue system for batch operations and task management with visual progress tracking and background processing"
+    type: "system_capability"
+    description: |
+      Implemented a queue system for batch operations and task management with visual progress tracking and
+      background processing
+  
   - name: "Keyboard Navigation"
-    description: "Added extensive keyboard shortcuts and navigation support for power users to efficiently browse and manage files"
+    type: "system_capability"
+    description: |
+      Added extensive keyboard shortcuts and navigation support for power users to efficiently browse and manage
+      files
+  
   - name: "Drag & Drop"
-    description: "Integrated native macOS drag-and-drop functionality for intuitive file operations and tag management"
-githubUrl: "https://github.com/yourusername/TaggedFileBrowser"
+    type: "system_capability"
+    description: |
+      Integrated native macOS drag-and-drop functionality for intuitive file operations and tag management

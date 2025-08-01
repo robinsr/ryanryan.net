@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { makeAnchor } from '../utils/work';
+import { makeAnchor } from '../../utils/work';
 
 interface Props {
   entries: CollectionEntry<'work'>[];
@@ -27,7 +27,7 @@ const { entries } = Astro.props;
   <div class="absolute left-0 top-0 w-full h-full">
     {entries.map((entry, index) => (
       <div 
-        class="timeline-item absolute top-20 flex flex-row items-center justify-center lg:hover:*:block cursor-pointer"
+        class="timeline-item absolute top-20 flex flex-row items-center justify-center md:hover:*:block cursor-pointer"
         style={`
           top: ${(index / (entries.length - 1)) * 95}%;
           transform: translateY(-50%);

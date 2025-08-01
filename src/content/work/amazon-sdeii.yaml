@@ -1,30 +1,202 @@
 type: "employment"
+
 company: "Amazon.com, Inc"
 title: "Software Development Engineer II"
 location: "Seattle, WA"
+
 startDate: "2018-10"
 endDate: "2022-09"
 current: false
-description: "As an SDE II at Amazon, I took on a broader scope of engineering work, leading efforts to build and maintain backend services, distributed systems, and operational tools that supported merchandising content at global scale. I transitioned from a front-end specialist to a full-stack and backend engineer, contributing to services that handled millions of requests per day across Amazon's retail platforms."
-highlights:
-  - "Led engineering efforts on a global merchandising content service, optimizing for scalability, reliability, and cost efficiency, serving millions of customer requests daily"
-  - "Developed RESTful APIs and asynchronous services in Java to support dynamic, data-driven customer experiences and integrations with partner teams"
-  - "Migrated services and infrastructure to AWS solutions, including Lambda, S3, CloudFormation, and IAM, for improved scalability and maintainability"
-  - "Built new business intelligence data pipelines using Apache Spark, closing critical gaps in customer and merchandising metrics"
-  - "Enhanced system observability with custom metrics, logging, and real-time performance monitoring, enabling faster detection and resolution of service issues"
-  - "Reduced infrastructure costs by 20% through performance analysis, load testing, and architectural optimizations"
-  - "Developed automated tooling to identify and resolve high-severity service errors, reducing on-call burdens and improving system reliability"
-  - "Created on-call debug features and emergent issue modes to accelerate root cause analysis during production incidents"
-  - "Mentored junior engineers and collaborated closely with leadership to provide technical guidance and architectural input"
-technologies:
-  - name: "Java"
-  - name: "AWS"
-  - name: "Lambda"
-  - name: "S3"
-  - name: "CloudFormation"
-  - name: "IAM"
-  - name: "Apache Spark"
-  - name: "RESTful APIs"
-  - name: "Distributed Systems"
-  - name: "Data Pipelines"
+
 url: "https://amazon.com" 
+
+description: >
+  As an SDE II at Amazon, I took on a broader scope of engineering work, leading efforts to build and maintain 
+  backend services, distributed systems, and operational tools that supported merchandising content at global
+  scale. I transitioned from a front-end specialist to a full-stack and backend engineer, contributing to services
+  that handled millions of requests per day across Amazon's retail platforms.
+
+highlights:
+  - |
+    Led engineering efforts on a global merchandising content service, optimizing for scalability,
+    reliability, and cost efficiency, serving millions of customer requests daily.
+  - |
+    Developed RESTful APIs and asynchronous services in Java to support dynamic, data-driven customer
+    experiences and integrations with partner teams.
+  - |
+    Migrated services and infrastructure to AWS solutions, including Lambda, S3, CloudFormation, and IAM,
+    for improved scalability and maintainability.
+  - |
+    Built new business intelligence data pipelines using Apache Spark, closing critical gaps in customer
+    and merchandising metrics.
+  - |
+    Enhanced system observability with custom metrics, logging, and real-time performance monitoring,
+    enabling faster detection and resolution of service issues.
+  - |
+    Reduced infrastructure costs by 20% through performance analysis, load testing, and architectural
+    optimizations.
+  - |
+    Developed automated tooling to identify and resolve high-severity service errors, reducing on-call
+    burdens and improving system reliability.
+  - |
+    Created on-call debug features and emergent issue modes to accelerate root cause analysis during
+    production incidents.
+  - |
+    Mentored junior engineers and collaborated closely with leadership to provide technical guidance and
+    architectural input.
+
+technologies:
+  
+  # Programming Languages
+  
+  - name: "Java"
+    type: "language_tech"
+    description: |
+      Primary backend language for developing services and APIs that powered global merchandising tools.
+      Used extensively to build scalable, asynchronous systems with strong reliability and observability.
+
+  - name: "JavaScript"
+    type: "language_tech"
+    description: |
+      Used across the stack for building asynchronous UI behavior and contributing to internal tooling.
+      Supported service debugging workflows and browser-based tools.
+
+  - name: "TypeScript"
+    type: "language_tech"
+    description: |
+      Used to modernize frontend tooling and increase type safety in JavaScript applications.
+      Helped reduce runtime errors and improve maintainability.
+
+  - name: "HTML"
+    type: "language_tech"
+    description: |
+      Developed accessible, semantic markup to support dynamic content and interactive merchandising features.
+
+  - name: "CSS"
+    type: "language_tech"
+    description: |
+      Styled responsive and accessible UIs within merchandising tools, using modular design practices.
+
+  # Frameworks & Tools
+  
+  - name: "Apache Spark"
+    type: "framework_tooling"
+    description: |
+      Built data pipelines with Apache Spark to extract and aggregate merchandising metrics, improving visibility
+      into campaign performance and customer behavior.
+
+  # Cloud Services and Platforms
+  
+  - name: "AWS"
+    type: "infra_platform"
+    description: |
+      Migrated legacy infrastructure to AWS-native services to improve scalability, reduce operational overhead,
+      and align with modern best practices in cloud architecture.
+
+  - name: "Lambda"
+    type: "infra_platform"
+    description: |
+      Used AWS Lambda for lightweight, event-driven workflows that augmented core service functionality and
+      simplified integration with internal tooling.
+
+  - name: "S3"
+    type: "infra_platform"
+    description: |
+      Leveraged Amazon S3 for durable storage of campaign assets and service artifacts in support of global
+      merchandising operations.
+
+  - name: "CloudFormation"
+    type: "infra_platform"
+    description: |
+      Used AWS CloudFormation to define and manage infrastructure as code, enabling reproducible and auditable
+      deployments across environments.
+
+  - name: "IAM"
+    type: "infra_platform"
+    description: |
+      Managed fine-grained permissions using AWS IAM to secure access between services, Lambda functions, and
+      developer tools, with a focus on least privilege.
+
+  # Engineering Practices
+  
+  - name: "CI/CD"
+    type: "engineering_practice"
+    description: |
+      Established CI/CD pipelines with automated testing and linting to enable safe, frequent deployments to
+      production with minimal manual overhead.
+
+  - name: "Observability"
+    type: "engineering_practice"
+    description: |
+      Improved system visibility by integrating metrics, structured logging, and dashboards for key
+      service performance indicators.
+
+  - name: "Error Tracking"
+    type: "engineering_practice"
+    description: |
+      Instrumented production services with tooling to surface high-severity errors, reducing time to resolution
+      during incidents.
+
+  - name: "Accessibility (a11y)"
+    type: "engineering_practice"
+    description: |
+      Applied accessibility best practices in markup and interaction design to meet Amazon's internal a11y
+      standards and improve customer experience.
+
+  - name: "UX Collaboration"
+    type: "engineering_practice"
+    description: |
+      Partnered closely with UX designers to iterate on dynamic interfaces and improve usability of internal
+      tools and customer-facing features.
+
+  - name: "Data Quality"
+    type: "engineering_practice"
+    description: |
+      Closed gaps in campaign metrics through the introduction of new data pipelines and validation tooling.
+
+  - name: "Service Modernization"
+    type: "engineering_practice"
+    description: |
+      Led efforts to refactor and migrate legacy services to AWS-native architectures and event-driven patterns.
+
+  - name: "Metrics Instrumentation"
+    type: "engineering_practice"
+    description: |
+      Integrated detailed performance metrics into production services to track availability, latency, and error
+      rates in real time.
+
+  - name: "Developer Experience"
+    type: "engineering_practice"
+    description: |
+      Delivered internal tooling and debug features to support faster iteration, root cause analysis, and
+      production readiness for partner teams.
+
+  # Architecture Patterns
+  
+  - name: "RESTful APIs"
+    type: "architecture_pattern"
+    description: |
+      Designed and maintained REST APIs supporting asynchronous frontend interactions and integrations with
+      partner teams across Amazon retail.
+
+  - name: "Distributed Systems"
+    type: "architecture_pattern"
+    description: |
+      Built and maintained high-reliability distributed services, with a focus on performance, consistency, and
+      graceful degradation under load.
+
+  # System Capabilities
+  
+  - name: "Campaign Management"
+    type: "system_capability"
+    description: |
+      Built backend services to support the scheduling, targeting, and delivery of merchandising campaigns across
+      global retail platforms.
+
+  # Delivery Context
+  
+  - name: "Internal Tools"
+    type: "delivery_context"
+    description: |
+      Built browser-based developer tooling to aid debugging of merchandising services and improve operational
+      efficiency for partner teams.

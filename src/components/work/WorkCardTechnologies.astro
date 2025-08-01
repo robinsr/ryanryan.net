@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TechnologyBadge from './TechnologyBadge.astro';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+---
+
+{entry.data.technologies && entry.data.technologies.length > 0 && (
+  <div>
+    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+      Technologies
+    </h4>
+    <div class="flex flex-wrap gap-2">
+      {entry.data.technologies.map((tech: any) => {
+        const techName = typeof tech === 'string' ? tech : tech.name;
+        const techDescription = typeof tech === 'string' ? null : tech.description;
+        const techType = typeof tech === 'string' ? null : tech.type;
+        
+        return (
+          <TechnologyBadge 
+            tech={{
+              name: techName,
+              type: techType,
+              description: techDescription
+            }}
+            workType={entry.data.type}
+          />
+        );
+      })}
+    </div>
+  </div>
+)} 

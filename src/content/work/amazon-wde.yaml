@@ -1,28 +1,121 @@
 type: "employment"
+
 company: "Amazon.com, Inc"
 title: "Web Development Engineer"
 location: "Seattle, WA"
+
 startDate: "2016-10"
 endDate: "2018-10"
 current: false
-description: "As a Web Development Engineer at Amazon, I specialized in building and enhancing customer-facing web experiences for Amazon Retail. My focus was on developing scalable, performant front-end applications that improved product discovery and merchandising on a global scale."
+
+url: "https://amazon.com"
+
+description: >
+  As a Web Development Engineer at Amazon, I specialized in building and enhancing customer-facing web experiences
+  for Amazon Retail. My focus was on developing scalable, performant front-end applications that improved product
+  discovery and merchandising on a global scale.
+
 highlights:
-  - "Designed and developed several customer-facing merchandising 'widgets' and content modules, deployed across Amazon's global marketplaces to enhance product discovery"
-  - "Collaborated closely with UX designers and product managers to translate high-level requirements into intuitive, responsive web interfaces"
-  - "Contributed to the creation and evolution of Amazon's internal front-end component libraries, ensuring consistency, accessibility, and maintainability across experiences"
-  - "Implemented accessibility best practices (ARIA, semantic HTML, keyboard navigation) to ensure web experiences met or exceeded WCAG standards"
-  - "Led front-end development for merchandising graphics pipelines, enabling dynamic visual content across Amazon's retail pages"
-  - "Championed cross-browser and cross-device compatibility, ensuring a consistent and performant experience across diverse user environments"
-  - "Increased unit test coverage and implemented front-end metrics and logging for better observability and debugging in production"
+  - |
+    Designed and developed several customer-facing merchandising 'widgets' and content modules, deployed across
+    Amazon's global marketplaces to enhance product discovery
+  - |
+    Collaborated closely with UX designers and product managers to translate high-level requirements into intuitive,
+    responsive web interfaces
+  - |
+    Contributed to the creation and evolution of Amazon's internal front-end component libraries, ensuring consistency,
+    accessibility, and maintainability across experiences
+  - |
+    Led front-end development for merchandising graphics pipelines, enabling dynamic visual content across Amazon's
+    retail pages
+  - |
+    Championed cross-browser and cross-device compatibility, ensuring a consistent and performant experience across
+    diverse user environments
+  - |
+    Increased unit test coverage and implemented front-end metrics and logging for better observability and debugging
+    in production
+
 technologies:
+
+  # === Programming Languages ===
   - name: "JavaScript"
+    type: "language_tech"
+    description: |
+      Primary language used to build dynamic client-side behavior and maintain complex UI interactions
+      across Amazon retail tools and customer-facing pages.
+
   - name: "TypeScript"
+    type: "language_tech"
+    description: |
+      Used to improve safety and maintainability of JavaScript applications, especially in larger React codebases
+      with shared components and asynchronous behavior.
+
+  - name: "CSS"
+    type: "language_tech"
+    description: |
+      Used modular CSS and utility classes to build responsive, visually consistent UIs in alignment with Amazon's
+      design guidelines.
+
+  # === Frontend Frameworks and Libraries ===
   - name: "React"
+    type: "framework_tooling"
+    description: |
+      Core frontend library for building interactive merchandising experiences and internal retail tooling.
+      Utilized component-based architecture for UI reuse and maintainability.
+
   - name: "Frontend Frameworks"
+    type: "framework_tooling"
+    description: |
+      Worked with various frontend frameworks including React and legacy AngularJS to deliver responsive,
+      accessible user experiences and modernize older interfaces.
+
+  # === Accessibility and Semantic Web Standards ===
   - name: "ARIA"
+    type: "engineering_practice"
+    description: |
+      Applied ARIA roles and attributes to enhance accessibility of custom components, ensuring screen reader
+      compatibility and keyboard navigation support.
+
   - name: "Semantic HTML"
+    type: "engineering_practice"
+    description: |
+      Wrote standards-compliant, semantic markup to improve accessibility and enable better screen reader and SEO
+      behavior.
+
   - name: "WCAG Standards"
+    type: "engineering_practice"
+    description: |
+      Adhered to WCAG 2.1 accessibility standards in markup, styling, and interaction design to ensure legal and
+      usability compliance.
+
+  # === Testing and Quality Assurance ===
   - name: "Unit Testing"
+    type: "engineering_practice"
+    description: |
+      Developed frontend unit tests for components and utility functions to ensure reliability, prevent regressions,
+      and support CI/CD workflows.
+
+  - name: "Linting"
+    type: "engineering_practice"
+    description: |
+      Used ESLint and other static analysis tools to maintain code consistency, catch early errors, and enforce
+      frontend coding standards.
+
+  # === Performance and UX Optimization ===
   - name: "Performance Optimization"
+    type: "engineering_practice"
+    description: |
+      Optimized load times, script execution, and rendering behavior using profiling tools and best practices for
+      critical path rendering.
+
   - name: "Cross-browser Compatibility"
-url: "https://amazon.com" 
+    type: "engineering_practice"
+    description: |
+      Tested and resolved inconsistencies across browsers and devices, ensuring functional parity and visual
+      consistency for all users.
+
+  - name: "Responsive Design"
+    type: "engineering_practice"
+    description: |
+      Designed and implemented layouts that adapted to various screen sizes and devices, supporting mobile-first
+      and accessibility-first principles.

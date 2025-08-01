@@ -120,7 +120,6 @@
 
 		const isInViewport = cardTopPosition >= windowTop && cardBottomPosition <= windowBottom;
     const isAboveViewport = cardTopPosition < windowTop;
-    const isBelowViewport = cardBottomPosition > windowBottom;
 
 		const cardBody: ViewportFrameRelation = isInViewport ? 'contained' : isAboveViewport ? 'fully-above' : 'fully-below';
 		
@@ -151,9 +150,6 @@
 		// Past cards (cards that are above the viewport) have active timeline markers and
 		// labels, but are not the active card
 		const pastCards = cards.filter((card) => card.state === 'past');
-		
-		// Upcoming cards (cards that are below the viewport) have inactive timeline markers and labels
-		const upcomingCards = cards.filter((card) => card.state === 'upcoming');
 		
 		// Showing cards are fully in the viewport. For large viewports this could be multiple 
 		// cards; for small viewports this might not be any cards. 
@@ -241,18 +237,6 @@
 				}
 			});
 		})
-	}
-
-	function onMarkerClicked(event: MouseEvent) {
-		const target = event.target as HTMLElement;
-		const anchor = target.dataset.timelineAnchor;
-		const cards = getTimelineCardElements();
-
-		const card = cards.find((card) => card.anchor === anchor);
-		
-		if (card) {
-			card.el.scrollIntoView({ behavior: 'smooth' });
-		}
 	}
 
 	function onContentLoaded() {

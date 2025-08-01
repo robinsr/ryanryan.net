@@ -22,13 +22,10 @@ export interface Props {
 
 
 const { 
-	file,
-	url,
 	frontmatter: {
 		title,
 		description,
 		pubDate = new Date(),
-		updatedDate = new Date(),
 		category,
 		tags = [],
 		image,
@@ -36,10 +33,7 @@ const {
 	}
 } = Astro.props;
 
-console.log(pubDate, typeof pubDate);
-
 const formattedDate = formatDateLong(pubDate);
-const formattedUpdatedDate = formatDateLong(updatedDate);
 ---
 
 <Layout 
