@@ -1,12 +1,12 @@
 type: "project"
 
-projectName: "TaggedFileBrowser"
+projectName: "HyperTagBrowser"
 title: "macOS File Browser with Advanced Tagging System"
 
 startDate: "2024-09"
 current: true
 
-githubUrl: "https://github.com/robinsr/TaggedFileBrowser"
+githubUrl: "https://github.com/robinsr/hyper-tag-browser"
 
 description: >
   A sophisticated macOS file browser application built with SwiftUI that provides advanced file organization 
