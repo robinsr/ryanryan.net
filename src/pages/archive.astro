@@ -3,11 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Tag from '../components/Tag.astro';
-import { posts } from '../utils/posts';
+import { getCollection } from 'astro:content';
+
+// Get all posts from the content collection
+const allPosts = await getCollection('posts');
+const posts = allPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
 // Group posts by year
 const postsByYear = posts.reduce((acc, post) => {
-  const year = post.pubDate.getFullYear();
+  const year = post.data.pubDate.getFullYear();
   if (!acc[year]) {
     acc[year] = [];
   }
@@ -52,37 +56,37 @@ const totalPosts = posts.length;
 									<article class="group">
 										<div class="flex items-start space-x-6">
 											<time 
-												datetime={post.pubDate.toISOString()}
+												datetime={post.data.pubDate.toISOString()}
 												class="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap pt-1"
 											>
-												{post.pubDate.toLocaleDateString('en-US', { 
+												{post.data.pubDate.toLocaleDateString('en-US', { 
 													month: 'short', 
 													day: 'numeric' 
 												})}
 											</time>
 											<div class="flex-1 min-w-0">
 												<h3 class="text-lg font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-													<a href={post.url} class="block">
-														{post.title}
+													<a href={`/posts/${post.slug}`} class="block">
+														{post.data.title}
 													</a>
 												</h3>
-												{post.description && (
+												{post.data.description && (
 													<p class="mt-2 text-gray-600 dark:text-gray-300 line-clamp-2">
-														{post.description}
+														{post.data.description}
 													</p>
 												)}
 												<div class="flex items-center space-x-4 mt-4">
-													{post.category && (
-														<Tag tag={post.category} type="category" href={`/category/${post.category.toLowerCase()}`} />
+													{post.data.category && (
+														<Tag tag={post.data.category} type="category" href={`/category/${post.data.category.toLowerCase()}`} />
 													)}
-													{post.tags && post.tags.length > 0 && (
+													{post.data.tags && post.data.tags.length > 0 && (
 														<div class="flex items-center space-x-2">
-															{post.tags.slice(0, 3).map((tag: string) => (
+															{post.data.tags.slice(0, 3).map((tag: string) => (
 																<Tag tag={tag} href={`/tag/${tag.toLowerCase()}`} />
 															))}
-															{post.tags.length > 3 && (
+															{post.data.tags.length > 3 && (
 																<span class="text-xs text-gray-500 dark:text-gray-400">
-																	+{post.tags.length - 3} more
+																	+{post.data.tags.length - 3} more
 																</span>
 															)}
 														</div>

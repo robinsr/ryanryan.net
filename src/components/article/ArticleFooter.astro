@@ -1,0 +1,55 @@
+---
+import { SITE_CONFIG } from '../../constants';
+
+import { SVG_PATHS } from '../../constants';
+
+const { title } = Astro.props;
+---
+
+<footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+  
+
+  <div class="flex items-center justify-between">
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+      <p>Thanks for reading! If you found this helpful, consider sharing it.</p>
+    </div>
+    <div class="flex space-x-4">
+      <a 
+        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.toString())}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-blue-500 transition-colors"
+        aria-label="Share on Twitter"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d={SVG_PATHS.twitter}/>
+        </svg>
+      </a>
+      <a 
+        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.toString())}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-blue-600 transition-colors"
+        aria-label="Share on LinkedIn"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d={SVG_PATHS.linkedin}/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Back to Blog Button -->
+  <div class="text-center mb-8 mt-12">
+    <a 
+      href="/blog" 
+      class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+    >
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Blog
+    </a>
+  </div>
+
+</footer>

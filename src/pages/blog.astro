@@ -3,8 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlogCard from '../components/BlogCard.astro';
-import { posts } from '../utils/posts';
+import { getCollection } from 'astro:content';
 
+// Get all posts from the content collection
+const posts = await getCollection('posts');
+// Sort by publication date (newest first)
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <Layout title="Blog">
@@ -26,32 +30,24 @@ import { posts } from '../utils/posts';
 				
 				<!-- Blog Posts Grid -->
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{posts.map((post) => (
+					{sortedPosts.map((post) => (
 						<BlogCard
-							title={post.title}
-							description={post.description}
-							pubDate={post.pubDate}
-							url={post.url}
-							category={post.category}
-							tags={post.tags}
-							image={post.image}
+							title={post.data.title}
+							description={post.data.description}
+							pubDate={post.data.pubDate}
+							url={`/posts/${post.slug}`}
+							category={post.data.category}
+							tags={post.data.tags}
+							image={post.data.image}
 						/>
 					))}
 				</div>
 				
 				<!-- Empty State -->
-				{posts.length === 0 && (
+				{sortedPosts.length === 0 && (
 					<div class="text-center py-12">
-						<div class="text-gray-400 dark:text-gray-500 mb-4">
-							<svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-							</svg>
-						</div>
-						<h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-							No posts yet
-						</h3>
-						<p class="text-gray-500 dark:text-gray-400">
-							Check back soon for new content!
+						<p class="text-gray-500 dark:text-gray-400 text-lg">
+							No blog posts yet. Check back soon!
 						</p>
 					</div>
 				)}

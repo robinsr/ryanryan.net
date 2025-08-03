@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/BlogPost.astro
 title: APIs with Node
 description: "With a little work, node can be used as a complete web server, but it's probably something you shouldn't do. Node's speed is limited when it comes to traditional web-server applications because it runs inside an interpreter (like all javascript) and just wont be as as fast at things like reading from disk."
 pubDate: 2013-08-25T12:00:00Z
@@ -22,9 +21,9 @@ For [TinyBudget](href="http://demos.ethernetbucket.com/TinyBudget"), I designed 
 Like everything in life, web APIs function becaue of social contract, and by that I mean beacuse we've already aggreed on the rules. In this case the rules governed how the API is to be talked to. Web APIs must be shown proper respect, anything less and you will surely suffer burning hell fire. To please the API, follow the documentation carefully. But since this article is about making an API you can craft your psuedo-god into whatever you want. (But this reminds of a very important rule to follow while programming: document everything. Otherwise debugging is absolutely terrible). So I've documented my API call like this:
 
 
-| Method | Requires | Optionsl | Returns | Example Call | 
-| ------------- | ------------- | ------------- | -------------- | -------------- | 
-| getMonth    | name, sess, year, month | none      | JSON Object: { items:array }      | getMonth?name=cary&amp;sess=3a987f1b8bf87f1e990e6272c0b51960&amp;month=4&amp;year=2013 | 
+| Method | Requires | Optional | Returns | Example Call | 
+| ------ | -------- | -------- | ------- | ------------ | 
+| getMonth | name, sess, year, month | none | JSON Object: `{ items:array }` | `getMonth?name=cary&sess=3a987f1b8bf87f1e990e6272c0b51960&month=4&year=2013` | 
 
 
 This doc outlines the name of the method, what parameters are required or optional, what the return object will look like, and what an example call looks like. This API takes all the parameters in the URI string (which isn't a great idea as its less secure, but hey, this is for demonstration)
@@ -62,7 +61,7 @@ function getMonth (year, month, name, sessionId){
 
 ### Handling the call
 
-On the server side, we need to build a function that handles the request. To see how to handle an HTTP request, read <a title="Demos Ethernet Bucket - HTTP Hanlder Function" href="httphandlerfunction">this</a>. The basic concept is you can match the req to a function based on its URL and then pass the request and response objects to the function on invocation. So our function will be called &quot;getMonth&quot;
+On the server side, we need to build a function that handles the request. To see how to handle an HTTP request, read <a title="Demos Ethernet Bucket - HTTP Hanlder Function" href="httphandlerfunction">this</a>. The basic concept is you can match the req to a function based on its URL and then pass the request and response objects to the function on invocation. So our function will be called "getMonth"
 
 ```javascript
 var databaseUrl = "yourdatabase"
@@ -108,6 +107,6 @@ res.writeHead(500, { 'Content-Type': 'text/plain' });
 res.end('Database Error);
 ```
 
-If there is no error, using Async I can make database queries for each item and add them one-by-one to the return object by using &quot;push&quot; (Side note: since for this application we're getting a user's expenditures and since MongoDB doesn't support the decimal data-type, items' monetary values are store as integers and then converted to decimal after being pulled from the database).
+If there is no error, using Async I can make database queries for each item and add them one-by-one to the return object by using "push" (Side note: since for this application we're getting a user's expenditures and since MongoDB doesn't support the decimal data-type, items' monetary values are store as integers and then converted to decimal after being pulled from the database).
 
 After all the items are loaded into the return object, I use the response object's method writeHead to configure the response's HTTP code. Finally, the requested is ended with the requested data nicely stringified for the client to use. 

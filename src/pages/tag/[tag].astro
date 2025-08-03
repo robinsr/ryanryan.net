@@ -3,15 +3,18 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import BlogCard from '../../components/BlogCard.astro';
-import { posts } from '../../utils/posts';
+import { getCollection } from 'astro:content';
 import { SITE_CONFIG } from '../../constants';
 
 export async function getStaticPaths() {
+	// Get all posts from the content collection
+	const allPosts = await getCollection('posts');
+	
 	// Get all unique tags from posts
 	const allTags = new Set<string>();
-	posts.forEach(post => {
-		if (post.tags) {
-			post.tags.forEach((tag: string) => allTags.add(tag));
+	allPosts.forEach(post => {
+		if (post.data.tags) {
+			post.data.tags.forEach((tag: string) => allTags.add(tag));
 		}
 	});
 
@@ -24,10 +27,11 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.props;
 
-// Filter posts by tag
-const taggedPosts = posts.filter(post => 
-	post.tags && post.tags.includes(tag)
-);
+// Get all posts and filter by tag
+const allPosts = await getCollection('posts');
+const taggedPosts = allPosts.filter(post => 
+	post.data.tags && post.data.tags.includes(tag)
+).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
 // Format tag for display (capitalize first letter)
 const displayTag = tag.charAt(0).toUpperCase() + tag.slice(1);
@@ -62,13 +66,13 @@ const displayTag = tag.charAt(0).toUpperCase() + tag.slice(1);
 					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 						{taggedPosts.map((post) => (
 							<BlogCard
-								title={post.title}
-								description={post.description}
-								pubDate={post.pubDate}
-								url={post.url}
-								category={post.category}
-								tags={post.tags}
-								image={post.image}
+								title={post.data.title}
+								description={post.data.description}
+								pubDate={post.data.pubDate}
+								url={`/posts/${post.slug}`}
+								category={post.data.category}
+								tags={post.data.tags}
+								image={post.data.image}
 							/>
 						))}
 					</div>
