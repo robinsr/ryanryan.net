@@ -9,14 +9,12 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://ryanryan.net',
   output: 'static',
-
   build: {
     assets: 'assets',
   },
-
   vite: {
     plugins: [tailwindcss()],
   },
-
   integrations: [mdx(), sitemap()],
+  compressHTML: false,
 });

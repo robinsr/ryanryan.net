@@ -1,0 +1,43 @@
+---
+import { SITE_CONFIG } from '../../constants';
+import type { PostMeta, SocialMeta } from '../../content/config';
+
+export interface Props {
+	post: PostMeta;
+}
+
+const { post } = Astro.props;
+
+const socials: SocialMeta = {
+	card: "summary_large_image",
+	title: post.title,
+	description: post.description,
+	image: post.image || SITE_CONFIG.social.image,
+	...post.social,
+};
+
+const card = socials.card;
+const title = socials.title;
+const description = socials.description;
+const image = socials.image;
+---
+
+<meta property="article:author" content={post.author}>
+<meta property="article:published_time" content={post.pubDate.toISOString()}>
+<meta property="article:modified_time" content={post.pubDate.toISOString()}>
+<meta property="article:section" content={post.category}>
+<meta property="article:tag" content={post.tags.join(', ')}>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{image && <meta property="og:image" content={new URL(image, Astro.url)} />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content={card} />
+<meta name="twitter:url" content={Astro.url} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{image && <meta name="twitter:image" content={new URL(image, Astro.url)} />}

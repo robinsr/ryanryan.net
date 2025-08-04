@@ -1,9 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ArticleFooter from '../../components/article/ArticleFooter.astro';
+
+export interface Props {
+	post: CollectionEntry<'posts'>;
+}
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -13,11 +17,22 @@ export async function getStaticPaths() {
   }));
 }
 
-const { post } = Astro.props;
+const { post } = Astro.props as Props;
 const { Content } = await post.render();
+
+let fullTitle = post.data.title;
+
+if (post.data.subtitle) {
+  fullTitle = `${post.data.title}: ${post.data.subtitle}`;
+}
+
+const title = post.data.title
+const description = post.data.description
+const image = post.data.image
+
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={title} description={description} image={image} post={post.data}>
   <div class="min-h-screen flex flex-col">
     <Header />
     

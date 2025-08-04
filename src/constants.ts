@@ -10,6 +10,12 @@ export const SITE_CONFIG = {
     name: 'Ryan Robinson',
     email: 'hi@ryanryan.net',
     summary: 'Full-stack developer passionate about building great web experiences.',
+  },
+  social: {
+    title: 'Ryan Robinson',
+    description: 'Full-stack developer passionate about building great web experiences.',
+    image: 'https://ryanryan.net/og-images/ryan-robinson.jpg',
+    card: 'summary_large_image',
   }
 } as const;
 

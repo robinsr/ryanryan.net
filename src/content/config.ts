@@ -1,5 +1,26 @@
 import { defineCollection, z } from 'astro:content';
+import { SITE_CONFIG } from '../constants';
 
+
+export interface SocialMeta {
+	title: string;
+	description: string;
+	image: string;
+	card: "summary" | "summary_large_image";
+}
+
+export interface PostMeta {
+	title: string;
+	subtitle?: string;
+	description: string;
+	pubDate: Date;
+	category: string;
+	tags: string[];
+	author: string;
+	draft: boolean;
+	social?: SocialMeta;
+	image?: string;
+}
 
 
 /**
@@ -34,8 +55,6 @@ const keyTechnologyTypeSchema = z.enum([
   // Examples: Desktop Application Development, Full-stack Development, Customer-facing Systems, Internal Tools, Contract Work
   'delivery_context',
 ]);
-
-
 
 /**
  * A key technology used in the work experience.
@@ -75,20 +94,41 @@ const workCollection = defineCollection({
 });
 
 /**
+ * Sub-schema for social media metadata.
+ */
+const postSocialSchema = z.object({
+  // Custom title for OG/Twitter (optional override)
+  title: z.string().optional().default(SITE_CONFIG.social.title),
+  // Social-optimized description
+  description: z.string().optional().default(SITE_CONFIG.social.description),
+  // Full URL to the OG/Twitter image
+  image: z.string().url().optional().default(SITE_CONFIG.social.image),
+  // Twitter card type
+  card: z.enum(["summary", "summary_large_image"]).optional().default(SITE_CONFIG.social.card), 
+})
+
+/**
+ * Schema for the frontmatter of blog posts.
+ */
+const postFrontmatterSchema = z.object({
+  title: z.string(),
+  subtitle: z.string().optional(),
+  description: z.string(),
+  author: z.string().default("Ryan Robinson"),
+  draft: z.boolean().default(false),
+  pubDate: z.coerce.date(),
+  category: z.string(),
+  tags: z.array(z.string()),
+  social: postSocialSchema.optional(),
+  image: z.string().optional(),
+})
+
+/**
  * The collection of blog posts.
  */
 const postsCollection = defineCollection({
   type: 'content',
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    category: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    image: z.string().optional(),
-    layout: z.string().optional(),
-    draft: z.boolean().default(false),
-  }),
+  schema: postFrontmatterSchema
 });
 
 export const collections = {
