@@ -4,7 +4,8 @@ projectName: "CWMoto Racing Team Website"
 title: "Full-Stack E-commerce & Racing Team Platform"
 
 startDate: "2023-01"
-current: true
+endDate: "2024-02"
+current: false
 
 description: >
   A comprehensive website for CWMoto, a PNW-based professional road racing team and 
@@ -18,35 +19,17 @@ githubUrl: "https://github.com/CW-Moto/website"
 liveUrl: "https://www.cwmoto.com"
 
 highlights:
-  - |
-    Built a full-stack e-commerce platform using Astro with TypeScript, integrating 
-    Shopify's Storefront API for product management and cart functionality
-  - |
-    Implemented a sophisticated architecture with tRPC for end-to-end type safety and 
-    seamless frontend-backend communication, eliminating the need for traditional REST endpoints
-  - |
-    Created a dual-purpose website that serves both the racing team's sponsorship needs
-    and the shop's e-commerce requirements with unified branding
-  - |
-    Developed a responsive, mobile-first design optimized for users accessing the site 
-    from race paddocks and mobile devices
-  - |
-    Integrated calendar functionality to display race events and team schedules with 
-    automatic image association based on event location
-  - |
-    Built a content management system using Astro Content Collections for blog posts, 
-    team information, and sponsor content
-  - |
-    Implemented user session management with Redis for secure authentication and cart persistence
-  - |
-    Created a modular component architecture with reusable UI elements for consistent design patterns
-  - |
-    Set up comprehensive testing with Vitest for unit tests and Playwright for end-to-end testing
-  - |
-    Deployed with Docker containerization for consistent development and production environments
-  - |
-    Configured automated deployment pipeline with Railway, including health checks and 
-    automatic restart policies for high availability
+  - Built a full-stack e-commerce platform using Astro with TypeScript, integrating Shopify's Storefront API for product management and cart functionality
+  - Implemented a sophisticated architecture with tRPC for end-to-end type safety and seamless frontend-backend communication, eliminating the need for traditional REST endpoints
+  - Created a dual-purpose website that serves both the racing team's sponsorship needs and the shop's e-commerce requirements with unified branding
+  - Developed a responsive, mobile-first design optimized for users accessing the site  from race paddocks and mobile devices
+  - Integrated calendar functionality to display race events and team schedules with automatic image association based on event location
+  - Built a content management system using Astro Content Collections for blog posts, team information, and sponsor content
+  - Implemented user session management with Redis for secure authentication and cart persistence
+  - Created a modular component architecture with reusable UI elements for consistent design patterns
+  - Set up comprehensive testing with Vitest for unit tests and Playwright for end-to-end testing
+  - Deployed with Docker containerization for consistent development and production environments
+  - Configured automated deployment pipeline with Railway, including health checks and automatic restart policies for high availability
 
 technologies:
   
@@ -171,3 +154,25 @@ technologies:
     type: "system_capability"
     description: |
       Complete integration with Shopify for product management, inventory, and payment processing
+
+
+topSkills:
+  - name: "Full-Stack Web Development"
+    description: >
+      Built an end-to-end web platform combining modern frontend frameworks with backend services, session management, and infrastructure deployment—demonstrating fluency across the stack and real-world product delivery experience.
+
+  - name: "E-commerce Integration"
+    description: >
+      Integrated a custom storefront with Shopify’s Storefront API, including dynamic product rendering, cart management, and secure checkout—showcasing applied experience in digital commerce and API-based systems.
+
+  - name: "End-to-End Type Safety"
+    description: >
+      Leveraged tRPC and TypeScript to enforce strict contracts between frontend and backend layers, enabling faster development and fewer runtime errors—an example of modern engineering practices for scalable web systems.
+
+  - name: "Performance-Optimized Responsive Design"
+    description: >
+      Delivered a mobile-first experience tailored to on-the-go users with server-side rendering and fast-loading pages—emphasizing attention to user context, performance, and accessibility.
+
+  - name: "CI/CD & Cloud Deployment"
+    description: >
+      Automated build, test, and deploy workflows using Docker and Railway for consistent and high-availability deployments—highlighting production-readiness and DevOps fluency.

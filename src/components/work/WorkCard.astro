@@ -1,9 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { makeAnchor } from '../../utils/work';
 import WorkCardHeader from './WorkCardHeader.astro';
+import WorkCardImages from './WorkCardImages.astro';
 import WorkCardHighlights from './WorkCardHighlights.astro';
 import WorkCardTechnologies from './WorkCardTechnologies.astro';
+import ShowReflectionsButton from './ShowReflectionsButton.astro';
+import { makeAnchor } from '../../utils/work';
+import { displayMonthYearRange } from '../../utils/date';
+import CopyWorkButton from './CopyWorkButton.astro';
+
 
 interface Props {
   entry: CollectionEntry<'work'>;
@@ -11,28 +16,59 @@ interface Props {
 }
 
 const { entry, index } = Astro.props;
+
+const reflectionText = entry.data.reflections?.trim().split('\n').filter(line => line.trim() !== '');
 ---
 
 <article 
-  class="timeline-tracker-card bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 border border-gray-200 dark:border-gray-700 transition-all duration-300"
+  class="timeline-tracker-card bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 transition-all duration-300"
   data-timeline-index={index}
   data-timeline-type={entry.data.type}
   data-timeline-anchor={makeAnchor(entry)}
   id={`entry-${index}`}
 >
-  <!-- Header -->
-  <WorkCardHeader entry={entry} />
-  
-  <!-- Description -->
-  <div class="mb-8">
-    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-      {entry.data.description}
-    </p>
+
+  <!-- Copy button -->
+  <div class="float-right">
+    <CopyWorkButton entry={entry} />
+
+    {entry.data.reflections && (
+      <ShowReflectionsButton entry={entry} />
+    )}
+
   </div>
   
-  <!-- Highlights -->
-  <WorkCardHighlights entry={entry} />
-  
-  <!-- Technologies -->
-  <WorkCardTechnologies entry={entry} />
-</article> 
+  <div class="p-8">
+    
+    <!-- Header -->
+    <WorkCardHeader entry={entry} />
+      
+    <!-- Description -->
+    <div class="mb-8">
+      <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+        {entry.data.description}
+      </p>
+    </div>
+
+    <!-- Showcase Images -->
+    <WorkCardImages entry={entry} />
+
+    <!-- Hidden reflections content that will be shown when button is clicked -->
+    <div id={`reflections-content-${entry.id}`} class="hidden mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div class="prose prose-sm dark:prose-invert max-w-none">
+        {reflectionText?.map(paragraph => (
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+            {paragraph}
+          </p>
+        ))}
+      </div>
+    </div>
+
+
+    <!-- Highlights -->
+    <WorkCardHighlights entry={entry} />
+
+    <!-- Technologies -->
+    <WorkCardTechnologies entry={entry} />
+  </div>
+</article>

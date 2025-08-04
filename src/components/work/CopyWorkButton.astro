@@ -1,0 +1,118 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Copy } from "@lucide/astro";
+import { displayMonthYearRange } from "../../utils/date";
+
+interface Props {
+  entry: CollectionEntry<"work">;
+}
+
+const { entry } = Astro.props;
+
+// Function to generate markdown content
+function generateMarkdown(entry: CollectionEntry<"work">): string {
+  const title =
+    entry.data.type === "employment"
+      ? entry.data.title
+      : entry.data.projectName;
+  const subtitle =
+    entry.data.type === "employment" ? entry.data.company : entry.data.title;
+  const dateRange = displayMonthYearRange(
+    entry.data.startDate,
+    entry.data.endDate,
+    entry.data.current,
+  );
+
+  let markdown = `${title}\n\n`;
+  markdown += `${subtitle}`;
+
+  if (entry.data.location) {
+    markdown += ` • ${entry.data.location}`;
+  }
+
+  markdown += `\n${dateRange}\n\n`;
+  markdown += `${entry.data.description}\n\n`;
+
+  if (entry.data.highlights && entry.data.highlights.length > 0) {
+    markdown += `Key Highlights:\n\n`;
+    markdown += entry.data.highlights.map((hl) => `- ${hl}`).join("\n");
+    markdown += `\n\n`;
+  }
+
+  if (entry.data.technologies && entry.data.technologies.length > 0) {
+    markdown += "🛠 ";
+    markdown += entry.data.technologies
+      .map((tech) => `(${tech.name})`)
+      .join(" ");
+  }
+
+  if (entry.data.githubUrl) {
+    markdown += `\n\n`;
+    markdown += `🔗 GitHub: ${entry.data.githubUrl}`;
+  }
+
+  return markdown;
+}
+
+const markdownContent = generateMarkdown(entry);
+---
+
+<button
+  id={`copy-btn-${entry.id}`}
+  class="inline-flex items-center justify-center w-8 h-8 m-2 text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors"
+  data-markdown={markdownContent}
+  title="Copy as Markdown">
+    <Copy class="w-4 h-4" />
+</button>
+
+<script>
+  // Copy functionality
+  document.addEventListener("DOMContentLoaded", () => {
+    const copyButtons = document.querySelectorAll('[id^="copy-btn-"]');
+
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const markdown = button.getAttribute("data-markdown");
+        if (!markdown) return;
+
+        try {
+          await navigator.clipboard.writeText(markdown);
+
+          // Visual feedback
+          const originalHTML = button.innerHTML;
+          button.innerHTML = `
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          `;
+
+          setTimeout(() => {
+            button.innerHTML = originalHTML;
+          }, 2000);
+        } catch (err) {
+          console.error("Failed to copy: ", err);
+          // Fallback for older browsers
+          const textArea = document.createElement("textarea");
+          textArea.value = markdown;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textArea);
+
+          // Visual feedback for fallback
+          const originalHTML = button.innerHTML;
+          button.innerHTML = `
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          `;
+
+          setTimeout(() => {
+            button.innerHTML = originalHTML;
+          }, 2000);
+        }
+      });
+    });
+  });
+</script>
+

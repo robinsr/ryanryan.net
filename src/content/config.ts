@@ -23,6 +23,10 @@ export interface PostMeta {
 }
 
 
+//
+// Work Schema
+//
+
 /**
  * The type of key technology used in the work experience.
  */
@@ -71,27 +75,67 @@ const keyTechnologySchema = z.object({
 const workTypeSchema = z.enum(['employment', 'project']);
 
 /**
+ * Defines a single image for a project including the full-size image, optional thumbnail, and alt text.
+ */
+const projectImageSchema = z.object({
+  full: z.string(),
+  thumbnail: z.string().optional(),
+  alt: z.string().optional(),
+})
+
+/**
+ * Defines the set of images for a project including the logo, primary image, and showcase images.
+ */
+const projectImagesSchema = z.object({
+  base_url: z.string().optional(),
+  logo: projectImageSchema.optional(),
+  primary: projectImageSchema.optional(),
+  showcase: z.array(projectImageSchema).optional().default([])
+})
+
+/**
+ * Defines a single skill for a project, eg "Native macOS Development" or "Advanced Tagging & Metadata Systems"
+ */
+const projectSkillSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+})
+
+
+/**
+ * Describes employment history and personal prjects
+ */
+const workOrProjectSchema = z.object({
+  type: workTypeSchema,
+  title: z.string(),
+  company: z.string().optional(), // Required for employment, optional for projects
+  projectName: z.string().optional(), // Required for projects, optional for employment
+  location: z.string().optional(), // Optional for projects
+  startDate: z.string(),
+  endDate: z.string().optional(),
+  current: z.boolean().default(false),
+  description: z.string(),
+  highlights: z.array(z.string()),
+  technologies: z.array(keyTechnologySchema),
+  url: z.string().url().optional(),
+  githubUrl: z.string().url().optional(), // For projects
+  liveUrl: z.string().url().optional(), // For projects
+  images: projectImagesSchema.optional(),
+  topSkills: z.array(projectSkillSchema).optional(),
+  reflections: z.string().optional(),
+});
+
+/**
  * The collection of work experience.
  */
 const workCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    type: workTypeSchema,
-    title: z.string(),
-    company: z.string().optional(), // Required for employment, optional for projects
-    projectName: z.string().optional(), // Required for projects, optional for employment
-    location: z.string().optional(), // Optional for projects
-    startDate: z.string(),
-    endDate: z.string().optional(),
-    current: z.boolean().default(false),
-    description: z.string(),
-    highlights: z.array(z.string()),
-    technologies: z.array(keyTechnologySchema),
-    url: z.string().url().optional(),
-    githubUrl: z.string().url().optional(), // For projects
-    liveUrl: z.string().url().optional(), // For projects
-  }),
+  schema: workOrProjectSchema
 });
+
+//
+// Post Schema
+//
 
 /**
  * Sub-schema for social media metadata.

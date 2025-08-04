@@ -14,36 +14,122 @@ description: >
   powerful search capabilities, allowing users to organize and discover files through descriptive tags, attribution 
   metadata, and custom work queues.
 
+images:
+  base_url: "https://raw.githubusercontent.com/robinsr/hyper-tag-browser/main/screenshots"
+  
+  primary:
+    full: "hypertagbrowser-browse-screen-cropped.jpg"
+    thumbnail: "thumbs/hypertagbrowser-browse-screen-cropped.jpg"
+    alt: "HyperTagBrowser Browse Screen"
+  
+  showcase:
+    
+    - full: "hypertagbrowser-browse-screen-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-browse-screen-cropped.jpg"
+      alt: >
+        1. The file browser is relatively intuitive, mirroring the Finder's layout and behavior.
+    
+    - full: "hypertagbrowser-browser-screen-selection-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-browser-screen-selection-cropped.jpg"
+      alt: >
+        2. Item selection using mouse or keyboard navigation
+
+      # Tag Sheet screenshots
+    
+    - full: "hypertagbrowser-tag-sheet-main-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-tag-sheet-main-cropped.jpg"
+      alt: > 
+        3. ⌘+T displays the 'Tag Sheet' for an item, presenting a UI for managing item tag associations
+        including a search field for finding existing tags and a keyboard-scrollable list of the 
+        current tag associations. Pressing ↵ toggles a tag association, allowing users to construct
+        the set of tags for an item or items, with changes only being applied when the user exits the sheet.
+    
+    - full: "hypertagbrowser-tag-sheet-search-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-tag-sheet-search-cropped.jpg"
+      alt: >
+        4. From the Tag Sheet, typing in the search field will filter the list of tags to only show those 
+        that match the text entered. The displayed tags are clickable, or can be focused with ⌘+[ or ⌘+]
+        and copied to the entry field with the tab key.
+
+    - full: "hypertagbrowser-tag-sheet-added-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-tag-sheet-added-cropped.jpg"
+      alt: >
+        5. The tag sheet is a powerful tool for managing tags and their relationships
+
+    - full: "hypertagbrowser-tag-sheet-multi-items-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-tag-sheet-multi-items-cropped.jpg"
+      alt: >
+        6. The Tag Sheet supports editing associations for multiple items at once. Only common tag associations
+        are shown, and any edits to the tag associations are applied to all selected items. Item's unique
+        tags (omitted from the Tag Sheet) are preserved.
+    
+    # Context Menu screenshots
+    
+    - full: "hypertagbrowser-context-menu-dates-submenu-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-context-menu-dates-submenu-cropped.jpg"
+      alt: >
+        7. Context menu for dates submenu
+    
+    - full: "hypertagbrowser-context-menu-multi-item-main-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-context-menu-multi-item-main-cropped.jpg"
+      alt: >
+        8. Context menu for multiple items
+
+    # Search Sheet screenshots
+    
+    - full: "hypertagbrowser-search-sheet-nebula-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-search-sheet-nebula-cropped.jpg"
+      alt: >
+        9. The search sheet is a powerful tool for finding files by name, tags, and metadata
+    
+    # Detail Screen screenshots
+
+
+    - full: "hypertagbrowser-detail-screen-main-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-detail-screen-main-cropped.jpg"
+      alt: >
+        10. From the item's detail screen, various actions can be performed from the screen's inspector panel.
+    
+    - full: "hypertagbrowser-detail-screen-added-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-detail-screen-added-cropped.jpg"
+      alt: >
+        11. Adding a new tag to an item from the item's detail screen.
+    
+    - full: "hypertagbrowser-detail-screen-bgcolor-match-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-detail-screen-bgcolor-match-cropped.jpg"
+      alt: >
+        12. For image file types, the app's background color matches the image's primary color
+    
+    # Detail Screen BGColor Match screenshots
+    
+    - full: "hypertagbrowser-detail-screen-bgcolor-match-tag-added-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-detail-screen-bgcolor-match-tag-added-cropped.jpg"
+      alt: >
+        13. New tag added to item from the item detail screen
+    
+    - full: "hypertagbrowser-detail-screen-bgcolor-match-tag-search-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-detail-screen-bgcolor-match-tag-search-cropped.jpg"
+      alt: >
+        14. Search for tags in the item detail screen
+
+    # Rename Tag Sheet screenshots
+    
+    - full: "hypertagbrowser-detail-screen-bgcolor-rename-tag-sheet-cropped.jpg"
+      thumbnail: "thumbs/hypertagbrowser-detail-screen-bgcolor-rename-tag-sheet-cropped.jpg"
+      alt: >
+        15. A sheet for renaming a tag — renames can be applied to different selections of items
+
 highlights:
-  - |
-    Built a native macOS application using SwiftUI and AppKit with a modern, responsive interface featuring 
-    grid and table views for file browsing
-  - |
-    Implemented a sophisticated tagging system with multiple domains including descriptive tags, attribution
-    metadata (artist, creator, owner), creation dates, and work queues
-  - |
-    Developed a robust file indexing service using GRDB (SQLite) for persistent storage of file metadata, 
-    tags, and relationships
-  - |
-    Created an intelligent file identification system using extended attributes to maintain unique content 
-    IDs across file operations
-  - |
-    Integrated macOS system services including QuickLook for thumbnail generation, Spotlight for search, 
-    and file system monitoring for real-time updates
-  - |
-    Built a comprehensive search system supporting complex queries with tag-based filtering, date ranges, 
-    and full-text search capabilities
-  - |
-    Implemented a work queue system for batch operations and task management with visual progress tracking
-  - |
-    Designed a modular architecture with dependency injection using Factory framework for maintainable 
-    and testable code
-  - |
-    Added advanced features including drag-and-drop support, keyboard navigation, context menus, and 
-    customizable UI panels
-  - |
-    Integrated with macOS system features like clipboard operations, file operations (rename, move, 
-    trash), and volume management
+  - Built a native macOS application using SwiftUI and AppKit with a modern, responsive interface featuring grid and table views for file browsing
+  - Implemented a sophisticated tagging system with multiple domains including descriptive tags, attributionmetadata (artist, creator, owner), creation dates, and work queues
+  - Developed a robust file indexing service using GRDB (SQLite) for persistent storage of file metadata, tags, and relationships
+  - Created an intelligent file identification system using extended attributes to maintain unique content IDs across file operations
+  - Integrated macOS system services including QuickLook for thumbnail generation, Spotlight for search, and file system monitoring for real-time updates
+  - Built a comprehensive search system supporting complex queries with tag-based filtering, date ranges, and full-text search capabilities
+  - Implemented a work queue system for batch operations and task management with visual progress tracking
+  - Designed a modular architecture with dependency injection using Factory framework for maintainable and testable code
+  - Added advanced features including drag-and-drop support, keyboard navigation, context menus, and customizable UI panels
+  - Integrated with macOS system features like clipboard operations, file operations (rename, move, trash), and volume management
 
 
 technologies:
@@ -52,7 +138,7 @@ technologies:
   
   - name: "Swift"
     type: "language_tech"
-    description: |
+    description: >
       The core programming language used throughout the application for type-safe, performant code with modern
       language features
   
@@ -60,43 +146,43 @@ technologies:
   
   - name: "SwiftUI"
     type: "framework_tooling"
-    description: |
+    description: >
       The primary UI framework used to build the modern, responsive interface with declarative syntax and
       automatic state management
   
   - name: "AppKit"
     type: "framework_tooling"
-    description: |
+    description: >
       Used for macOS-specific functionality including window management, system integration, and native controls
       not available in SwiftUI
   
   - name: "GRDB (SQLite)"
     type: "framework_tooling"
-    description: |
+    description: >
       The database layer providing persistent storage for file metadata, tags, relationships, and search indexes
       with type-safe query building
   
   - name: "QuickLook"
     type: "framework_tooling"
-    description: |
+    description: >
       Integrated for automatic thumbnail generation and preview capabilities for various file types including
       images and documents
   
   - name: "Spotlight"
     type: "framework_tooling"
-    description: |
+    description: >
       Leveraged for advanced search functionality including full-text search, metadata indexing, and system-wide
       content discovery
   
   - name: "Core Data"
     type: "framework_tooling"
-    description: |
+    description: >
       Used for managing complex data relationships and providing a robust object graph for the application's
       data model
   
   - name: "Uniform Type Identifiers"
     type: "framework_tooling"
-    description: |
+    description: >
       Utilized for file type identification and categorization to enable proper handling of different content
       types
   
@@ -104,7 +190,7 @@ technologies:
   
   - name: "Factory (Dependency Injection)"
     type: "architecture_pattern"
-    description: |
+    description: >
       Used to implement a clean dependency injection system for better testability and modular architecture
       design
 
@@ -112,53 +198,103 @@ technologies:
   
   - name: "File System Monitoring"
     type: "system_capability"
-    description: |
+    description: >
       Implemented to watch for file system changes and automatically update the database when files are modified,
       moved, or deleted
   
   - name: "Extended Attributes"
     type: "system_capability"
-    description: |
+    description: >
       Used to store unique content IDs on files to maintain identity across file operations and enable robust
       file tracking
   
   - name: "macOS System Integration"
     type: "system_capability"
-    description: |
+    description: >
       Integrated with various macOS system services including clipboard, file operations, volume management, and
       system preferences
   
   - name: "Thumbnail Generation"
     type: "system_capability"
-    description: |
+    description: >
       Built a custom thumbnail service using QuickLook and caching to provide fast, efficient image previews
       for the file browser
   
   - name: "Search & Filtering"
     type: "system_capability"
-    description: |
+    description: >
       Developed a sophisticated search system with tag-based filtering, date ranges, and complex query building
       for efficient file discovery
   
   - name: "Tag Management"
     type: "system_capability"
-    description: |
+    description: >
       Created a comprehensive tagging system with multiple domains (descriptive, attribution, creation dates)
       and drag-and-drop support
   
   - name: "Work Queues"
     type: "system_capability"
-    description: |
+    description: >
       Implemented a queue system for batch operations and task management with visual progress tracking and
       background processing
   
   - name: "Keyboard Navigation"
     type: "system_capability"
-    description: |
+    description: >
       Added extensive keyboard shortcuts and navigation support for power users to efficiently browse and manage
       files
   
   - name: "Drag & Drop"
     type: "system_capability"
-    description: |
+    description: >
       Integrated native macOS drag-and-drop functionality for intuitive file operations and tag management
+
+
+topSkills:
+  - name: "Native macOS Development"
+    description: >
+      Built a fully native application using SwiftUI and AppKit, demonstrating fluency in the Apple development ecosystem 
+      and the ability to deliver polished, system-integrated desktop experiences.
+
+  - name: "Advanced Tagging & Metadata Systems"
+    description: >
+      Designed a rich, multi-domain tagging architecture with support for attribution metadata, file relationships, and 
+      persistent identifiers—showcasing strengths in data modeling, search optimization, and user-centric organization tools.
+
+  - name: "Intelligent File Indexing & Search"
+    description: >
+      Implemented a performant file indexing engine with full-text search, tag-based filtering, and integration with macOS 
+      Spotlight and QuickLook—highlighting proficiency in building complex, responsive search systems.
+
+  - name: "Modular Architecture & Dependency Injection"
+    description: >
+      Applied clean architectural principles using the Factory DI framework, enabling scalable, testable codebases—
+      a strong signal of senior-level software design maturity.
+
+  - name: "macOS System Integration"
+    description: >
+      Integrated deeply with system services including file monitoring, clipboard, QuickLook, and drag-and-drop—demonstrating 
+      the ability to leverage platform capabilities for enhanced user experience and reliability.
+
+
+draft_reflections: >
+  This project started as an exploration of macOS development and quickly grew into a deep dive 
+  into file systems, metadata indexing, and native app architecture. I wanted to build a power-user 
+  tool that felt truly native—fast, keyboard-driven, and tightly integrated with macOS. The tagging 
+  system evolved out of my own frustration with Finder’s limitations, and implementing extended 
+  attributes and persistent content IDs was both technically challenging and satisfying.
+
+  One of the most eye-opening aspects of the project was working directly with a local database. 
+  In most modern web services and frontend apps, you rarely touch the data layer directly—you’re 
+  calling APIs or operating on abstractions. Here, I used GRDB with SQLite to build a custom schema 
+  from scratch, and was surprised at how few options exist for serious native app data storage: 
+  Core Data, SwiftData, or hand-rolled SQLite. Schema evolution turned out to be particularly tricky— 
+  especially when preserving existing user data across updates. I had to get creative around workarounds 
+  for limitations like SQLite’s inability to alter certain constraints post-creation, which gave me a 
+  deeper respect for the stability and migration tooling we take for granted in other ecosystems.
+
+  This project pushed me to think more like a product engineer than just a developer: What would make 
+  this genuinely useful? How should tagging feel? How should batch operations work without being overwhelming? 
+  I also got to sharpen my understanding of SwiftUI and dependency injection patterns, and I’m proud of how 
+  the app turned out—it feels like something I’d want to use every day. I plan to keep refining it and may 
+  eventually extend it to sync or export features across devices.

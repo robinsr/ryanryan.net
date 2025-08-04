@@ -15,31 +15,19 @@ description: >
 
 githubUrl: "https://github.com/robinsr/cheatsheet"
 
+images:
+  primary:
+    full: "https://user-images.githubusercontent.com/3228075/165586323-380692cf-c793-48cc-9e6b-fa99467c10e6.jpg"
+
 highlights:
-  - |
-    Developed a cross-platform Electron application with automatic active window detection 
-    using electron-active-window for seamless workflow integration
-  - |
-    Implemented a sophisticated state management system using MobX and MobX State Tree 
-    for complex shortcut data and UI state synchronization
-  - |
-    Built a responsive React-based UI with styled-components, featuring theme support, 
-    keyboard navigation, and accessibility considerations
-  - |
-    Created an intelligent search system that allows users to find shortcuts quickly 
-    and even create new shortcuts on-the-fly
-  - |
-    Designed a modular component architecture with reusable card-based layouts for 
-    displaying shortcut categories and individual shortcuts
-  - |
-    Integrated export functionality for sharing shortcut collections in multiple 
-    formats (PNG, SVG) with custom rendering capabilities
-  - |
-    Implemented comprehensive keyboard navigation allowing users to operate the 
-    entire application without mouse interaction
-  - |
-    Added multi-application support with automatic switching and always-on-top 
-    functionality for optimal workflow integration
+  - Developed a cross-platform Electron application with automatic active window detection using electron-active-window for seamless workflow integration
+  - Implemented a sophisticated state management system using MobX and MobX State Tree for complex shortcut data and UI state synchronization
+  - Built a responsive React-based UI with styled-components, featuring theme support, keyboard navigation, and accessibility considerations
+  - Created an intelligent search system that allows users to find shortcuts quickly and even create new shortcuts on-the-fly
+  - Designed a modular component architecture with reusable card-based layouts for displaying shortcut categories and individual shortcuts
+  - Integrated export functionality for sharing shortcut collections in multiple formats (PNG, SVG) with custom rendering capabilities
+  - Implemented comprehensive keyboard navigation allowing users to operate the entire application without mouse interaction
+  - Added multi-application support with automatic switching and always-on-top functionality for optimal workflow integration
 
 
 technologies:
@@ -49,25 +37,25 @@ technologies:
   - name: "JavaScript"
     type: "language_tech"
     description: >
-      The primary programming language used throughout the application for both frontend 
+      The primary programming language used throughout the application for both frontend
       and backend logic, leveraging ES6+ features for modern development patterns.
   
   - name: "HTML5"
     type: "language_tech"
     description: >
-      The markup language used for structuring the application's user interface with 
+      The markup language used for structuring the application's user interface with
       semantic elements and accessibility features.
   
   - name: "CSS3"
     type: "language_tech"
     description: >
-      The styling language used for layout, animations, and responsive design with 
+      The styling language used for layout, animations, and responsive design with
       modern CSS features like Flexbox and CSS Grid.
   
   - name: "SCSS"
     type: "language_tech"
     description: >
-      The CSS preprocessor used for additional styling with variables, mixins, and 
+      The CSS preprocessor used for additional styling with variables, mixins, and
       nested rules to maintain consistent design patterns and responsive breakpoints.
   
   # === Frameworks & Tools ===
@@ -75,57 +63,57 @@ technologies:
   - name: "Electron"
     type: "framework_tooling"
     description: >
-      The cross-platform desktop application framework that enables building native 
-      apps using web technologies, providing the foundation for the desktop window 
+      The cross-platform desktop application framework that enables building native
+      apps using web technologies, providing the foundation for the desktop window
       management and system integration.
   
   - name: "React"
     type: "framework_tooling"
     description: >
-      The primary frontend framework used to build the component-based user interface 
+      The primary frontend framework used to build the component-based user interface
       with hooks and functional components for stateful UI logic.
   
   - name: "MobX"
     type: "framework_tooling"
     description: >
-      The reactive state management library that provides observable state containers 
-      and automatic UI updates when data changes, ensuring real-time synchronization 
+      The reactive state management library that provides observable state containers
+      and automatic UI updates when data changes, ensuring real-time synchronization
       between the app state and UI.
   
   - name: "Styled Components"
     type: "framework_tooling"
     description: >
-      The CSS-in-JS library used for component-scoped styling with theme support, 
+      The CSS-in-JS library used for component-scoped styling with theme support,
       enabling dynamic theming and responsive design patterns throughout the application.
   
   - name: "Node.js"
     type: "framework_tooling"
     description: >
-      The JavaScript runtime used in the Electron main process for file system operations, 
+      The JavaScript runtime used in the Electron main process for file system operations,
       window management, and system-level integrations.
   
   - name: "Vite"
     type: "framework_tooling"
     description: >
-      The modern build tool used for fast development and optimized production builds 
+      The modern build tool used for fast development and optimized production builds
       with hot module replacement and efficient bundling.
   
   - name: "Jest"
     type: "framework_tooling"
     description: >
-      The testing framework used for unit testing components and utilities with 
+      The testing framework used for unit testing components and utilities with
       comprehensive test coverage and mocking capabilities.
   
   - name: "Babel"
     type: "framework_tooling"
     description: >
-      The JavaScript compiler used to transform modern ES6+ code for compatibility 
+      The JavaScript compiler used to transform modern ES6+ code for compatibility
       with Electron's Node.js environment and enable JSX compilation.
   
   - name: "Webpack"
     type: "framework_tooling"
     description: >
-      The module bundler used as an alternative build system for development and 
+      The module bundler used as an alternative build system for development and
       production builds with code splitting and optimization.
   
   # === Engineering Practices ===
@@ -133,7 +121,7 @@ technologies:
   - name: "Cross-platform Development"
     type: "engineering_practice"
     description: >
-      The development approach that ensures the application works consistently across 
+      The development approach that ensures the application works consistently across
       Windows, macOS, and Linux operating systems through Electron's abstraction layer.
   
   # === Architecture Patterns ===
@@ -141,20 +129,20 @@ technologies:
   - name: "MobX State Tree"
     type: "architecture_pattern"
     description: >
-      The opinionated state management solution built on MobX that provides type-safe 
-      models, actions, and views for managing complex application state with built-in 
+      The opinionated state management solution built on MobX that provides type-safe
+      models, actions, and views for managing complex application state with built-in
       serialization and time-travel debugging.
   
   - name: "State Management"
     type: "architecture_pattern"
     description: >
-      The architectural pattern implemented with MobX State Tree for managing complex 
+      The architectural pattern implemented with MobX State Tree for managing complex
       application state, user preferences, and shortcut data with predictable data flow.
   
   - name: "Component Architecture"
     type: "architecture_pattern"
     description: >
-      The modular design pattern used to build reusable UI components with clear 
+      The modular design pattern used to build reusable UI components with clear
       separation of concerns, enabling maintainable and scalable code organization.
   
   # === System Capabilities ===
@@ -162,17 +150,51 @@ technologies:
   - name: "Keyboard Navigation"
     type: "system_capability"
     description: >
-      The accessibility feature that allows users to navigate and interact with the 
+      The accessibility feature that allows users to navigate and interact with the
       entire application using only keyboard input, improving productivity and accessibility.
   
   - name: "Active Window Detection"
     type: "system_capability"
     description: >
-      The system integration feature that monitors and responds to changes in the active 
+      The system integration feature that monitors and responds to changes in the active
       application window, automatically displaying relevant shortcuts for the current context.
   
   - name: "Desktop Application Development"
     type: "delivery_context"
     description: >
-      The specialized development discipline focused on creating native desktop experiences 
+      The specialized development discipline focused on creating native desktop experiences
       with system integration, window management, and offline functionality.
+
+
+# === Top Skills ===
+
+topSkills:
+  - name: "Developer Experience Design"
+    description: >
+      Demonstrates a strong focus on building tools that enhance user workflows, reduce friction, 
+      and improve day-to-day productivity—an asset in platform, internal tooling, and developer 
+      experience–oriented roles.
+
+  - name: "Cross-Platform Application Development"
+    description: >
+      Delivered a consistent and performant desktop experience across Windows, macOS, and Linux 
+      using modern web technologies. Reflects versatility and architectural planning in support 
+      of multi-environment product delivery.
+
+  - name: "Accessibility-Driven UX Engineering"
+    description: >
+      Engineered a fully keyboard-navigable interface with clear information hierarchy, responsive 
+      layouts, and theme support—highlighting a commitment to inclusive design and user-first 
+      development practices.
+
+  - name: "State Architecture for Complex UIs"
+    description: >
+      Built a scalable and maintainable application state model for synchronizing UI, 
+      user preferences, and application logic—demonstrating thoughtful state management and 
+      architecture skills applicable to complex front-end systems.
+
+  - name: "Rapid Prototyping with Modern Web Tech"
+    description: >
+      Showcases proficiency in quickly delivering polished, full-featured applications using 
+      technologies like Electron, React, and Vite—valuable for fast-paced environments that 
+      demand both speed and quality.

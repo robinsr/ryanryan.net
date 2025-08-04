@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Quote } from '@lucide/astro';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const reflections = entry.data.reflections;
+---
+
+<button
+  id={`show-reflections-btn-${entry.id}`}
+  class="inline-flex items-center justify-center w-8 h-8 m-2 text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors"
+  title="Show Reflections"
+  data-reflections={reflections}
+>
+  <Quote class="w-4 h-4" />
+</button>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const reflectionButtons = document.querySelectorAll('[id^="show-reflections-btn-"]');
+    
+    reflectionButtons.forEach(button => {
+      const entryId = button.id.replace('show-reflections-btn-', '');
+      const content = document.getElementById(`reflections-content-${entryId}`);
+      
+      if (!content) return;
+      
+      button.addEventListener('click', () => {
+        const isVisible = !content.classList.contains('hidden');
+        
+        if (isVisible) {
+          // Hide reflections
+          content.classList.add('hidden');
+          button.setAttribute('title', 'Show Reflections');
+          button.classList.remove('bg-gray-100', 'dark:bg-gray-800');
+        } else {
+          // Show reflections
+          content.classList.remove('hidden');
+          button.setAttribute('title', 'Hide Reflections');
+          button.classList.add('bg-gray-100', 'dark:bg-gray-800');
+        }
+      });
+    });
+  });
+</script>
