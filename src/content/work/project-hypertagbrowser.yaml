@@ -14,110 +14,6 @@ description: >
   powerful search capabilities, allowing users to organize and discover files through descriptive tags, attribution 
   metadata, and custom work queues.
 
-images:
-  base_url: "https://raw.githubusercontent.com/robinsr/hyper-tag-browser/main/screenshots"
-  
-  primary:
-    full: "hypertagbrowser-browse-screen-cropped.jpg"
-    thumbnail: "thumbs/hypertagbrowser-browse-screen-cropped.jpg"
-    alt: "HyperTagBrowser Browse Screen"
-  
-  showcase:
-    
-    - full: "hypertagbrowser-browse-screen-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-browse-screen-cropped.jpg"
-      alt: >
-        1. The file browser is relatively intuitive, mirroring the Finder's layout and behavior.
-    
-    - full: "hypertagbrowser-browser-screen-selection-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-browser-screen-selection-cropped.jpg"
-      alt: >
-        2. Item selection using mouse or keyboard navigation
-
-      # Tag Sheet screenshots
-    
-    - full: "hypertagbrowser-tag-sheet-main-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-tag-sheet-main-cropped.jpg"
-      alt: > 
-        3. ⌘+T displays the 'Tag Sheet' for an item, presenting a UI for managing item tag associations
-        including a search field for finding existing tags and a keyboard-scrollable list of the 
-        current tag associations. Pressing ↵ toggles a tag association, allowing users to construct
-        the set of tags for an item or items, with changes only being applied when the user exits the sheet.
-    
-    - full: "hypertagbrowser-tag-sheet-search-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-tag-sheet-search-cropped.jpg"
-      alt: >
-        4. From the Tag Sheet, typing in the search field will filter the list of tags to only show those 
-        that match the text entered. The displayed tags are clickable, or can be focused with ⌘+[ or ⌘+]
-        and copied to the entry field with the tab key.
-
-    - full: "hypertagbrowser-tag-sheet-added-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-tag-sheet-added-cropped.jpg"
-      alt: >
-        5. The tag sheet is a powerful tool for managing tags and their relationships
-
-    - full: "hypertagbrowser-tag-sheet-multi-items-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-tag-sheet-multi-items-cropped.jpg"
-      alt: >
-        6. The Tag Sheet supports editing associations for multiple items at once. Only common tag associations
-        are shown, and any edits to the tag associations are applied to all selected items. Item's unique
-        tags (omitted from the Tag Sheet) are preserved.
-    
-    # Context Menu screenshots
-    
-    - full: "hypertagbrowser-context-menu-dates-submenu-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-context-menu-dates-submenu-cropped.jpg"
-      alt: >
-        7. Context menu for dates submenu
-    
-    - full: "hypertagbrowser-context-menu-multi-item-main-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-context-menu-multi-item-main-cropped.jpg"
-      alt: >
-        8. Context menu for multiple items
-
-    # Search Sheet screenshots
-    
-    - full: "hypertagbrowser-search-sheet-nebula-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-search-sheet-nebula-cropped.jpg"
-      alt: >
-        9. The search sheet is a powerful tool for finding files by name, tags, and metadata
-    
-    # Detail Screen screenshots
-
-
-    - full: "hypertagbrowser-detail-screen-main-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-detail-screen-main-cropped.jpg"
-      alt: >
-        10. From the item's detail screen, various actions can be performed from the screen's inspector panel.
-    
-    - full: "hypertagbrowser-detail-screen-added-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-detail-screen-added-cropped.jpg"
-      alt: >
-        11. Adding a new tag to an item from the item's detail screen.
-    
-    - full: "hypertagbrowser-detail-screen-bgcolor-match-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-detail-screen-bgcolor-match-cropped.jpg"
-      alt: >
-        12. For image file types, the app's background color matches the image's primary color
-    
-    # Detail Screen BGColor Match screenshots
-    
-    - full: "hypertagbrowser-detail-screen-bgcolor-match-tag-added-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-detail-screen-bgcolor-match-tag-added-cropped.jpg"
-      alt: >
-        13. New tag added to item from the item detail screen
-    
-    - full: "hypertagbrowser-detail-screen-bgcolor-match-tag-search-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-detail-screen-bgcolor-match-tag-search-cropped.jpg"
-      alt: >
-        14. Search for tags in the item detail screen
-
-    # Rename Tag Sheet screenshots
-    
-    - full: "hypertagbrowser-detail-screen-bgcolor-rename-tag-sheet-cropped.jpg"
-      thumbnail: "thumbs/hypertagbrowser-detail-screen-bgcolor-rename-tag-sheet-cropped.jpg"
-      alt: >
-        15. A sheet for renaming a tag — renames can be applied to different selections of items
 
 highlights:
   - Built a native macOS application using SwiftUI and AppKit with a modern, responsive interface featuring grid and table views for file browsing
@@ -130,7 +26,6 @@ highlights:
   - Designed a modular architecture with dependency injection using Factory framework for maintainable and testable code
   - Added advanced features including drag-and-drop support, keyboard navigation, context menus, and customizable UI panels
   - Integrated with macOS system features like clipboard operations, file operations (rename, move, trash), and volume management
-
 
 technologies:
   
@@ -249,7 +144,6 @@ technologies:
     description: >
       Integrated native macOS drag-and-drop functionality for intuitive file operations and tag management
 
-
 topSkills:
   - name: "Native macOS Development"
     description: >
@@ -275,6 +169,131 @@ topSkills:
     description: >
       Integrated deeply with system services including file monitoring, clipboard, QuickLook, and drag-and-drop—demonstrating 
       the ability to leverage platform capabilities for enhanced user experience and reliability.
+
+
+images:
+  base_url: "https://raw.githubusercontent.com/robinsr/hyper-tag-browser/main/screenshots"
+  # base_url: "./tmp-hypertag-screenshots/screenshots"
+  
+  primary:
+    full: "010-hypertagbrowser-browse-main.png"
+    thumbnail: "thumbs/010-hypertagbrowser-browse-main.png"
+    alt: "HyperTagBrowser Browse Screen"
+  
+  showcase:
+    
+    - full: "010-hypertagbrowser-browse-main.png"
+      thumbnail: "thumbs/010-hypertagbrowser-browse-main.png"
+      alt: >
+        1. The file browser is relatively intuitive, mirroring the Finder's layout and behavior.
+
+    - full: "011-hypertagbrowser-browse-cursor-single.png"
+      thumbnail: "thumbs/011-hypertagbrowser-browse-cursor-single.png"
+      alt: >
+        2. Item selection using mouse or keyboard navigation
+
+    - full: "012-hypertagbrowser-browse-cursor-multi-item.png"
+      thumbnail: "thumbs/012-hypertagbrowser-browse-cursor-multi-item.png"
+      alt: >
+        3. Multi-item selection supported using mouse or shift + arrow keys
+
+    - full: "013-hypertagbrowser-browse-refinements.png"
+      thumbnail: "thumbs/013-hypertagbrowser-browse-refinements.png"
+      alt: >
+        4. ⌃+F opens the Refinements panel, which can be used to filter the file browser by tag, date, and more.
+
+    - full: "014-hypertagbrowser-browse-refinements-applied.png"
+      thumbnail: "thumbs/014-hypertagbrowser-browse-refinements-applied.png"
+      alt: >
+        5. Refinements can be applied to the file browser, including filtering by tag, date, and more.
+
+    - full: "015-hypertagbrowser-browser-refine-not-filter.png"
+      thumbnail: "thumbs/015-hypertagbrowser-browser-refine-not-filter.png"
+      alt: >
+        6. Individual refinements can be toggled as inclusive or exclusive.
+
+    - full: "016-hypertagbrowser-stashed-tags.png"
+      thumbnail: "thumbs/016-hypertagbrowser-stashed-tags.png"
+      alt: >
+        7. The Tag Stash panel can be used to build sets of tags to be applied simultaneously to multiple items.
+
+    - full: "020-hypertagbrowser-search-sheet-main.png"
+      thumbnail: "thumbs/020-hypertagbrowser-search-sheet-main.png"
+      alt: >
+        8. The Search Sheet has more free-form search capabilities, with a simple DSL for building complex queries
+        across tags, dates, creators, and filenames.
+
+    - full: "030-hypertagbrowser-browse-tag-sheet-search.png"
+      thumbnail: "thumbs/030-hypertagbrowser-browse-tag-sheet-search.png"
+      alt: >
+        9. ⌘+T displays the 'Tag Sheet' for an item, presenting a UI for managing item tag associations
+        including a search field for finding existing tags and a keyboard-scrollable list of the 
+        current tag associations. Pressing ↵ toggles a tag association, allowing users to construct
+        the set of tags for an item or items, with changes only being applied when the user exits the sheet.
+
+    - full: "030-hypertagbrowser-browse-tag-sheet-multi-item.png"
+      thumbnail: "thumbs/030-hypertagbrowser-browse-tag-sheet-multi-item.png"
+      alt: >
+        10. The Tag Sheet supports editing associations for multiple items at once. Only common tag associations
+        are shown, and any edits to the tag associations are applied to all selected items. Item's unique
+        tags (omitted from the Tag Sheet) are preserved.
+
+    - full: "040-hypertagbrowser-detail-main-dark.png"
+      thumbnail: "thumbs/040-hypertagbrowser-detail-main-dark.png"
+      alt: >
+        11. The item detail screen shows the item's metadata, including tags, dates, and more.
+
+    # Composite light/dark mode image missing transparency - cant figure out the right imagemagick command to make it work
+    # - full: "040-hypertagbrowser-detail-main-diagonal.png"
+    #   thumbnail: "thumbs/040-hypertagbrowser-detail-main-diagonal.png"
+    #   alt: >
+    #     tbd — 040-hypertagbrowser-detail-main-diagonal.png
+
+    - full: "040-hypertagbrowser-detail-main-light.png"
+      thumbnail: "thumbs/040-hypertagbrowser-detail-main-light.png"
+      alt: >
+        12. HyperTagBrowser supports dark and light mode.
+
+    - full: "040-hypertagbrowser-details-file-rename.png"
+      thumbnail: "thumbs/040-hypertagbrowser-details-file-rename.png"
+      alt: >
+        13. The item detail screen supports renaming the item.
+
+    - full: "040-hypertagbrowser-details-inspector-2.png"
+      thumbnail: "thumbs/040-hypertagbrowser-details-inspector-2.png"
+      alt: >
+        14. The item detail screen supports a variety of actions, including renaming, moving, and deleting the item.
+
+    - full: "040-hypertagbrowser-details-tag-context-menu-recategorize.png"
+      thumbnail: "thumbs/040-hypertagbrowser-details-tag-context-menu-recategorize.png"
+      alt: >
+        15. The item detail screen supports recategorizing a tag association, essentially changing the the meaning
+        of the tag association (eg, a keyword association, a creator association, etc.)
+
+    - full: "040-hypertagbrowser-details-tag-context-menu.png"
+      thumbnail: "thumbs/040-hypertagbrowser-details-tag-context-menu.png"
+      alt: >
+        16. Various actions on a tag or tag association can be performed from the context menu.
+
+    - full: "040-hypertagbrowser-details-tag-sheet.png"
+      thumbnail: "thumbs/040-hypertagbrowser-details-tag-sheet.png"
+      alt: >
+        17. The Tag Sheet is also accessible from the item detail screen.
+
+    - full: "080-hypertagbrowser-settings-general.png"
+      thumbnail: "thumbs/080-hypertagbrowser-settings-general.png"
+      alt: >
+        18. The Settings screen showing some general user preferences.
+
+    - full: "081-hypertagbrowser-settings-appearance.png"
+      thumbnail: "thumbs/081-hypertagbrowser-settings-appearance.png"
+      alt: >
+        19. The Settings screen supports changing the app's appearance.
+
+    - full: "090-hypertagbrowser-key-shortcuts.png"
+      thumbnail: "thumbs/090-hypertagbrowser-key-shortcuts.png"
+      alt: >
+        20. A help screen showing the keyboard shortcuts.
 
 
 draft_reflections: >

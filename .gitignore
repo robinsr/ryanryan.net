@@ -28,3 +28,6 @@ pnpm-debug.log*
 *.sublime-workspace
 
 .vscode/
+
+# temporary public folders (eg for screenshots)
+public/tmp-*
