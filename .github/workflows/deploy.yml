@@ -2,9 +2,9 @@ name: Deploy to Cloudflare Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [ fallback-github-deploy ]
   pull_request:
-    branches: [ main ]
+    branches: [ fallback-github-deploy ]
 
 jobs:
   deploy:
