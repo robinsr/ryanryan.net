@@ -3,6 +3,7 @@ title: "🧱 Refactoring for Sanity: Taming a Wild Merchandising Widget"
 description: "A deep dive into how I stabilized a high-traffic merchandising widget by rebuilding it layer by layer—from fragile frontend to brittle backend."
 pubDate: 2017-05-18T12:00:00Z
 category: engineering
+collection: article
 tags: [refactoring, debugging, reliability, observability, javascript, rest, amazon]
 ---
 
@@ -11,7 +12,7 @@ When I joined the team, one of the first things handed to me was a customer-faci
 
 The bug count? High. The incident rate? Frequent. The joy of working on it? Low.
 
-Here’s what I did to fix that—and what I learned in the process.
+Here's what I did to fix that—and what I learned in the process.
 
 
 ### What We Were Dealing With
@@ -34,7 +35,7 @@ I broke the JavaScript into smaller modules using a basic MVC structure, introdu
 
 #### 2. Stabilizing the Rendering Layer
 
-I replaced the fragile JSP/JSON combo with proper model classes and a dedicated JSON serializer. This removed a whole class of bugs we’d been patching over manually.
+I replaced the fragile JSP/JSON combo with proper model classes and a dedicated JSON serializer. This removed a whole class of bugs we'd been patching over manually.
 
 #### 3. Fixing the API
 
@@ -59,10 +60,10 @@ After the refactor:
 
 ### What I Took Away
 
-- **If you can’t observe it, you can’t fix it.** Adding logs and metrics made everything else easier.
-- **Testing isn’t just about correctness—it’s about courage.** It gave us the confidence to make improvements without breaking things.
-- **You don’t always need a rewrite.** Modularizing what’s there, and wrapping it in guardrails, can go a long way.
+- **If you can't observe it, you can't fix it.** Adding logs and metrics made everything else easier.
+- **Testing isn't just about correctness—it's about courage.** It gave us the confidence to make improvements without breaking things.
+- **You don't always need a rewrite.** Modularizing what's there, and wrapping it in guardrails, can go a long way.
 
 
 
-This was one of those projects that reminded me: good engineering isn’t just building something flashy—it’s making sure what you’ve built can survive contact with the real world.
+This was one of those projects that reminded me: good engineering isn't just building something flashy—it's making sure what you've built can survive contact with the real world.

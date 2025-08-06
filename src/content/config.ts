@@ -9,12 +9,15 @@ export interface SocialMeta {
 	card: "summary" | "summary_large_image";
 }
 
+export type CollectionType = "tutorial" | "article" | "reflection";
+
 export interface PostMeta {
 	title: string;
 	subtitle?: string;
 	description: string;
 	pubDate: Date;
 	category: string;
+	collection: CollectionType;
 	tags: string[];
 	author: string;
 	draft: boolean;
@@ -162,6 +165,7 @@ const postFrontmatterSchema = z.object({
   draft: z.boolean().default(false),
   pubDate: z.coerce.date(),
   category: z.string(),
+  collection: z.enum(["tutorial", "article", "reflection"]),
   tags: z.array(z.string()),
   social: postSocialSchema.optional(),
   image: z.string().optional(),

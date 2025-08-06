@@ -3,23 +3,15 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import BlogCard from '../../components/BlogCard.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedTags, getPostsByTag } from '../../utils/posts';
 import { SITE_CONFIG } from '../../constants';
 
 export async function getStaticPaths() {
-	// Get all posts from the content collection
-	const allPosts = await getCollection('posts');
-	
-	// Get all unique tags from posts
-	const allTags = new Set<string>();
-	allPosts.forEach(post => {
-		if (post.data.tags) {
-			post.data.tags.forEach((tag: string) => allTags.add(tag));
-		}
-	});
+	// Get all unique tags from published posts
+	const allTags = await getPublishedTags();
 
 	// Create a path for each tag
-	return Array.from(allTags).map((tag: string) => ({
+	return allTags.map((tag: string) => ({
 		params: { tag },
 		props: { tag }
 	}));
@@ -27,11 +19,8 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.props;
 
-// Get all posts and filter by tag
-const allPosts = await getCollection('posts');
-const taggedPosts = allPosts.filter(post => 
-	post.data.tags && post.data.tags.includes(tag)
-).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+// Get posts filtered by tag
+const taggedPosts = await getPostsByTag(tag);
 
 // Format tag for display (capitalize first letter)
 const displayTag = tag.charAt(0).toUpperCase() + tag.slice(1);

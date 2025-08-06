@@ -3,21 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Tag from '../components/Tag.astro';
-import { getCollection } from 'astro:content';
+import { getPostsByYear, getPublishedPostsCount } from '../utils/posts';
 
-// Get all posts from the content collection
-const allPosts = await getCollection('posts');
-const posts = allPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
-
-// Group posts by year
-const postsByYear = posts.reduce((acc, post) => {
-  const year = post.data.pubDate.getFullYear();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
-  acc[year].push(post);
-  return acc;
-}, {} as Record<number, typeof posts>);
+// Get posts grouped by year
+const postsByYear = await getPostsByYear();
 
 // Sort years in descending order
 const sortedYears = Object.keys(postsByYear)
@@ -25,7 +14,7 @@ const sortedYears = Object.keys(postsByYear)
   .sort((a, b) => b - a);
 
 // Get total post count
-const totalPosts = posts.length;
+const totalPosts = await getPublishedPostsCount();
 ---
 
 <Layout title="Archive">

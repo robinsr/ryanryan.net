@@ -3,23 +3,15 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import BlogCard from '../../components/BlogCard.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedCategories, getPostsByCategory } from '../../utils/posts';
 import { SITE_CONFIG } from '../../constants';
 
 export async function getStaticPaths() {
-	// Get all posts from the content collection
-	const allPosts = await getCollection('posts');
-	
-	// Get all unique categories from posts
-	const allCategories = new Set<string>();
-	allPosts.forEach(post => {
-		if (post.data.category) {
-			allCategories.add(post.data.category);
-		}
-	});
+	// Get all unique categories from published posts
+	const allCategories = await getPublishedCategories();
 
 	// Create a path for each category
-	return Array.from(allCategories).map((category: string) => ({
+	return allCategories.map((category: string) => ({
 		params: { category },
 		props: { category }
 	}));
@@ -27,11 +19,8 @@ export async function getStaticPaths() {
 
 const { category } = Astro.props;
 
-// Get all posts and filter by category
-const allPosts = await getCollection('posts');
-const categoryPosts = allPosts.filter(post => 
-	post.data.category === category
-).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+// Get posts filtered by category
+const categoryPosts = await getPostsByCategory(category);
 
 // Format category for display (capitalize first letter)
 const displayCategory = category.charAt(0).toUpperCase() + category.slice(1);

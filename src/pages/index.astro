@@ -4,13 +4,10 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlogCard from '../components/BlogCard.astro';
 import { SITE_CONFIG } from '../constants';
-import { getCollection } from 'astro:content';
+import { getRecentPosts } from '../utils/posts';
 
-// Get all posts from the content collection and sort by date
-const allPosts = await getCollection('posts');
-const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 // Get only the 3 most recent posts for the home page
-const recentPosts = sortedPosts.slice(0, 3);
+const recentPosts = await getRecentPosts(3);
 ---
 
 <Layout title="Home">
