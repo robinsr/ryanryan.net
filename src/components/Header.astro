@@ -1,6 +1,7 @@
 ---
 const currentPath = Astro.url.pathname;
 import { SITE_CONFIG, NAV_ITEMS } from '../constants';
+import ThemeToggle from './ThemeToggle.astro';
 
 ---
 
@@ -18,9 +19,9 @@ import { SITE_CONFIG, NAV_ITEMS } from '../constants';
 					{SITE_CONFIG.tagline}
 				</p>
 			</div>
-			
+
 			<!-- Navigation -->
-			<nav class="hidden md:flex space-x-8">
+			<nav class="hidden md:flex items-center space-x-8">
 				{NAV_ITEMS.map((item) => (
 					<a href={item.href} class={`text-sm font-medium transition-colors ${
 						currentPath === item.href
@@ -30,12 +31,17 @@ import { SITE_CONFIG, NAV_ITEMS } from '../constants';
 						{item.label}
 					</a>
 				))}
+
+				<!-- Theme Toggle -->
+				<div class="ml-4">
+					<ThemeToggle />
+				</div>
 			</nav>
-			
+
 			<!-- Mobile menu button -->
 			<div class="md:hidden">
-				<button 
-					type="button" 
+				<button
+					type="button"
 					class="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:text-gray-900 dark:focus:text-white"
 					aria-label="Toggle menu"
 					id="mobile-menu-button"
@@ -46,7 +52,7 @@ import { SITE_CONFIG, NAV_ITEMS } from '../constants';
 				</button>
 			</div>
 		</div>
-		
+
 		<!-- Mobile menu -->
 		<div class="md:hidden hidden" id="mobile-menu">
 			<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200 dark:border-gray-700">
@@ -59,6 +65,14 @@ import { SITE_CONFIG, NAV_ITEMS } from '../constants';
 						{item.label}
 					</a>
 				))}
+
+				<!-- Mobile Theme Toggle -->
+				<div class="px-3 py-2 border-t border-gray-200 dark:border-gray-700 pt-3">
+					<div class="flex items-center justify-between">
+						<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Theme</span>
+						<ThemeToggle />
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -67,10 +81,10 @@ import { SITE_CONFIG, NAV_ITEMS } from '../constants';
 <script>
 	const mobileMenuButton = document.getElementById('mobile-menu-button');
 	const mobileMenu = document.getElementById('mobile-menu');
-	
+
 	if (mobileMenuButton && mobileMenu) {
 		mobileMenuButton.addEventListener('click', () => {
 			mobileMenu.classList.toggle('hidden');
 		});
 	}
-</script> 
+</script>

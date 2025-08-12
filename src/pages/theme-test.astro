@@ -1,0 +1,94 @@
+---
+import FullWidth from '../layouts/FullWidth.astro';
+---
+
+<FullWidth title="Theme Toggle Test" description="Testing the theme toggle functionality">
+  <div class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-8">
+        Theme Toggle Test
+      </h1>
+
+      <div class="space-y-6">
+        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+            Test Content
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">
+            This page tests the theme toggle functionality. The toggle should be visible in the header above.
+          </p>
+          <p class="text-gray-600 dark:text-gray-300">
+            Current theme: <span id="current-theme" class="font-mono bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded">Detecting...</span>
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-6 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Light Mode Colors</h3>
+            <div class="space-y-2">
+              <div class="h-8 bg-gray-100 rounded"></div>
+              <div class="h-8 bg-gray-200 rounded"></div>
+              <div class="h-8 bg-gray-300 rounded"></div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-gray-800 dark:bg-gray-200 border border-gray-700 dark:border-gray-300 rounded-lg">
+            <h3 class="text-lg font-medium text-gray-100 dark:text-gray-900 mb-2">Dark Mode Colors</h3>
+            <div class="space-y-2">
+              <div class="h-8 bg-gray-700 rounded"></div>
+              <div class="h-8 bg-gray-600 rounded"></div>
+              <div class="h-8 bg-gray-500 rounded"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <h3 class="text-lg font-medium text-blue-900 dark:text-blue-100 mb-2">Instructions</h3>
+          <ol class="text-blue-800 dark:text-blue-200 space-y-2 list-decimal list-inside">
+            <li>Look for the theme toggle in the header (it should look like an iOS-style switch)</li>
+            <li>Click the toggle to cycle through themes: Auto → Light → Dark → Auto</li>
+            <li>Check that the page colors change appropriately</li>
+            <li>Refresh the page to verify your preference is saved</li>
+            <li>Check that the preference expires after 12 hours</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</FullWidth>
+
+<script>
+  // Display current theme
+  function updateThemeDisplay() {
+    const themeDisplay = document.getElementById('current-theme');
+    if (themeDisplay) {
+      const isDark = document.documentElement.classList.contains('dark');
+      const savedTheme = localStorage.getItem('theme-preference');
+
+      let themeText = 'Auto (System)';
+      if (savedTheme) {
+        try {
+          const data = JSON.parse(savedTheme);
+          themeText = data.theme.charAt(0).toUpperCase() + data.theme.slice(1);
+        } catch {
+          themeText = 'Auto (System)';
+        }
+      }
+
+      themeDisplay.textContent = `${themeText} - ${isDark ? 'Dark' : 'Light'}`;
+    }
+  }
+
+  // Update display initially and on theme changes
+  updateThemeDisplay();
+
+  // Listen for theme changes
+  const observer = new MutationObserver(() => {
+    updateThemeDisplay();
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+</script>

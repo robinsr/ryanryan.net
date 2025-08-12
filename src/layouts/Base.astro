@@ -27,12 +27,15 @@ const fullTitle = [ title, SITE_CONFIG.title ].filter(Boolean).join(' - ');
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth" transition:name="root" transition:animate="none">
+<html lang="en" class="scroll-smooth dark" transition:name="root" transition:animate="none" data-theme="auto">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
 
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -47,6 +50,40 @@ const fullTitle = [ title, SITE_CONFIG.title ].filter(Boolean).join(' - ');
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Overpass+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+		<!-- Theme initialization script to prevent FOUC -->
+		<script is:inline>
+			(function() {
+				function getInitialTheme() {
+					const saved = localStorage.getItem('theme-preference');
+					if (saved) {
+						try {
+							const data = JSON.parse(saved);
+							const now = Date.now();
+							// Check if preference has expired (12 hours = 43200000 ms)
+							if (now - data.timestamp > 43200000) {
+								localStorage.removeItem('theme-preference');
+								return null;
+							}
+							return data.theme;
+						} catch {
+							localStorage.removeItem('theme-preference');
+							return null;
+						}
+					}
+					return null;
+				}
+
+				const theme = getInitialTheme();
+				const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+				if (theme === 'dark' || (theme === 'auto' && systemPrefersDark)) {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+			})();
+		</script>
 
     <ClientRouter />
   </head>
