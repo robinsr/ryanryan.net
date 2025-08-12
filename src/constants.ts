@@ -53,4 +53,33 @@ export const NAV_ITEMS = [
   { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },
   { label: 'Work', href: '/work' },
-] as const; 
+] as const;
+
+
+export const PAGES = {
+  home: {
+    title: 'Home',
+    description: 'Personal website and blog',
+    href: '/',
+  },
+  about: {
+    title: 'About',
+    description: 'About me',
+    href: '/about',
+  },
+  work: {
+    title: "Work & Projects",
+    description: "Professional experience and personal projects in software engineering, platform engineering, and developer tooling.",
+    href: '/work',
+  },
+  blog: {
+    title: 'Blog',
+    description: 'Thoughts on web development, programming, and technology.',
+    href: '/blog',
+  },
+  archive: {
+    title: 'Archive',
+    description: 'Complete collection of posts spanning multiple years',
+    href: '/archive',
+  },
+} as const;

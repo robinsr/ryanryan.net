@@ -1,8 +1,11 @@
 ---
-import '../styles/global.css';
-import { SITE_CONFIG } from '../constants';
 import type { PostMeta } from '../content/config';
+
+import '../styles/global.css';
+
 import ArticleMeta from '../components/article/ArticleMeta.astro';
+import { ClientRouter } from "astro:transitions";
+import { SITE_CONFIG } from '../constants';
 
 export interface Props {
 	title: string;
@@ -11,10 +14,10 @@ export interface Props {
 	post?: PostMeta;
 }
 
-const { 
-	title = "", 
-	description = SITE_CONFIG.tagline, 
-	image, 
+const {
+	title = "",
+	description = SITE_CONFIG.tagline,
+	image,
 	post
 } = Astro.props;
 
@@ -24,7 +27,7 @@ const fullTitle = [ title, SITE_CONFIG.title ].filter(Boolean).join(' - ');
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" transition:name="root" transition:animate="none">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,20 +35,23 @@ const fullTitle = [ title, SITE_CONFIG.title ].filter(Boolean).join(' - ');
 		<meta name="generator" content={Astro.generator} />
 
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		
+
 		<!-- SEO -->
 		<title>{fullTitle}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />
-		
+
 		{post && <ArticleMeta post={post} />}
-		
+
 		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Overpass+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-	</head>
-	<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased min-w-[320px]">
+
+    <ClientRouter />
+  </head>
+
+  <body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased min-w-[320px]">
 		<slot />
 	</body>
 </html>
@@ -57,16 +63,16 @@ const fullTitle = [ title, SITE_CONFIG.title ].filter(Boolean).join(' - ');
 		--accent-dark: 49, 10, 101;
 		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
 	}
-	
+
 	html {
 		font-family: 'Inter', system-ui, sans-serif;
 		min-height: 100vh;
 	}
-	
+
 	body {
 		min-height: 100vh;
 	}
-	
+
 	code {
 		font-family: 'Overpass Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 	}

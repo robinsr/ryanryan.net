@@ -1,51 +1,40 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import LayoutMDX from '../layouts/LayoutMDX.astro';
 ---
 
-<Layout title="About">
-	<div class="min-h-screen flex flex-col">
-		<Header />
-		
-		<main class="flex-1">
-			<div class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-				<!-- Page Header -->
-				<header class="mb-12">
-					<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						About Ryan
-					</h1>
-				</header>
-				
-				<!-- About Content -->
-				<div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:dark:text-white prose-p:text-gray-700 prose-p:dark:text-gray-300 prose-a:text-blue-600 prose-a:dark:text-blue-400 prose-strong:text-gray-900 prose-strong:dark:text-white">
-					<p>
-						Hi, I'm Ryan.
-					</p>
-					
-					<p>
-						I'm a software engineer based in Seattle, with a background in full-stack development, platform engineering, and developer tooling. I've spent much of my career building systems that support large-scale applications and the people who operate them — from content rendering engines serving millions of requests per day, to internal tools that make developer lives less painful.
-					</p>
-					
-					<p>
-						I care deeply about <strong>thoughtful systems</strong>, <strong>human-centered engineering</strong>, and team cultures built on trust. I've worked in high-velocity environments, led technical projects across international teams, and spent a lot of time fixing things that weren't built to last. I believe that good engineering isn't just about clever solutions — it's about clarity, maintainability, and doing the invisible work that keeps systems resilient.
-					</p>
-					
-					<p>
-						For several years, I worked at Amazon, where I built and scaled merchandising tools, migrated legacy systems to AWS, and helped reduce operational pain for both engineers and customers. Along the way, I picked up a lot of lessons about what breaks at scale, how to debug the real problem (not just the symptom), and why observability is one of the best investments you can make.
-					</p>
-					
-					<p>
-						After a personal sabbatical to focus on health and reset my priorities, I returned to engineering with more intention — choosing work that's grounded, impactful, and collaborative. This blog is part of that: a space to reflect on what I've learned, what I'm still figuring out, and how to build better systems (and maybe a better self) along the way.
-					</p>
-					
-					<p>
-						Thanks for reading. If anything resonates — feel free to reach out or connect with me on <a href="https://linkedin.com/in/ryanbrobinson" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
-					</p>
-				</div>
-			</div>
-		</main>
-		
-		<Footer />
-	</div>
-</Layout> 
+<LayoutMDX title="About">
+
+  <!-- Page Header -->
+  <header class="mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+      About Me
+    </h1>
+  </header>
+
+  <!-- About Content -->
+  <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:dark:text-white prose-p:text-gray-700 prose-p:dark:text-gray-300 prose-a:text-blue-600 prose-a:dark:text-blue-400 prose-strong:text-gray-900 prose-strong:dark:text-white">
+    <p>
+      Hi, I'm Ryan.
+    </p>
+
+    <p>
+      I'm a software engineer based in Seattle, with a background in full-stack development, platform engineering, and developer tooling. I've spent much of my career building systems that support large-scale applications and the people who operate them — from content rendering engines serving millions of requests per day, to internal tools that make developer lives less painful.
+    </p>
+
+    <p>
+      I care deeply about <strong>thoughtful systems</strong>, <strong>human-centered engineering</strong>, and team cultures built on trust. I've worked in high-velocity environments, led technical projects across international teams, and spent a lot of time fixing things that weren't built to last. I believe that good engineering isn't just about clever solutions — it's about clarity, maintainability, and doing the invisible work that keeps systems resilient.
+    </p>
+
+    <p>
+      For several years, I worked at Amazon, where I built and scaled merchandising tools, migrated legacy systems to AWS, and helped reduce operational pain for both engineers and customers. Along the way, I picked up a lot of lessons about what breaks at scale, how to debug the real problem (not just the symptom), and why observability is one of the best investments you can make.
+    </p>
+
+    <p>
+      After a personal sabbatical to focus on health and reset my priorities, I returned to engineering with more intention — choosing work that's grounded, impactful, and collaborative. This blog is part of that: a space to reflect on what I've learned, what I'm still figuring out, and how to build better systems (and maybe a better self) along the way.
+    </p>
+
+    <p>
+      Thanks for reading. If anything resonates — feel free to reach out or connect with me on <a href="https://linkedin.com/in/ryanbrobinson" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+    </p>
+  </div>
+</Layout>

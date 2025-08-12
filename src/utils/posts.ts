@@ -61,13 +61,13 @@ export async function getPostsByTag(tag: string): Promise<CollectionEntry<'posts
 export async function getPublishedCategories(): Promise<string[]> {
   const publishedPosts = await getPublishedPosts();
   const categories = new Set<string>();
-  
+
   publishedPosts.forEach(post => {
     if (post.data.category) {
       categories.add(post.data.category);
     }
   });
-  
+
   return Array.from(categories);
 }
 
@@ -77,13 +77,13 @@ export async function getPublishedCategories(): Promise<string[]> {
 export async function getPublishedTags(): Promise<string[]> {
   const publishedPosts = await getPublishedPosts();
   const tags = new Set<string>();
-  
+
   publishedPosts.forEach(post => {
     if (post.data.tags) {
       post.data.tags.forEach(tag => tags.add(tag));
     }
   });
-  
+
   return Array.from(tags);
 }
 
@@ -92,7 +92,7 @@ export async function getPublishedTags(): Promise<string[]> {
  */
 export async function getPostsByYear(): Promise<Record<number, CollectionEntry<'posts'>[]>> {
   const sortedPosts = await getPublishedPostsSorted();
-  
+
   return sortedPosts.reduce((acc, post) => {
     const year = post.data.pubDate.getFullYear();
     if (!acc[year]) {
@@ -109,4 +109,61 @@ export async function getPostsByYear(): Promise<Record<number, CollectionEntry<'
 export async function getPublishedPostsCount(): Promise<number> {
   const publishedPosts = await getPublishedPosts();
   return publishedPosts.length;
-} 
+}
+
+
+export interface PopularItem {
+  name: string;
+  url: string;
+  count: number;
+}
+
+
+
+export async function getPopularCategories(): Promise<PopularItem[]> {
+  const publishedPosts = await getPublishedPosts();
+  const countMap = {} as Record<string, number>
+
+  publishedPosts
+    .map(post => post.data.category)
+    .forEach(category => {
+      if (countMap[category]) {
+        countMap[category] = countMap[category] + 1
+      } else {
+        countMap[category] = 1
+      }
+      return countMap
+    })
+
+  return Object.entries(countMap).map((entry) => {
+    const [name, count] =  entry
+
+    return {
+      name, count, url: `/category/${name}`
+    }
+  })
+}
+
+export async function getPopularTags(): Promise<PopularItem[]> {
+  const publishedPosts = await getPublishedPosts();
+  const countMap = {} as Record<string, number>
+
+  publishedPosts
+    .flatMap(post => post.data.tags)
+    .forEach(tag => {
+      if (countMap[tag]) {
+        countMap[tag] = countMap[tag] + 1
+      } else {
+        countMap[tag] = 1
+      }
+      return countMap
+    })
+
+  return Object.entries(countMap).map((entry) => {
+    const [name, count] =  entry
+
+    return {
+      name, count, url: `/tag/${name}`
+    }
+  })
+}

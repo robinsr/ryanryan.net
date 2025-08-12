@@ -1,12 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import type { CollectionEntry } from 'astro:content';
+import FullWidth from '../layouts/FullWidth.astro';
 import TimelineBar from '../components/work/TimelineBar.astro';
 import TimelineTracker from '../components/work/TimelineTracker.astro';
 import WorkCard from '../components/work/WorkCard.astro';
 import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
+import { PAGES } from '../constants';
+
+const { title, description } = PAGES.work;
 
 // Get all work experience entries
 const workEntries = await getCollection('work');
@@ -19,74 +20,60 @@ const sortedWork = workEntries.sort((a: CollectionEntry<'work'>, b: CollectionEn
 
 	const dateA = new Date(a.data.startDate);
   const dateB = new Date(b.data.startDate);
-  
+
 	return dateB.getTime() - dateA.getTime();
 });
 ---
 
-<Layout 
-	title="Work & Projects" 
-	description="Professional experience and personal projects in software engineering, platform engineering, and developer tooling."
->	
-	
+<FullWidth title={title} description={description}>
+  <div class="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Page Header -->
+    <header class="mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Work & Projects
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300">
+        My professional journey and personal projects in software engineering and platform development.
+      </p>
+    </header>
 
-	<div class="min-h-screen flex flex-col">
-		<Header />
+    <!-- Timeline Layout -->
+    <div class="relative">
 
-		<main class="flex-1">
+      <!-- Fixed Timeline Bar -->
+      <div class="fixed left-8 top-1/2 transform -translate-y-1/2 z-10">
+        <TimelineBar entries={sortedWork} />
+      </div>
 
-			<div class="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-				<!-- Page Header -->
-				<header class="mb-12">
-					<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Work & Projects
-					</h1>
-					<p class="text-xl text-gray-600 dark:text-gray-300">
-						My professional journey and personal projects in software engineering and platform development.
-					</p>
-				</header>
-				
-				<!-- Timeline Layout -->
-				<div class="relative">
-					
-					<!-- Fixed Timeline Bar -->
-					<div class="fixed left-8 top-1/2 transform -translate-y-1/2 z-10">
-						<TimelineBar entries={sortedWork} />
-					</div>
-					
-					<!-- Content Area -->
-					<div class="md:ml-12 md:mr-12 lg:ml-28 lg:mr-28">
-						<!-- Combined Work & Projects List -->
-						<div class="space-y-8">
-							{sortedWork.map((entry: CollectionEntry<'work'>, index: number) => (
-								<WorkCard entry={entry} index={index} />
-							))}
-						</div>
-					</div>
-				</div>
-				
-				<!-- Empty State -->
-				{sortedWork.length === 0 && (
-					<div class="text-center py-12">
-						<div class="text-gray-400 dark:text-gray-500 mb-4">
-							<svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6" />
-							</svg>
-						</div>
-						<h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-							No work experience or projects yet
-						</h3>
-						<p class="text-gray-500 dark:text-gray-400">
-							Work experience and project entries will appear here.
-						</p>
-					</div>
-				)}
-			</div>
-		</main>
-		
-		<Footer />
-	</div>
-</Layout>
+      <!-- Content Area -->
+      <div class="md:ml-12 md:mr-12 lg:ml-28 lg:mr-28 mb-20 pt-8">
+        <!-- Combined Work & Projects List -->
+        <div class="space-y-8">
+          {sortedWork.map((entry: CollectionEntry<'work'>, index: number) => (
+            <WorkCard entry={entry} index={index} />
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    {sortedWork.length === 0 && (
+      <div class="text-center py-12">
+        <div class="text-gray-400 dark:text-gray-500 mb-4">
+          <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+          No work experience or projects yet
+        </h3>
+        <p class="text-gray-500 dark:text-gray-400">
+          Work experience and project entries will appear here.
+        </p>
+      </div>
+    )}
+  </div>
+</FullWidth>
 
 <!-- Timeline tracking functionality -->
-<TimelineTracker /> 
+<TimelineTracker />
