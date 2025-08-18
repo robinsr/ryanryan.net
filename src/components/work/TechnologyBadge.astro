@@ -14,11 +14,11 @@ const { tech, workType } = Astro.props;
 const getTechColors = (type: string | null) => {
   if (!type) {
     // Default colors for backward compatibility
-    return workType === 'employment' 
+    return workType === 'employment'
       ? 'text-blue-600 bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400'
       : 'text-purple-600 bg-purple-100 dark:bg-purple-900/20 dark:text-purple-400';
   }
-  
+
   switch (type) {
     case 'language_tech':
       return 'text-emerald-600 bg-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400';
@@ -35,7 +35,7 @@ const getTechColors = (type: string | null) => {
     case 'delivery_context':
       return 'text-slate-600 bg-slate-100 dark:bg-slate-900/20 dark:text-slate-400';
     default:
-      return workType === 'employment' 
+      return workType === 'employment'
         ? 'text-blue-600 bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400'
         : 'text-purple-600 bg-purple-100 dark:bg-purple-900/20 dark:text-purple-400';
   }
@@ -43,10 +43,10 @@ const getTechColors = (type: string | null) => {
 ---
 
 <div class="relative group tech-badge">
-  <span class={`inline-block px-3 py-1 text-xs font-medium rounded-full cursor-default ${getTechColors(tech.type || null)}`}>
+  <span class={`inline-flex flex-wrap px-3 py-1 text-xs font-medium rounded-full cursor-default ${getTechColors(tech.type || null)}`}>
     {tech.name}
   </span>
-  
+
   {tech.description && (
     <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 w-80 tech-tooltip">
       <div class="text-center leading-relaxed">{tech.description}</div>
@@ -58,11 +58,11 @@ const getTechColors = (type: string | null) => {
 <script>
   // Disable tooltips when parent is in expanded mode
   const techBadges = document.querySelectorAll('.tech-badge');
-  
+
   techBadges.forEach(badge => {
     const tooltip = badge.querySelector('.tech-tooltip');
     if (!tooltip) return;
-    
+
     // Check if parent container is expanded
     const container = badge.closest('[id^="tech-container-"]');
     if (container && container.classList.contains('flex-col')) {
@@ -70,4 +70,4 @@ const getTechColors = (type: string | null) => {
       tooltip.classList.add('hidden');
     }
   });
-</script> 
+</script>

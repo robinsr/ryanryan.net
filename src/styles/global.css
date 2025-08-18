@@ -14,3 +14,20 @@ body {
 .container {
   min-width: 320px;
 }
+
+/* Technology badge text wrapping */
+.tech-badge span {
+  /* word-break: break-word; */
+  hyphens: auto;
+  max-width: 400px;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 640px) {
+  .tech-badge span {
+    word-break: break-word;
+    max-width: 150px;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}

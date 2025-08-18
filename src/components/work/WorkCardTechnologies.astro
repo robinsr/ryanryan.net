@@ -23,8 +23,8 @@ const { entry } = Astro.props;
         Expand
       </button>
     </div>
-    
-    <div 
+
+    <div
       id={`tech-container-${entry.id}`}
       class="flex flex-wrap gap-2 transition-all duration-300"
     >
@@ -32,14 +32,14 @@ const { entry } = Astro.props;
         const techName = typeof tech === 'string' ? tech : tech.name;
         const techDescription = typeof tech === 'string' ? null : tech.description;
         const techType = typeof tech === 'string' ? null : tech.type;
-        
+
         return (
-          <div 
+          <div
             id={`tech-item-${entry.id}-${index}`}
             class="tech-item"
             data-description={techDescription || ''}
           >
-            <TechnologyBadge 
+            <TechnologyBadge
               tech={{
                 name: techName,
                 type: techType,
@@ -57,7 +57,7 @@ const { entry } = Astro.props;
 <script>
   // Get all expand buttons
   const expandButtons = document.querySelectorAll('[id^="expand-tech-"]');
-  
+
   expandButtons.forEach((button: Element) => {
     button.addEventListener('click', (event) => {
       const target = event.target as HTMLButtonElement;
@@ -65,23 +65,21 @@ const { entry } = Astro.props;
       const entryId = target.id.replace('expand-tech-', '');
       const container = document.getElementById(`tech-container-${entryId}`);
       const techItems = container?.querySelectorAll('.tech-item');
-      
+
       if (!container || !techItems) return;
-      
+
       if (isExpanded) {
         // Collapse back to flex layout
         target.textContent = 'Expand';
         target.setAttribute('data-expanded', 'false');
         container.className = 'flex flex-wrap gap-2 transition-all duration-300';
-        
+
+        // Clear table and restore original tech items
+        container.innerHTML = '';
         techItems.forEach(item => {
           item.className = 'tech-item';
-          // Remove any description elements that were added
-          const descriptionEl = item.querySelector('.tech-description');
-          if (descriptionEl) {
-            descriptionEl.remove();
-          }
-          
+          container.appendChild(item);
+
           // Re-enable tooltips
           const tooltip = item.querySelector('.tech-tooltip');
           if (tooltip) {
@@ -90,24 +88,74 @@ const { entry } = Astro.props;
           }
         });
       } else {
-        // Expand to single column layout
+        // Expand to table layout
         target.textContent = 'Collapse';
         target.setAttribute('data-expanded', 'true');
-        container.className = 'flex flex-col gap-3 transition-all duration-300';
-        
+        container.className = 'transition-all duration-300';
+
+        // Create table structure
+        const table = document.createElement('table');
+        table.className = 'w-full border-collapse text-sm min-w-full';
+
+        // Create a wrapper div for horizontal scrolling on small screens
+        const tableWrapper = document.createElement('div');
+        tableWrapper.className = 'overflow-x-auto border border-gray-200 dark:border-gray-700 rounded-lg';
+
+        // Add table header
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        headerRow.className = 'border-b-2 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800';
+
+        const techHeader = document.createElement('th');
+        techHeader.className = 'text-left py-3 px-4 font-medium text-gray-900 dark:text-white whitespace-nowrap';
+        techHeader.textContent = 'Technology';
+
+        const descHeader = document.createElement('th');
+        descHeader.className = 'text-left py-3 px-4 font-medium text-gray-900 dark:text-white';
+        descHeader.textContent = 'Description';
+
+        headerRow.appendChild(techHeader);
+        headerRow.appendChild(descHeader);
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Create table body
+        const tbody = document.createElement('tbody');
+
         techItems.forEach(item => {
-          item.className = 'tech-item flex items-start gap-3';
           const description = item.getAttribute('data-description');
-          
+
+          // Create table row
+          const row = document.createElement('tr');
+          row.className = 'border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50';
+
+          // Create technology cell
+          const techCell = document.createElement('td');
+          techCell.className = 'py-3 px-4 align-top whitespace-nowrap';
+          techCell.appendChild(item.querySelector('.tech-badge')?.cloneNode(true) || item.cloneNode(true));
+
+          // Create description cell
+          const descCell = document.createElement('td');
+          descCell.className = 'py-3 px-4 text-sm text-gray-600 dark:text-gray-400 leading-relaxed';
+
           if (description) {
-            // Add description element
-            const descriptionEl = document.createElement('div');
-            descriptionEl.className = 'tech-description text-sm text-gray-600 dark:text-gray-400 flex-1 leading-relaxed';
-            descriptionEl.textContent = description;
-            item.appendChild(descriptionEl);
+            descCell.textContent = description;
           }
-          
-          // Disable tooltips when expanded
+
+          row.appendChild(techCell);
+          row.appendChild(descCell);
+          tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        tableWrapper.appendChild(table);
+
+        // Clear container and add table wrapper
+        container.innerHTML = '';
+        container.appendChild(tableWrapper);
+
+        // Disable tooltips when expanded
+        techItems.forEach(item => {
           const tooltip = item.querySelector('.tech-tooltip');
           if (tooltip) {
             tooltip.classList.add('hidden');
@@ -117,4 +165,4 @@ const { entry } = Astro.props;
       }
     });
   });
-</script> 
+</script>

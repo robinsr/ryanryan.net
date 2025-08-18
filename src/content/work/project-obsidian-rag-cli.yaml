@@ -1,0 +1,139 @@
+type: "project"
+
+projectName: "Obsidian RAG"
+title: "Python Developer & RAG Systems"
+
+startDate: "2025-08"
+current: true
+
+githubUrl: "https://github.com/robinsr/obsidian-rag-experiment"
+
+description: >
+  A Retrieval-Augmented Generation (RAG) system that transforms Obsidian vaults into searchable knowledge bases
+  using semantic similarity. Built with modern Python tools, the project demonstrates vector embeddings,
+  similarity search, and CLI application development. It provides both index building capabilities for vaults
+  and natural language querying with direct Obsidian integration.
+
+highlights:
+  - |
+    Built a semantic search system for Obsidian vaults using vector embeddings and similarity search to find
+    relevant notes by meaning rather than exact text matching
+  - |
+    Implemented ChromaDB vector database integration for efficient storage and retrieval of text embeddings
+    with metadata linking back to source files
+  - |
+    Designed and implemented a CLI application using Typer framework with Rich console output for building
+    search indexes and querying notes using natural language
+  - |
+    Created automatic text chunking and processing pipeline that splits Markdown content into manageable
+    chunks for embedding generation and storage
+  - |
+    Developed configuration management system using TOML files for vault paths and automatic detection of
+    Obsidian vaults for seamless integration
+  - |
+    Implemented direct Obsidian integration with clickable links that open notes directly in the application
+    using obsidian:// protocol
+  - |
+    Built a modular architecture with separate packages for index building, querying, configuration management,
+    and console utilities
+  - |
+    Provided both standalone deployment and automatic configuration options with comprehensive error handling
+    and user feedback
+
+technologies:
+
+  # === Programming Languages ===
+
+  - name: "Python"
+    type: "language_tech"
+    description: |
+      The primary programming language used to build the RAG system, CLI application, and vector processing
+      pipeline with modern Python 3.11+ features and type hints
+
+  - name: "TOML Configuration"
+    type: "language_tech"
+    description: |
+      Used for defining vault configurations and project settings, providing human-readable configuration
+      for the RAG system and automatic vault detection
+
+  # === Frameworks & Tools ===
+
+  - name: "Typer"
+    type: "framework_tooling"
+    description: |
+      The CLI framework used to build the command-line interface, providing argument parsing, help text
+      generation, and command structure for build_index and query operations
+
+  - name: "Rich Console"
+    type: "framework_tooling"
+    description: |
+      Integrated Rich library for beautiful console output including progress bars, status updates,
+      markdown rendering, and formatted search results
+
+  - name: "Sentence Transformers"
+    type: "framework_tooling"
+    description: |
+      Implemented Hugging Face sentence-transformers for generating vector embeddings using the
+      all-MiniLM-L6-v2 model for semantic text understanding
+
+  # === Infrastructure & Platforms ===
+
+  - name: "ChromaDB"
+    type: "infra_platform"
+    description: |
+      The vector database used to store and query text embeddings, providing efficient similarity search
+      capabilities and persistent storage for the RAG system
+
+  - name: "Hugging Face"
+    type: "infra_platform"
+    description: |
+      Integrated with Hugging Face model hub for downloading and caching the embedding model, providing
+      access to pre-trained transformer models
+
+  # === Architecture Patterns ===
+
+  - name: "RAG Architecture"
+    type: "architecture_pattern"
+    description: |
+      Implemented the Retrieval-Augmented Generation pattern to enhance information retrieval with
+      semantic understanding and vector similarity search
+
+  - name: "Vector Database Pattern"
+    type: "architecture_pattern"
+    description: |
+      Built a system that converts text to vector embeddings and stores them in a specialized database
+      for efficient similarity-based retrieval
+
+  - name: "CLI Application Pattern"
+    type: "architecture_pattern"
+    description: |
+      Designed a command-line interface with separate commands for building indexes and querying content,
+      following modern CLI application best practices
+
+  # === System Capabilities ===
+
+  - name: "Text Chunking"
+    type: "system_capability"
+    description: |
+      Implemented intelligent text processing that splits Markdown content into meaningful chunks for
+      embedding generation while preserving context and readability
+
+  - name: "Semantic Search"
+    type: "system_capability"
+    description: |
+      Built similarity search capabilities that find relevant content using vector embeddings rather than
+      traditional keyword matching, enabling natural language queries
+
+  # === Engineering Practices ===
+
+  - name: "Configuration Management"
+    type: "system_capability"
+    description: |
+      Implemented automatic vault detection and configuration persistence using TOML files, providing
+      seamless user experience without manual configuration
+
+  - name: "Error Handling"
+    type: "system_capability"
+    description: |
+      Built comprehensive error handling and validation for vault paths, file operations, and model
+      loading with user-friendly error messages and graceful degradation
