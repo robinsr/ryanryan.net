@@ -1,0 +1,217 @@
+type: "project"
+
+projectName: "Error Ferret"
+title: "AI-Powered Code Review Tool with Microservices Architecture"
+
+startDate: "2025-08-20"
+current: true
+
+description: >
+  Error Ferret is an AI-powered code review tool that provides line-by-line feedback using OpenAI's GPT models.
+  Built as a modern, scalable microservices application, it demonstrates advanced architectural patterns including
+  event-driven processing with NATS JetStream, containerized deployment, and Kubernetes autoscaling. The system
+  processes code reviews through an asynchronous worker pipeline, allowing for reliable and scalable AI-powered
+  code analysis. This project showcases full-stack development skills across multiple technologies and deployment
+  strategies, from local development with Docker to production-ready Kubernetes manifests.
+
+githubUrl: "https://github.com/robinsr/error-ferret"
+
+highlights:
+  - Built a full-stack AI-powered code review platform using TypeScript, React, and Astro with a microservices architecture
+  - Implemented an event-driven processing pipeline using NATS JetStream for reliable, scalable code review processing
+  - Created a monorepo structure with pnpm workspaces for shared packages and multiple applications (API, worker, web)
+  - Developed a hybrid frontend architecture combining Astro for static content and React SPA for interactive code review functionality
+  - Integrated OpenAI's GPT models for intelligent code analysis with customizable reviewer personalities (security, performance, clarity)
+  - Built a robust API using Fastify with comprehensive request validation using Zod schemas
+  - Implemented asynchronous job processing with worker nodes that can scale based on queue depth
+  - Designed Kubernetes manifests with KEDA for automatic scaling based on NATS JetStream lag
+  - Set up comprehensive development environment with Docker Compose for local NATS and development tooling
+  - Created a modular component architecture with shared UI components and type definitions across the monorepo
+
+technologies:
+
+  # === Programming Languages ===
+
+  - name: "TypeScript"
+    type: "language_tech"
+    description: |
+      Used throughout the entire codebase for type safety and better developer experience across all services
+      and shared packages
+
+  # === Frameworks & Tools ===
+
+  - name: "React"
+    type: "framework_tooling"
+    description: |
+      Primary frontend framework for the interactive code review SPA, providing component-based UI architecture
+      and state management
+
+  - name: "Astro"
+    type: "framework_tooling"
+    description: |
+      Static site generator used for the landing page and team information, with React integration for
+      serving the SPA at /app route
+
+  - name: "Fastify"
+    type: "framework_tooling"
+    description: |
+      High-performance Node.js web framework used for the API server, handling review creation, status
+      polling, and worker callbacks
+
+  - name: "NATS JetStream"
+    type: "framework_tooling"
+    description: |
+      Message broker and streaming platform used for reliable job queuing and processing, enabling
+      asynchronous code review processing
+
+  - name: "Tailwind CSS"
+    type: "framework_tooling"
+    description: |
+      Utility-first CSS framework used for styling the entire application with consistent design patterns
+      and responsive layouts
+
+  - name: "pnpm"
+    type: "framework_tooling"
+    description: |
+      Package manager used for monorepo management with workspace linking and efficient dependency
+      installation across multiple packages
+
+  - name: "Zod"
+    type: "framework_tooling"
+    description: |
+      TypeScript-first schema validation library used for API request/response validation and
+      ensuring data integrity across services
+
+  - name: "OpenAI API"
+    type: "framework_tooling"
+    description: |
+      Integrated GPT models for intelligent code analysis, generating structured feedback and
+      providing AI-powered code review capabilities
+
+  # === Infrastructure & Platforms ===
+
+  - name: "Docker"
+    type: "infra_platform"
+    description: |
+      Containerization platform used for local development environment setup, particularly for
+      NATS JetStream service
+
+  - name: "Kubernetes"
+    type: "infra_platform"
+    description: |
+      Container orchestration platform with manifests for production deployment, including
+      KEDA autoscaling for worker nodes
+
+  - name: "KEDA"
+    type: "infra_platform"
+    description: |
+      Kubernetes Event-driven Autoscaler used to automatically scale worker pods based on
+      NATS JetStream queue depth and processing lag
+
+  - name: "Cloudflare"
+    type: "infra_platform"
+    description: |
+      Edge platform used for deployment and hosting of the Astro-based web application
+
+  # === Engineering Practices ===
+
+  - name: "Microservices Architecture"
+    type: "engineering_practice"
+    description: |
+      Designed system with separate services for API handling, background processing, and
+      web presentation, enabling independent scaling and deployment
+
+  - name: "Event-Driven Processing"
+    type: "engineering_practice"
+    description: |
+      Implemented asynchronous job processing using message queues, allowing for reliable
+      and scalable AI-powered code review generation
+
+  - name: "Monorepo Management"
+    type: "engineering_practice"
+    description: |
+      Organized codebase using pnpm workspaces for shared packages, enabling code reuse
+      across multiple applications while maintaining clear separation of concerns
+
+  - name: "Type Safety"
+    type: "engineering_practice"
+    description: |
+      Enforced strict typing throughout the application using TypeScript and Zod schemas,
+      reducing runtime errors and improving developer experience
+
+  # === Architecture Patterns ===
+
+  - name: "Message Queue Pattern"
+    type: "architecture_pattern"
+    description: |
+      Used NATS JetStream for reliable job queuing and processing, enabling decoupled
+      communication between API and worker services
+
+  - name: "Worker Pattern"
+    type: "architecture_pattern"
+    description: |
+      Implemented background processing workers that consume jobs from queues and
+      perform AI-powered code analysis asynchronously
+
+  - name: "API Gateway Pattern"
+    type: "architecture_pattern"
+    description: |
+      Centralized API server handling all external requests and coordinating with
+      background services through message queues
+
+  - name: "Hybrid Frontend Architecture"
+    type: "architecture_pattern"
+    description: |
+      Combined Astro for static content with React SPA for interactive functionality,
+      optimizing for both performance and user experience
+
+  # === System Capabilities ===
+
+  - name: "AI-Powered Code Analysis"
+    type: "system_capability"
+    description: |
+      Integrated OpenAI GPT models for intelligent code review, providing structured
+      feedback on code quality, security, and performance
+
+  - name: "Asynchronous Processing"
+    type: "system_capability"
+    description: |
+      Built scalable job processing system that can handle multiple code reviews
+      simultaneously through worker node scaling
+
+  - name: "Multi-File Code Review"
+    type: "system_capability"
+    description: |
+      Support for reviewing multiple code files in a single session, with aggregated
+      feedback and comprehensive analysis results
+
+topSkills:
+  - name: "Full-Stack Microservices Development"
+    description: >
+      Built a complete microservices application spanning frontend, API, and background processing—demonstrating
+      end-to-end system design skills and the ability to architect scalable, maintainable applications with
+      modern technologies.
+
+  - name: "Event-Driven Architecture"
+    description: >
+      Implemented an asynchronous processing pipeline using NATS JetStream for reliable job queuing and
+      worker scaling—showcasing understanding of distributed systems, message queues, and scalable
+      background processing patterns.
+
+  - name: "AI Integration & LLM Applications"
+    description: >
+      Integrated OpenAI's GPT models for intelligent code analysis with structured prompting and response
+      parsing—demonstrating practical experience with AI/ML APIs and building intelligent applications
+      that provide real value to users.
+
+  - name: "Monorepo Architecture & Package Management"
+    description: >
+      Designed and implemented a pnpm workspace-based monorepo with shared packages and multiple
+      applications—showcasing advanced project organization skills and the ability to manage complex
+      codebases with shared dependencies.
+
+  - name: "Production-Ready Infrastructure"
+    description: >
+      Created Kubernetes manifests with KEDA autoscaling and comprehensive Docker setup—highlighting
+      DevOps skills and the ability to design infrastructure that can scale automatically based on
+      application demand.

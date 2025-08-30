@@ -3,7 +3,7 @@ type: "project"
 projectName: "Obsidian RAG"
 title: "Python Developer & RAG Systems"
 
-startDate: "2025-08"
+startDate: "2025-08-01"
 current: true
 
 githubUrl: "https://github.com/robinsr/obsidian-rag-experiment"
