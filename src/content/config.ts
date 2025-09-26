@@ -1,5 +1,5 @@
 import { defineCollection, z } from 'astro:content';
-import { SITE_CONFIG } from '../constants';
+import { SITE_CONFIG } from '@/constants';
 
 
 export interface SocialMeta {
@@ -26,14 +26,11 @@ export interface PostMeta {
 }
 
 
-//
-// Work Schema
-//
 
 /**
  * The type of key technology used in the work experience.
  */
-const keyTechnologyTypeSchema = z.enum([
+const KeyTechnologyTypeSchema = z.enum([
   // Programming, scripting, markup, and stylesheet languages. 
   // Examples: JavaScript, TypeScript, HTML, CSS, SASS, Java, Python
   'language_tech', 
@@ -61,55 +58,71 @@ const keyTechnologyTypeSchema = z.enum([
   // Project constraints, modalities, and professional settings that influence delivery approach. 
   // Examples: Desktop Application Development, Full-stack Development, Customer-facing Systems, Internal Tools, Contract Work
   'delivery_context',
+
+  // Catch-all category. Use sparringly
+  'other',
 ]);
+
+export type KeyTechnologyType = z.infer<typeof KeyTechnologyTypeSchema>;
 
 /**
  * A key technology used in the work experience.
  */
-const keyTechnologySchema = z.object({
+const KeyTechnologySchema = z.object({
   name: z.string(),
-  type: keyTechnologyTypeSchema.optional(),
+  type: KeyTechnologyTypeSchema.optional(),
   description: z.string().optional(),
 });
+
+export type KeyTechnology = z.infer<typeof KeyTechnologySchema>;
+
 
 /**
  * The type of work experience.
  */
-const workTypeSchema = z.enum(['employment', 'project']);
+const WorkTypeSchema = z.enum(['employment', 'project']);
+
+export type WorkType = z.infer<typeof WorkTypeSchema>;
 
 /**
  * Defines a single image for a project including the full-size image, optional thumbnail, and alt text.
  */
-const projectImageSchema = z.object({
+const ProjectImageSchema = z.object({
   full: z.string(),
   thumbnail: z.string().optional(),
   alt: z.string().optional(),
 })
 
+export type ProjectImage = z.infer<typeof ProjectImageSchema>;
+
 /**
  * Defines the set of images for a project including the logo, primary image, and showcase images.
  */
-const projectImagesSchema = z.object({
+const ProjectImagesSchema = z.object({
   base_url: z.string().optional(),
-  logo: projectImageSchema.optional(),
-  primary: projectImageSchema.optional(),
-  showcase: z.array(projectImageSchema).optional().default([])
+  logo: ProjectImageSchema.optional(),
+  primary: ProjectImageSchema.optional(),
+  showcase: z.array(ProjectImageSchema).optional().default([])
 })
+
+export type ProjectImages = z.infer<typeof ProjectImagesSchema>;
 
 /**
  * Defines a single skill for a project, eg "Native macOS Development" or "Advanced Tagging & Metadata Systems"
  */
-const projectSkillSchema = z.object({
+const ProjectSkillSchema = z.object({
   name: z.string(),
   description: z.string(),
 })
+
+export type ProjectSkill = z.infer<typeof ProjectSkillSchema>;
 
 
 /**
  * Describes employment history and personal prjects
  */
-const workOrProjectSchema = z.object({
-  type: workTypeSchema,
+const WorkOrProjectItemSchema = z.object({
+  type: WorkTypeSchema,
   title: z.string(),
   company: z.string().optional(), // Required for employment, optional for projects
   projectName: z.string().optional(), // Required for projects, optional for employment
@@ -119,31 +132,22 @@ const workOrProjectSchema = z.object({
   current: z.boolean().default(false),
   description: z.string(),
   highlights: z.array(z.string()),
-  technologies: z.array(keyTechnologySchema),
+  technologies: z.array(KeyTechnologySchema),
   url: z.string().url().optional(),
   githubUrl: z.string().url().optional(), // For projects
   liveUrl: z.string().url().optional(), // For projects
-  images: projectImagesSchema.optional(),
-  topSkills: z.array(projectSkillSchema).optional(),
+  images: ProjectImagesSchema.optional(),
+  topSkills: z.array(ProjectSkillSchema).optional(),
   reflections: z.string().optional(),
 });
 
-/**
- * The collection of work experience.
- */
-const workCollection = defineCollection({
-  type: 'data',
-  schema: workOrProjectSchema
-});
+export type WorkOrProjectItem = z.infer<typeof WorkOrProjectItemSchema>;
 
-//
-// Post Schema
-//
 
 /**
  * Sub-schema for social media metadata.
  */
-const postSocialSchema = z.object({
+const PostSocialSchema = z.object({
   // Custom title for OG/Twitter (optional override)
   title: z.string().optional().default(SITE_CONFIG.social.title),
   // Social-optimized description
@@ -154,10 +158,12 @@ const postSocialSchema = z.object({
   card: z.enum(["summary", "summary_large_image"]).optional().default(SITE_CONFIG.social.card), 
 })
 
+export type PostSocial = z.infer<typeof PostSocialSchema>;
+
 /**
  * Schema for the frontmatter of blog posts.
  */
-const postFrontmatterSchema = z.object({
+const PostFrontmatterSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   description: z.string(),
@@ -167,16 +173,28 @@ const postFrontmatterSchema = z.object({
   category: z.string(),
   collection: z.enum(["tutorial", "article", "reflection"]),
   tags: z.array(z.string()),
-  social: postSocialSchema.optional(),
+  social: PostSocialSchema.optional(),
   image: z.string().optional(),
 })
+
+export type PostFrontmatter = z.infer<typeof PostFrontmatterSchema>;
+
+
+
+/**
+ * The collection of work experience.
+ */
+const workCollection = defineCollection({
+  type: 'data',
+  schema: WorkOrProjectItemSchema
+});
 
 /**
  * The collection of blog posts.
  */
 const postsCollection = defineCollection({
   type: 'content',
-  schema: postFrontmatterSchema
+  schema: PostFrontmatterSchema
 });
 
 export const collections = {

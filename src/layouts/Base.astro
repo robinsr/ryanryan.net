@@ -1,11 +1,11 @@
 ---
-import type { PostMeta } from '../content/config';
+import type { PostMeta } from '@/content/config';
 
-import '../styles/global.css';
+import '@/styles/global.css';
 
-import ArticleMeta from '../components/article/ArticleMeta.astro';
+import ArticleMeta from '@/components/article/ArticleMeta.astro';
 import { ClientRouter } from "astro:transitions";
-import { SITE_CONFIG } from '../constants';
+import { SITE_CONFIG } from '@/constants';
 
 export interface Props {
 	title: string;

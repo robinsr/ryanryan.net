@@ -1,8 +1,8 @@
 ---
-import FullWidth from '../../layouts/FullWidth.astro';
-import BlogCard from '../../components/BlogCard.astro';
-import { getPublishedTags, getPostsByTag } from '../../utils/posts';
-import { SITE_CONFIG, PAGES } from '../../constants';
+import FullWidth from '@layouts/FullWidth.astro';
+import BlogCard from '@/components/BlogCard.astro';
+import { getPublishedTags, getPostsByTag } from '@/utils/posts';
+import { SITE_CONFIG, PAGES } from '@/constants';
 
 export async function getStaticPaths() {
 	// Get all unique tags from published posts

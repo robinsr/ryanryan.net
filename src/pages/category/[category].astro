@@ -1,8 +1,8 @@
 ---
-import FullWidth from '../../layouts/FullWidth.astro';
-import BlogCard from '../../components/BlogCard.astro';
-import { getPublishedCategories, getPostsByCategory } from '../../utils/posts';
-import { SITE_CONFIG } from '../../constants';
+import FullWidth from '@/layouts/FullWidth.astro';
+import BlogCard from '@/components/BlogCard.astro';
+import { getPublishedCategories, getPostsByCategory } from '@/utils/posts';
+import { SITE_CONFIG } from '@/constants';
 
 export async function getStaticPaths() {
 	// Get all unique categories from published posts

@@ -1,8 +1,8 @@
 ---
-import { getPublishedPosts } from '../../utils/posts';
+import { getPublishedPosts } from '@/utils/posts';
 import type { CollectionEntry } from 'astro:content';
-import FullWidth from '../../layouts/FullWidth.astro';
-import ArticleFooter from '../../components/article/ArticleFooter.astro';
+import FullWidth from '@/layouts/FullWidth.astro';
+import ArticleFooter from '@/components/article/ArticleFooter.astro';
 
 export interface Props {
 	post: CollectionEntry<'posts'>;

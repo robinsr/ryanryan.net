@@ -1,13 +1,17 @@
 ---
+// @ts-ignore
+import type { WorkOrProjectItem } from '@/content/config'
+
 import type { CollectionEntry } from 'astro:content';
 import WorkCardHeader from './WorkCardHeader.astro';
 import WorkCardImages from './WorkCardImages.astro';
 import WorkCardHighlights from './WorkCardHighlights.astro';
-import WorkCardTechnologies from './WorkCardTechnologies.astro';
+import WorkCardTechnologies from './react/WorkCardTechnologies';
+import CopyWorkButton from './react/CopyWorkButton';
 import ShowReflectionsButton from './ShowReflectionsButton.astro';
-import { makeAnchor } from '../../utils/work';
-import { displayMonthYearRange } from '../../utils/date';
-import CopyWorkButton from './CopyWorkButton.astro';
+import { makeAnchor } from '@/utils/work';
+import { displayMonthYearRange } from '@/utils/date';
+
 
 
 interface Props {
@@ -30,7 +34,7 @@ const reflectionText = entry.data.reflections?.trim().split('\n').filter(line =>
 
   <!-- Copy button -->
   <div class="float-right">
-    <CopyWorkButton entry={entry} />
+    <CopyWorkButton entry={entry.data} client:load />
 
     {entry.data.reflections && (
       <ShowReflectionsButton entry={entry} />
@@ -69,6 +73,6 @@ const reflectionText = entry.data.reflections?.trim().split('\n').filter(line =>
     <WorkCardHighlights entry={entry} />
 
     <!-- Technologies -->
-    <WorkCardTechnologies entry={entry} />
+    <WorkCardTechnologies entry={entry.data as WorkOrProjectItem} client:load />
   </div>
 </article>

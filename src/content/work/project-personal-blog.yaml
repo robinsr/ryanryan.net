@@ -16,86 +16,57 @@ githubUrl: "https://github.com/robinsr/ryanryan.net"
 liveUrl: "https://ryanryan.net" 
 
 highlights:
-  - |
-    Built a performant static site using Astro with TypeScript, achieving perfect 
-    Lighthouse scores for performance, accessibility, and SEO
-  - |
-    Implemented a content management system using Astro Content Collections for 
-    blog posts and work experience data
-  - |
-    Designed a responsive, accessible UI with modern CSS and Tailwind CSS, ensuring 
-    excellent user experience across all devices
-  - |
-    Created reusable components and layouts for consistent design patterns and 
-    maintainable code
-  - |
-    Integrated dark mode support and optimized for various screen sizes and 
-    accessibility standards
-  - |
-    Deployed with automated CI/CD pipeline for seamless updates and version control
+  - Built a performant static site using Astro with TypeScript, achieving perfect Lighthouse scores for performance, accessibility, and SEO
+  - Implemented a content management system using Astro Content Collections for blog posts and work experience data
+  - Designed a responsive, accessible UI with modern CSS and Tailwind CSS, ensuring excellent user experience across all devices
+  - Created reusable components and layouts for consistent design patterns and maintainable code
+  - Integrated dark mode support and optimized for various screen sizes and accessibility standards
+  - Deployed with automated CI/CD pipeline for seamless updates and version control
 
 technologies:
 
   # === Programming Languages ===
 
-  - name: "TypeScript"
-    type: "language_tech"
-    description: |
-      Used throughout the codebase for type safety, better developer experience, and 
-      catching errors at compile time
-  
+  - name: TypeScript
+    type: language_tech
+    description: Used throughout the codebase for type safety, better developer experience, and catching errors at compile time.
+
   # === Frameworks & Tools ===
-  
-  - name: "Astro"
-    type: "framework_tooling"
-    description: |
-      The primary static site generator used to build the blog, providing excellent 
-      performance and developer experience with component-based architecture
-  
-  - name: "Tailwind CSS"
-    type: "framework_tooling"
-    description: |
-      The utility-first CSS framework used for styling components and creating responsive 
-      layouts with consistent design tokens
-  
+
+  - name: Astro
+    type: framework_tooling
+    description: The primary static site generator used to build the blog, providing excellent performance and developer experience with component-based architecture.
+
+  - name: Tailwind CSS
+    type: framework_tooling
+    description: The utility-first CSS framework used for styling components and creating responsive layouts with consistent design tokens.
+
   # === Engineering Practices ===
-  
-  
-  - name: "Responsive Design"
-    type: "engineering_practice"
-    description: |
-      Implemented mobile-first design principles to ensure the site works seamlessly across 
-      all device sizes
-  
-  - name: "Accessibility"
-    type: "engineering_practice"
-    description: |
-      Built with WCAG guidelines in mind, including proper semantic HTML, keyboard navigation, 
-      and screen reader support
-  
-  - name: "SEO Optimization"
-    type: "engineering_practice"
-    description: |
-      Implemented meta tags, structured data, and performance optimizations to improve search 
-      engine visibility
-  
+
+  - name: Responsive Design
+    type: engineering_practice
+    description: Implemented mobile-first design principles to ensure the site works seamlessly across all device sizes.
+
+  - name: Accessibility
+    type: engineering_practice
+    description: Built with WCAG guidelines in mind, including proper semantic HTML, keyboard navigation, and screen reader support.
+
+  - name: SEO Optimization
+    type: engineering_practice
+    description: Implemented meta tags, structured data, and performance optimizations to improve search engine visibility.
+
   # === Architecture Patterns ===
-  
-  - name: "Performance Optimization"
-    type: "engineering_practice"
-    description: |
-      Achieved perfect Lighthouse scores through code splitting, image optimization, and 
-      efficient asset loading
-  
+
+  - name: Performance Optimization
+    type: engineering_practice
+    description: Achieved perfect Lighthouse scores through code splitting, image optimization, and efficient asset loading.
+
   # === Architecture Patterns ===
-  
-  - name: "Content Collections"
-    type: "architecture_pattern"
-    description: |
-      Astro's content management system used to organize and type-safe blog posts and work 
-      experience data
-  
-  - name: "Static Site Generation"
-    type: "architecture_pattern"
-    description: |
-      The build approach that pre-renders all pages at build time for optimal performance and SEO
+
+  - name: Content Collections
+    type: architecture_pattern
+    description: Astro's content management system used to organize and type-safe blog posts and work experience data.
+
+  - name: Static Site Generation
+    type: architecture_pattern
+    description: The build approach that pre-renders all pages at build time for optimal performance and SEO.

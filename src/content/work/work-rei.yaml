@@ -17,146 +17,100 @@ description: >
   strategy.
 
 highlights:
-  - |
-    Led front-end development for REI's Outdoor Programs and Adventures booking application, delivering an 
-    improved user experience for customers registering for outdoor classes and events
-  - |
-    Worked closely with design teams to implement REI's redesigned component library, ensuring a consistent 
-    and accessible design language across the company's web properties
-  - |
-    Participated in the incremental delivery and testing of production features, implementing continuous 
-    improvement in performance, usability, and visual polish
-  - |
-    Collaborated across disciplines to enhance monitoring and reliability of customer-facing services
-  - |
-    Improved internal engineering workflows through thoughtful UI development and clear communication 
-    with cross-functional teams
+  - Led front-end development for REI's Outdoor Programs and Adventures booking application, delivering an improved user experience for customers registering for outdoor classes and events
+  - Worked closely with design teams to implement REI's redesigned component library, ensuring a consistent and accessible design language across the company's web properties
+  - Participated in the incremental delivery and testing of production features, implementing continuous improvement in performance, usability, and visual polish
+  - Collaborated across disciplines to enhance monitoring and reliability of customer-facing services
+  - Improved internal engineering workflows through thoughtful UI development and clear communication with cross-functional teams
 
 technologies:
 
   # === Programming Languages ===
   
-  - name: "JavaScript"
-    type: "language_tech"
-    description: |
-      Used extensively to build a single-page application (SPA) for REI's outdoor programs and classes, forming the
-      core of the customer-facing experience.
+  - name: JavaScript
+    type: language_tech
+    description: Used extensively to build a single-page application (SPA) for REI's outdoor programs and classes, forming the core of the customer-facing experience.
 
-  - name: "Java"
-    type: "language_tech"
-    description: |
-      Gained exposure to Java-based backend systems using SpringMVC and Spring Boot while collaborating on
-      service interfaces and REST API contracts.
+  - name: Java
+    type: language_tech
+    description: Gained exposure to Java-based backend systems using SpringMVC and Spring Boot while collaborating on service interfaces and REST API contracts.
 
-  - name: "SASS"
-    type: "language_tech"
-    description: |
-      Authored and maintained modular, themable stylesheets using SASS during SPA development to ensure visual
-      consistency and maintainability.
+  - name: SASS
+    type: language_tech
+    description: Authored and maintained modular, themable stylesheets using SASS during SPA development to ensure visual consistency and maintainability.
 
-  - name: "LESS"
-    type: "language_tech"
-    description: |
-      Maintained legacy styles written in LESS and gradually migrated components to SASS as part of refactor efforts.
+  - name: LESS
+    type: language_tech
+    description: Maintained legacy styles written in LESS and gradually migrated components to SASS as part of refactor efforts.
 
   # === Frameworks & Libraries ===
   
-  - name: "Backbone.js"
-    type: "framework_tooling"
-    description: |
-      Used Backbone.js as the primary front-end framework for state management, templating, and routing in the
-      outdoor programs booking SPA.
+  - name: Backbone.js
+    type: framework_tooling
+    description: Used Backbone.js as the primary front-end framework for state management, templating, and routing in the outdoor programs booking SPA.
 
-  - name: "Bootstrap"
-    type: "framework_tooling"
-    description: |
-      Incorporated Bootstrap components and grid system to expedite layout and UI development, particularly
-      in responsive contexts.
+  - name: Bootstrap
+    type: framework_tooling
+    description: Incorporated Bootstrap components and grid system to expedite layout and UI development, particularly in responsive contexts.
 
-  - name: "Spring MVC"
-    type: "framework_tooling"
-    description: |
-      Worked closely with backend engineers using Spring MVC to define API contracts and integrate frontend views
-      with backend services.
+  - name: Spring MVC
+    type: framework_tooling
+    description: Worked closely with backend engineers using Spring MVC to define API contracts and integrate frontend views with backend services.
 
   # === Tooling & DevOps ===
   
-  - name: "Webpack"
-    type: "framework_tooling"
-    description: |
-      Used webpack to bundle JavaScript modules and manage build configurations for development and production
-      environments.
+  - name: Webpack
+    type: framework_tooling
+    description: Used webpack to bundle JavaScript modules and manage build configurations for development and production environments.
 
-  - name: "Gulp"
-    type: "framework_tooling"
-    description: |
-      Used Gulp for asset pipeline automation tasks such as compiling stylesheets, transpiling code, and watching
-      files during development.
+  - name: Gulp
+    type: framework_tooling
+    description: Used Gulp for asset pipeline automation tasks such as compiling stylesheets, transpiling code, and watching files during development.
 
-  - name: "Git"
-    type: "framework_tooling"
-    description: |
-      Used git for version control, branch-based workflows, and team collaboration in both feature and maintenance
-      branches.
+  - name: Git
+    type: framework_tooling
+    description: Used git for version control, branch-based workflows, and team collaboration in both feature and maintenance branches.
 
   # === Testing & QA ===
   
-  - name: "Selenium"
-    type: "framework_tooling"
-    description: |
-      Collaborated with QA to write and maintain Selenium-based UI tests, ensuring consistent behavior across
-      user flows and browsers.
+  - name: Selenium
+    type: framework_tooling
+    description: Collaborated with QA to write and maintain Selenium-based UI tests, ensuring consistent behavior across user flows and browsers.
 
   # === Engineering Practices ===
   
-  - name: "Accessibility"
-    type: "engineering_practice"
-    description: |
-      Ensured the booking experience met WCAG standards through semantic HTML, ARIA roles, and keyboard navigation
-      support.
+  - name: Accessibility
+    type: engineering_practice
+    description: Ensured the booking experience met WCAG standards through semantic HTML, ARIA roles, and keyboard navigation support.
 
-  - name: "Performance Optimization"
-    type: "engineering_practice"
-    description: |
-      Improved front-end performance through asset bundling, DOM profiling, and reducing render-blocking requests
-      for faster load times.
+  - name: Performance Optimization
+    type: engineering_practice
+    description: Improved front-end performance through asset bundling, DOM profiling, and reducing render-blocking requests for faster load times.
 
-  - name: "Agile Development"
-    type: "engineering_practice"
-    description: |
-      Worked in an iterative, agile environment with sprints, demos, and cross-disciplinary standups to align on
-      goals and deliver value quickly.
+  - name: Agile Development
+    type: engineering_practice
+    description: Worked in an iterative, agile environment with sprints, demos, and cross-disciplinary standups to align on goals and deliver value quickly.
 
   # === Architecture Patterns ===
   
-  - name: "Component Libraries"
-    type: "architecture_pattern"
-    description: |
-      Authored and maintained modular front-end components to promote reuse, clarity, and visual consistency
-      within the SPA.
+  - name: Component Libraries
+    type: architecture_pattern
+    description: Authored and maintained modular front-end components to promote reuse, clarity, and visual consistency within the SPA.
 
   # === Delivery Context ===
   
-  - name: "Front-end Development"
-    type: "delivery_context"
-    description: |
-      Led front-end implementation of REI's outdoor classes booking app, focusing on SPA architecture, accessibility,
-      and responsive behavior.
+  - name: Front-end Development
+    type: delivery_context
+    description: Led front-end implementation of REI's outdoor classes booking app, focusing on SPA architecture, accessibility, and responsive behavior.
 
-  - name: "Full-stack Development"
-    type: "delivery_context"
-    description: |
-      Worked across the stack on integration tasks, REST API development, and client-server coordination in a
-      Java/Spring environment.
+  - name: Full-stack Development
+    type: delivery_context
+    description: Worked across the stack on integration tasks, REST API development, and client-server coordination in a Java/Spring environment.
 
-  - name: "Cross-functional Collaboration"
-    type: "delivery_context"
-    description: |
-      Partnered with designers, QA engineers, and backend developers in an agile environment to deliver cohesive
-      and accessible digital experiences.
+  - name: Cross-functional Collaboration
+    type: delivery_context
+    description: Partnered with designers, QA engineers, and backend developers in an agile environment to deliver cohesive and accessible digital experiences.
 
-  - name: "User Experience Design"
-    type: "delivery_context"
-    description: |
-      Contributed to user-centric front-end design by collaborating closely with UX designers, ensuring designs
-      translated well into interactive interfaces.
+  - name: User Experience Design
+    type: delivery_context
+    description: Contributed to user-centric front-end design by collaborating closely with UX designers, ensuring designs translated well into interactive interfaces.

@@ -1,11 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import FullWidth from '../layouts/FullWidth.astro';
-import TimelineBar from '../components/work/TimelineBar.astro';
-import TimelineTracker from '../components/work/TimelineTracker.astro';
-import WorkCard from '../components/work/WorkCard.astro';
+import FullWidth from '@/layouts/FullWidth.astro';
+import TimelineBar from '@/components/work/Timeline/TimelineBar.astro';
+import TimelineTracker from '@/components/work/Timeline/TimelineTracker.astro';
+import WorkCard from '@/components/work/WorkCard/WorkCard.astro';
 import { getCollection } from 'astro:content';
-import { PAGES } from '../constants';
+import { PAGES } from '@/constants';
 
 const { title, description } = PAGES.work;
 

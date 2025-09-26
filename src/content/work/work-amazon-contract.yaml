@@ -16,17 +16,10 @@ description: >
   visibility and provided internal teams with better tools for managing visual merchandising.
 
 highlights:
-  - |
-    Led front-end development for a merchandising graphics pipeline, enabling scalable creation and delivery of
-    marketing visuals across Amazon's retail pages
-  - |
-    Designed and implemented a configurable user metrics insights dashboard, providing merchandising teams with
-    clearer visibility into the performance of visual campaigns
-  - |
-    Collaborated with product managers and designers to prototype and build new customer-facing shopping experiences,
-    enhancing product discovery pathways
-  - |
-    Applied best practices in front-end engineering, including performance optimization, responsive design, and maintainability
+  - Led front-end development for a merchandising graphics pipeline, enabling scalable creation and delivery of marketing visuals across Amazon's retail pages
+  - Designed and implemented a configurable user metrics insights dashboard, providing merchandising teams with clearer visibility into the performance of visual campaigns
+  - Collaborated with product managers and designers to prototype and build new customer-facing shopping experiences, enhancing product discovery pathways
+  - Applied best practices in front-end engineering, including performance optimization, responsive design, and maintainability
 
 technologies:
 
@@ -34,64 +27,44 @@ technologies:
   
   - name: "Performance Optimization"
     type: "engineering_practice"
-    description: |
-      Profiling and optimizing render paths, asset loading, and JavaScript execution to ensure fast, reliable page
-      loads at scale.
+    description: "Profiling and optimizing render paths, asset loading, and JavaScript execution to ensure fast, reliable page loads at scale."
 
   - name: "Responsive Design"
     type: "engineering_practice"
-    description: |
-      Designed UI components that adapt across screen sizes and devices, ensuring consistent functionality and layout
-      integrity on desktop and mobile.
+    description: "Designed UI components that adapt across screen sizes and devices, ensuring consistent functionality and layout integrity on desktop and mobile."
 
   - name: "Production Code"
     type: "engineering_practice"
-    description: |
-      Delivered production-grade JavaScript and HTML/CSS code as a contract engineer, following Amazon code standards
-      and peer review processes.
+    description: "Delivered production-grade JavaScript and HTML/CSS code as a contract engineer, following Amazon code standards and peer review processes."
 
   - name: "Large-scale Engineering"
     type: "engineering_practice"
-    description: |
-      Collaborated with internal stakeholders to ship features that reached global customer audiences, emphasizing
-      maintainability, observability, and fault tolerance.
+    description: "Collaborated with internal stakeholders to ship features that reached global customer audiences, emphasizing maintainability, observability, and fault tolerance."
 
   # === System Capabilities ===
-  
+
   - name: "Merchandising Systems"
     type: "system_capability"
-    description: |
-      Worked within Amazon's global retail merchandising tools to enable dynamic content display, campaign targeting,
-      and customer-facing promotions.
+    description: "Worked within Amazon's global retail merchandising tools to enable dynamic content display, campaign targeting, and customer-facing promotions."
 
   - name: "Graphics Pipeline"
     type: "system_capability"
-    description: |
-      Maintained and extended an internal graphics processing pipeline responsible for rendering and distributing
-      thousands of images used across Amazon storefronts.
+    description: "Maintained and extended an internal graphics processing pipeline responsible for rendering and distributing thousands of images used across Amazon storefronts."
 
   - name: "User Metrics Dashboard"
     type: "system_capability"
-    description: |
-      Built an internal reporting dashboard to expose customer interaction metrics to stakeholders, enabling faster
-      product iteration and campaign planning.
+    description: "Built an internal reporting dashboard to expose customer interaction metrics to stakeholders, enabling faster product iteration and campaign planning."
 
   - name: "Visual Merchandising"
     type: "system_capability"
-    description: |
-      Delivered visual merchandising experiences through client-side code, enabling marketing teams to deploy and update
-      rich visual content in real time.
+    description: "Delivered visual merchandising experiences through client-side code, enabling marketing teams to deploy and update rich visual content in real time."
 
   - name: "Shopping Experiences"
     type: "system_capability"
-    description: |
-      Developed features for Amazon's global shopping surfaces with a focus on clarity, visual appeal, and ease of use
-      for millions of customers.
+    description: "Developed features for Amazon's global shopping surfaces with a focus on clarity, visual appeal, and ease of use for millions of customers."
 
   # === Delivery Context ===
-  
+
   - name: "Front-end Development"
     type: "delivery_context"
-    description: |
-      Focused on building and maintaining web interfaces for high-visibility retail shopping pages, balancing performance,
-      usability, and scalability.
+    description: "Focused on building and maintaining web interfaces for high-visibility retail shopping pages, balancing performance, usability, and scalability."

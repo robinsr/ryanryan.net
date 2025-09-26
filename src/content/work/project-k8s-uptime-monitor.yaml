@@ -16,104 +16,74 @@ description: >
 
 
 highlights:
-  - |
-    Built a lightweight uptime monitoring service in Go with configurable HTTP endpoint checking and response time tracking
-  - |
-    Implemented Prometheus metrics integration for comprehensive observability including uptime status, response durations, and failure counts
-  - |
-    Designed and implemented a Kubernetes operator using controller-runtime framework with custom resource definitions (CRDs)
-  - |
-    Created a custom UptimeCheck resource type with validation, status tracking, and declarative configuration management
-  - |
-    Developed a reconciliation loop that manages CronJob resources to execute uptime checks at specified intervals
-  - |
-    Implemented proper Kubernetes RBAC permissions and resource lifecycle management for production deployment
-  - |
-    Built a modular architecture with separate packages for monitoring logic, API server, configuration management, and controllers
-  - |
-    Provided both standalone deployment and Kubernetes-native deployment options with comprehensive YAML manifests
+  - Built a lightweight uptime monitoring service in Go with configurable HTTP endpoint checking and response time tracking
+  - Implemented Prometheus metrics integration for comprehensive observability including uptime status, response durations, and failure counts
+  - Designed and implemented a Kubernetes operator using controller-runtime framework with custom resource definitions (CRDs)
+  - Created a custom UptimeCheck resource type with validation, status tracking, and declarative configuration management
+  - Developed a reconciliation loop that manages CronJob resources to execute uptime checks at specified intervals
+  - Implemented proper Kubernetes RBAC permissions and resource lifecycle management for production deployment
+  - Built a modular architecture with separate packages for monitoring logic, API server, configuration management, and controllers
+  - Provided both standalone deployment and Kubernetes-native deployment options with comprehensive YAML manifests
 
 
 technologies:
   
   # === Programming Languages ===
   
-  - name: "Go"
-    type: "language_tech"
-    description: |
-      The primary programming language used to build the monitoring service, API server, and Kubernetes operator
-      with its strong concurrency support and standard library
+  - name: Go
+    type: language_tech
+    description: The primary programming language used to build the monitoring service, API server, and Kubernetes operator with its strong concurrency support and standard library
   
-  - name: "YAML Configuration"
-    type: "language_tech"
-    description: |
-      Used for defining monitoring targets and Kubernetes manifests, providing human-readable configuration for
-      the service and operator
+  - name: YAML Configuration
+    type: language_tech
+    description: Used for defining monitoring targets and Kubernetes manifests, providing human-readable configuration for the service and operator
   
   # === Frameworks & Tools ===
   
-  - name: "Controller Runtime"
-    type: "framework_tooling"
-    description: |
-      The framework used to build the Kubernetes operator, providing the reconciliation loop and resource
-      management capabilities
+  - name: Controller Runtime
+    type: framework_tooling
+    description: The framework used to build the Kubernetes operator, providing the reconciliation loop and resource management capabilities
   
-  - name: "Prometheus Metrics"
-    type: "framework_tooling"
-    description: |
-      Integrated Prometheus client library to expose metrics for uptime status, response times, and failure
-      counts at the /metrics endpoint
+  - name: Prometheus Metrics
+    type: framework_tooling
+    description: Integrated Prometheus client library to expose metrics for uptime status, response times, and failure counts at the /metrics endpoint
   
-  - name: "HTTP Client"
-    type: "framework_tooling"
-    description: |
-      Implemented HTTP requests to check endpoint availability with configurable timeouts and response validation
-  
+  - name: HTTP Client
+    type: framework_tooling
+    description: Implemented HTTP requests to check endpoint availability with configurable timeouts and response validation
+
   # === Infrastructure & Platforms ===
   
-  - name: "Kubernetes"
-    type: "infra_platform"
-    description: |
-      The container orchestration platform where the operator runs, managing custom resources and providing
-      the deployment environment
+  - name: Kubernetes
+    type: infra_platform
+    description: The container orchestration platform where the operator runs, managing custom resources and providing the deployment environment
   
-  - name: "RBAC"
-    type: "infra_platform"
-    description: |
-      Configured proper Kubernetes role-based access control permissions for the operator to manage custom
-      resources and CronJobs
+  - name: RBAC
+    type: infra_platform
+    description: Configured proper Kubernetes role-based access control permissions for the operator to manage custom resources and CronJobs
   
   # === Architecture Patterns ===
   
-  - name: "Custom Resource Definitions (CRDs)"
-    type: "architecture_pattern"
-    description: |
-      Extended the Kubernetes API to define custom UptimeCheck resources that can be managed declaratively
-      like native Kubernetes objects
+  - name: Custom Resource Definitions (CRDs)
+    type: architecture_pattern
+    description: Extended the Kubernetes API to define custom UptimeCheck resources that can be managed declaratively like native Kubernetes objects
   
-  - name: "Kubernetes Operator Pattern"
-    type: "architecture_pattern"
-    description: |
-      Implemented the operator pattern to extend Kubernetes functionality and manage application-specific
-      resources
+  - name: Kubernetes Operator Pattern
+    type: architecture_pattern
+    description: Implemented the operator pattern to extend Kubernetes functionality and manage application-specific resources
   
-  - name: "Reconciliation Loops"
-    type: "architecture_pattern"
-    description: |
-      Built reconciliation logic to continuously ensure the desired state of UptimeCheck resources matches
-      the actual cluster state
+  - name: Reconciliation Loops
+    type: architecture_pattern
+    description: Built reconciliation logic to continuously ensure the desired state of UptimeCheck resources matches the actual cluster state
   
   # === System Capabilities ===
   
-  - name: "CronJob Management"
-    type: "system_capability"
-    description: |
-      Created and managed Kubernetes CronJobs programmatically to execute uptime checks at specified intervals
+  - name: CronJob Management
+    type: system_capability
+    description: Created and managed Kubernetes CronJobs programmatically to execute uptime checks at specified intervals
+
+  # === Engineering Practices ===
   
-  # === Engineering Practices === 
-  
-  - name: "Status Management"
-    type: "system_capability"
-    description: |
-      Implemented status tracking for uptime checks including last check time, response status, and uptime
-      percentages
+  - name: Status Management
+    type: system_capability
+    description: Implemented status tracking for uptime checks including last check time, response status, and uptime percentages

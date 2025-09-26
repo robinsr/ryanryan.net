@@ -29,146 +29,115 @@ highlights:
 
 technologies:
   
-  # === Programming Languages ===
-  
-  - name: "Swift"
-    type: "language_tech"
-    description: >
-      The core programming language used throughout the application for type-safe, performant code with modern
-      language features
-  
-  # === Frameworks & Tools ===
-  
-  - name: "SwiftUI"
-    type: "framework_tooling"
-    description: >
-      The primary UI framework used to build the modern, responsive interface with declarative syntax and
-      automatic state management
-  
-  - name: "AppKit"
-    type: "framework_tooling"
-    description: >
-      Used for macOS-specific functionality including window management, system integration, and native controls
-      not available in SwiftUI
-  
-  - name: "GRDB (SQLite)"
-    type: "framework_tooling"
-    description: >
-      The database layer providing persistent storage for file metadata, tags, relationships, and search indexes
-      with type-safe query building
-  
-  - name: "QuickLook"
-    type: "framework_tooling"
-    description: >
-      Integrated for automatic thumbnail generation and preview capabilities for various file types including
-      images and documents
-  
-  - name: "Spotlight"
-    type: "framework_tooling"
-    description: >
-      Leveraged for advanced search functionality including full-text search, metadata indexing, and system-wide
-      content discovery
-  
-  - name: "Core Data"
-    type: "framework_tooling"
-    description: >
-      Used for managing complex data relationships and providing a robust object graph for the application's
-      data model
-  
-  - name: "Uniform Type Identifiers"
-    type: "framework_tooling"
-    description: >
-      Utilized for file type identification and categorization to enable proper handling of different content
-      types
-  
-  # === Architecture Patterns ===
-  
-  - name: "Factory (Dependency Injection)"
-    type: "architecture_pattern"
-    description: >
-      Used to implement a clean dependency injection system for better testability and modular architecture
-      design
+  # Programming Languages
 
-  # === System Capabilities ===
-  
-  - name: "File System Monitoring"
-    type: "system_capability"
-    description: >
-      Implemented to watch for file system changes and automatically update the database when files are modified,
-      moved, or deleted
-  
-  - name: "Extended Attributes"
-    type: "system_capability"
-    description: >
-      Used to store unique content IDs on files to maintain identity across file operations and enable robust
-      file tracking
-  
-  - name: "macOS System Integration"
-    type: "system_capability"
-    description: >
-      Integrated with various macOS system services including clipboard, file operations, volume management, and
-      system preferences
-  
-  - name: "Thumbnail Generation"
-    type: "system_capability"
-    description: >
-      Built a custom thumbnail service using QuickLook and caching to provide fast, efficient image previews
-      for the file browser
-  
-  - name: "Search & Filtering"
-    type: "system_capability"
-    description: >
-      Developed a sophisticated search system with tag-based filtering, date ranges, and complex query building
-      for efficient file discovery
-  
-  - name: "Tag Management"
-    type: "system_capability"
-    description: >
-      Created a comprehensive tagging system with multiple domains (descriptive, attribution, creation dates)
-      and drag-and-drop support
-  
-  - name: "Work Queues"
-    type: "system_capability"
-    description: >
-      Implemented a queue system for batch operations and task management with visual progress tracking and
-      background processing
-  
-  - name: "Keyboard Navigation"
-    type: "system_capability"
-    description: >
-      Added extensive keyboard shortcuts and navigation support for power users to efficiently browse and manage
-      files
-  
-  - name: "Drag & Drop"
-    type: "system_capability"
-    description: >
-      Integrated native macOS drag-and-drop functionality for intuitive file operations and tag management
+  - name: Java
+    type: language_tech
+    description: Primary backend language for developing services and APIs that powered global merchandising tools. Used extensively to build scalable, asynchronous systems with strong reliability and observability.
 
-topSkills:
-  - name: "Native macOS Development"
-    description: >
-      Built a fully native application using SwiftUI and AppKit, demonstrating fluency in the Apple development ecosystem 
-      and the ability to deliver polished, system-integrated desktop experiences.
+  - name: JavaScript
+    type: language_tech
+    description: Used across the stack for building asynchronous UI behavior and contributing to internal tooling. Supported service debugging workflows and browser-based tools.
 
-  - name: "Advanced Tagging & Metadata Systems"
-    description: >
-      Designed a rich, multi-domain tagging architecture with support for attribution metadata, file relationships, and 
-      persistent identifiers—showcasing strengths in data modeling, search optimization, and user-centric organization tools.
+  - name: TypeScript
+    type: language_tech
+    description: Used to modernize frontend tooling and increase type safety in JavaScript applications. Helped reduce runtime errors and improve maintainability.
 
-  - name: "Intelligent File Indexing & Search"
-    description: >
-      Implemented a performant file indexing engine with full-text search, tag-based filtering, and integration with macOS 
-      Spotlight and QuickLook—highlighting proficiency in building complex, responsive search systems.
+  - name: HTML
+    type: language_tech
+    description: Developed accessible, semantic markup to support dynamic content and interactive merchandising features.
 
-  - name: "Modular Architecture & Dependency Injection"
-    description: >
-      Applied clean architectural principles using the Factory DI framework, enabling scalable, testable codebases—
-      a strong signal of senior-level software design maturity.
+  - name: CSS
+    type: language_tech
+    description: Styled responsive and accessible UIs within merchandising tools, using modular design practices.
 
-  - name: "macOS System Integration"
-    description: >
-      Integrated deeply with system services including file monitoring, clipboard, QuickLook, and drag-and-drop—demonstrating 
-      the ability to leverage platform capabilities for enhanced user experience and reliability.
+  # Frameworks & Tools
+
+  - name: Apache Spark
+    type: framework_tooling
+    description: Built data pipelines with Apache Spark to extract and aggregate merchandising metrics, improving visibility into campaign performance and customer behavior.
+
+  # Cloud Services and Platforms
+
+  - name: AWS
+    type: infra_platform
+    description: Migrated legacy infrastructure to AWS-native services to improve scalability, reduce operational overhead, and align with modern best practices in cloud architecture.
+
+  - name: Lambda
+    type: infra_platform
+    description: Used AWS Lambda for lightweight, event-driven workflows that augmented core service functionality and simplified integration with internal tooling.
+
+  - name: S3
+    type: infra_platform
+    description: Leveraged Amazon S3 for durable storage of campaign assets and service artifacts in support of global merchandising operations.
+
+  - name: CloudFormation
+    type: infra_platform
+    description: Used AWS CloudFormation to define and manage infrastructure as code, enabling reproducible and auditable deployments across environments.
+
+  - name: IAM
+    type: infra_platform
+    description: Managed fine-grained permissions using AWS IAM to secure access between services, Lambda functions, and developer tools, with a focus on least privilege.
+
+  # Engineering Practices
+
+  - name: CI/CD
+    type: engineering_practice
+    description: Established CI/CD pipelines with automated testing and linting to enable safe, frequent deployments to production with minimal manual overhead.
+
+  - name: Observability
+    type: engineering_practice
+    description: Improved system visibility by integrating metrics, structured logging, and dashboards for key service performance indicators.
+
+  - name: Error Tracking
+    type: engineering_practice
+    description: Instrumented production services with tooling to surface high-severity errors, reducing time to resolution during incidents.
+
+  - name: Accessibility (a11y)
+    type: engineering_practice
+    description: Applied accessibility best practices in markup and interaction design to meet Amazon's internal a11y standards and improve customer experience.
+
+  - name: UX Collaboration
+    type: engineering_practice
+    description: Partnered closely with UX designers to iterate on dynamic interfaces and improve usability of internal tools and customer-facing features.
+
+  - name: Data Quality
+    type: engineering_practice
+    description: Closed gaps in campaign metrics through the introduction of new data pipelines and validation tooling.
+
+  - name: Service Modernization
+    type: engineering_practice
+    description: Led efforts to refactor and migrate legacy services to AWS-native architectures and event-driven patterns.
+
+  - name: Metrics Instrumentation
+    type: engineering_practice
+    description: Integrated detailed performance metrics into production services to track availability, latency, and error rates in real time.
+
+  - name: Developer Experience
+    type: engineering_practice
+    description: Delivered internal tooling and debug features to support faster iteration, root cause analysis, and production readiness for partner teams.
+
+  # Architecture Patterns
+
+  - name: RESTful APIs
+    type: architecture_pattern
+    description: Designed and maintained REST APIs supporting asynchronous frontend interactions and integrations with partner teams across Amazon retail.
+
+  - name: Distributed Systems
+    type: architecture_pattern
+    description: Built and maintained high-reliability distributed services, with a focus on performance, consistency, and graceful degradation under load.
+
+  # System Capabilities
+
+  - name: Campaign Management
+    type: system_capability
+    description: Built backend services to support the scheduling, targeting, and delivery of merchandising campaigns across global retail platforms.
+
+  # Delivery Context
+
+  - name: Internal Tools
+    type: delivery_context
+    description: Built browser-based developer tooling to aid debugging of merchandising services and improve operational efficiency for partner teams.
 
 
 images:

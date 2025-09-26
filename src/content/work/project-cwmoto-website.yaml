@@ -35,144 +35,115 @@ technologies:
 
   # === Programming Languages ===
 
-  - name: "TypeScript"
-    type: "language_tech"
-    description: |
-      Used throughout the codebase for type safety and better developer experience across frontend and backend
+  - name: TypeScript
+    type: language_tech
+    description: Used throughout the codebase for type safety and better developer experience across frontend and backend
 
   # === Frameworks & Tools ===
 
-  - name: "Astro"
-    type: "framework_tooling"
-    description: |
-      The primary static site generator and framework used for building the website with server-side rendering
-      capabilities
+  - name: Astro
+    type: framework_tooling
+    description: The primary static site generator and framework used for building the website with server-side rendering capabilities
 
-  - name: "tRPC"
-    type: "framework_tooling"
-    description: |
-      Implemented for end-to-end type safety between frontend and backend, providing RPC-style API calls with full
-      IntelliSense support
+  - name: tRPC
+    type: framework_tooling
+    description: Implemented for end-to-end type safety between frontend and backend, providing RPC-style API calls with full IntelliSense support
 
-  - name: "Shopify Storefront API"
-    type: "framework_tooling"
-    description: |
-      Integrated for e-commerce functionality including product catalog, cart management, and checkout processes
+  - name: Shopify Storefront API
+    type: framework_tooling
+    description: Integrated for e-commerce functionality including product catalog, cart management, and checkout processes
 
-  - name: "Tailwind CSS"
-    type: "framework_tooling"
-    description: |
-      Used for styling the entire website with utility-first CSS framework for rapid development and consistent design
+  - name: Tailwind CSS
+    type: framework_tooling
+    description: Used for styling the entire website with utility-first CSS framework for rapid development and consistent design
 
-  - name: "Alpine.js"
-    type: "framework_tooling"
-    description: |
-      Lightweight JavaScript framework for handling interactive elements on the frontend without the overhead of
-      larger frameworks
+  - name: Alpine.js
+    type: framework_tooling
+    description: Lightweight JavaScript framework for handling interactive elements on the frontend without the overhead of larger frameworks
 
-  - name: "Node.js"
-    type: "framework_tooling"
-    description: |
-      The runtime environment for the backend server and API endpoints
+  - name: Node.js
+    type: framework_tooling
+    description: The runtime environment for the backend server and API endpoints
 
   # === Infrastructure & Platforms ===
 
-  - name: "Nixpacks"
-    type: "framework_tooling"
-    description: |
-      Build system used by Railway to automatically detect and build the application from source code
+  - name: Nixpacks
+    type: framework_tooling
+    description: Build system used by Railway to automatically detect and build the application from source code
 
-  - name: "Zod"
-    type: "framework_tooling"
-    description: |
-      TypeScript-first schema validation library used for form validation and API request/response validation
+  - name: Zod
+    type: framework_tooling
+    description: TypeScript-first schema validation library used for form validation and API request/response validation
 
-  - name: "Playwright"
-    type: "framework_tooling"
-    description: |
-      End-to-end testing framework used for automated browser testing to ensure website functionality
+  - name: Playwright
+    type: framework_tooling
+    description: End-to-end testing framework used for automated browser testing to ensure website functionality
 
-  - name: "Vitest"
-    type: "framework_tooling"
-    description: |
-      Unit testing framework used for testing individual components and utility functions
+  - name: Vitest
+    type: framework_tooling
+    description: Unit testing framework used for testing individual components and utility functions
 
   # === Infrastructure & Platforms ===
 
-  - name: "Redis"
-    type: "infra_platform"
-    description: |
-      Used for user session management and cart persistence, providing fast in-memory data storage
+  - name: Redis
+    type: infra_platform
+    description: Used for user session management and cart persistence, providing fast in-memory data storage
 
-  - name: "Docker"
-    type: "infra_platform"
-    description: |
-      Containerization platform used for consistent development and production deployment environments
+  - name: Docker
+    type: infra_platform
+    description: Containerization platform used for consistent development and production deployment environments
 
-  - name: "Railway"
-    type: "infra_platform"
-    description: |
-      Cloud platform used for automated deployment with built-in health checks and restart policies
+  - name: Railway
+    type: infra_platform
+    description: Cloud platform used for automated deployment with built-in health checks and restart policies
 
   # === Engineering Practices ===
 
-  - name: "Responsive Design"
-    type: "engineering_practice"
-    description: |
-      Mobile-first design approach ensuring the website works seamlessly across all device sizes
+  - name: Responsive Design
+    type: engineering_practice
+    description: Mobile-first design approach ensuring the website works seamlessly across all device sizes
 
-  - name: "Mobile-First Development"
-    type: "engineering_practice"
-    description: |
-      Development methodology prioritizing mobile experience, crucial for users accessing the site from race paddocks
+  - name: Mobile-First Development
+    type: engineering_practice
+    description: Development methodology prioritizing mobile experience, crucial for users accessing the site from race paddocks
 
-  - name: "CI/CD Pipeline"
-    type: "engineering_practice"
-    description: |
-      Automated deployment pipeline that builds, tests, and deploys the application to production
+  - name: CI/CD Pipeline
+    type: engineering_practice
+    description: Automated deployment pipeline that builds, tests, and deploys the application to production
 
   # === Architecture Patterns ===
 
-  - name: "GraphQL"
-    type: "architecture_pattern"
-    description: |
-      Used for communicating with Shopify's APIs, providing efficient data fetching and real-time updates
+  - name: GraphQL
+    type: architecture_pattern
+    description: Used for communicating with Shopify's APIs, providing efficient data fetching and real-time updates
 
-  - name: "Content Collections"
-    type: "architecture_pattern"
-    description: |
-      Astro's content management system used for organizing blog posts, team information, and sponsor content
+  - name: Content Collections
+    type: architecture_pattern
+    description: Astro's content management system used for organizing blog posts, team information, and sponsor content
 
-  - name: "Server-Side Rendering"
-    type: "architecture_pattern"
-    description: |
-      Implemented for optimal performance and SEO, with pages pre-rendered at build time where possible
+  - name: Server-Side Rendering
+    type: architecture_pattern
+    description: Implemented for optimal performance and SEO, with pages pre-rendered at build time where possible
 
   # === System Capabilities ===
 
-  - name: "E-commerce Integration"
-    type: "system_capability"
-    description: |
-      Complete integration with Shopify for product management, inventory, and payment processing
+  - name: E-commerce Integration
+    type: system_capability
+    description: Complete integration with Shopify for product management, inventory, and payment processing
 
 
 topSkills:
-  - name: "Full-Stack Web Development"
-    description: >
-      Built an end-to-end web platform combining modern frontend frameworks with backend services, session management, and infrastructure deployment—demonstrating fluency across the stack and real-world product delivery experience.
+  - name: Full-Stack Web Development
+    description: Built an end-to-end web platform combining modern frontend frameworks with backend services, session management, and infrastructure deployment—demonstrating fluency across the stack and real-world product delivery experience.
 
-  - name: "E-commerce Integration"
-    description: >
-      Integrated a custom storefront with Shopify’s Storefront API, including dynamic product rendering, cart management, and secure checkout—showcasing applied experience in digital commerce and API-based systems.
+  - name: E-commerce Integration
+    description: Integrated a custom storefront with Shopify’s Storefront API, including dynamic product rendering, cart management, and secure checkout—showcasing applied experience in digital commerce and API-based systems.
 
-  - name: "End-to-End Type Safety"
-    description: >
-      Leveraged tRPC and TypeScript to enforce strict contracts between frontend and backend layers, enabling faster development and fewer runtime errors—an example of modern engineering practices for scalable web systems.
+  - name: End-to-End Type Safety
+    description: Leveraged tRPC and TypeScript to enforce strict contracts between frontend and backend layers, enabling faster development and fewer runtime errors—an example of modern engineering practices for scalable web systems.
 
-  - name: "Performance-Optimized Responsive Design"
-    description: >
-      Delivered a mobile-first experience tailored to on-the-go users with server-side rendering and fast-loading pages—emphasizing attention to user context, performance, and accessibility.
+  - name: Performance-Optimized Responsive Design
+    description: Delivered a mobile-first experience tailored to on-the-go users with server-side rendering and fast-loading pages—emphasizing attention to user context, performance, and accessibility.
 
-  - name: "CI/CD & Cloud Deployment"
-    description: >
-      Automated build, test, and deploy workflows using Docker and Railway for consistent and high-availability deployments—highlighting production-readiness and DevOps fluency.
+  - name: CI/CD & Cloud Deployment
+    description: Automated build, test, and deploy workflows using Docker and Railway for consistent and high-availability deployments—highlighting production-readiness and DevOps fluency.
